@@ -1,8 +1,10 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useParamStore } from '../store/paramStore';
+import { useClickedStore } from '../store/clickedStore';
 
 const store = useParamStore()
+const clickedStore = useClickedStore()
 
 const props = defineProps({
   labelX: Number,
@@ -17,10 +19,6 @@ const props = defineProps({
   objLabel: Object,
 })
 
-const emit = defineEmits(['setActionItem'])
-
-const setActionItem = () => {}
-
 const scale = ref(1)
 
 const handleClick = () => {
@@ -29,15 +27,15 @@ const handleClick = () => {
 
 const handleMouseOver = () => {
   scale.value = 1.5
-  setActionItem({
+  clickedStore.actionItem = {
     type: 'SupportOnMouseOver',
     objLabel: props.objLabel,
-  })
+  }
 }
 
 const handleMouseOut = () => {
   scale.value = 1
-  setActionItem(null)
+  clickedStore.actionItem = null
 }
 
 const drawDoubleLabel = computed(() => {

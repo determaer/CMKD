@@ -1,6 +1,7 @@
 <script setup>
 import { ref, provide, onMounted, computed, watch } from 'vue'
 import { useParamStore } from '../store/paramStore'
+import { useClickedStore } from '../store/clickedStore'
 import DrawLabels from './DrawLabels.vue'
 import DrawLineBtwElements from './DrawLineBtwElements.vue'
 import DrawBase from './DrawBase.vue'
@@ -10,6 +11,7 @@ import DrawClickedSector from './DrawClickedSector.vue'
 import DrawArrows from './DrawArrows.vue'
 
 const store = useParamStore()
+const clickedStore = useClickedStore()
 
 const props = defineProps({
   scaleMultiplier: Number,
@@ -25,26 +27,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['setActionItem','setClickedInfo'])
-
-const clickLayerX = ref(-1000)
-const clickLayerY = ref(-1000)
-
-const clickedLine = ref({
-  isClicked: false,
-  objLabelIn: null,
-  objLabelOut: null,
-})
-
-const clickedElement = ref({
-  isClicked: false,
-  objLabel: null, //содержит внутри объекта id элементов далее
-  prevLabels: null, //стрелка к ним
-  nextLabels: null, //стрелка от них
-})
-const clickedSector = ref({
-  isClicked: false,
-  sector: null,
-})
 
 watch(
   () => props.dialogSized,
@@ -118,7 +100,6 @@ const calcParams = () => {
     let t = i * (360 / (store.discNum * 2)) + 90
     arrLabelAngles.push(t)
   }
-  console.log(store.pointNum, store.discNum)
   for (let i = 1; i < store.pointNum; i = i + store.circleDivider) {
     let tIn = (i + 1) * (360 / store.pointNum) + 90 //+ (4 - 4 ** sizeMultiplier)
     let tOut = (i + 2) * (360 / store.pointNum) + 90 //- (4 - 4 ** sizeMultiplier)
@@ -157,11 +138,7 @@ const calcParams = () => {
     dividerAngles: arrDividerAngles,
     angles: arrAngles,
   })
-}
-    
-const calcSectors = () => {
   for (let i = store.circleNum; i >= 0; i = i - 1) {
-    console.log(store.params)
     let sectorsAngles = []
     let sectorsLabels = []
     let currentAngle = 0
@@ -193,7 +170,6 @@ const calcSectors = () => {
               end1 = null
               let end = label.index
               if (end != props.labels.length - 1) {
-                // console.log(end)
                 let angle1 = store.params.angles.find(
                   (lAngle) => lAngle.labelId === end + 1
                 ).labelAngle
@@ -238,7 +214,6 @@ const calcSectors = () => {
           }
         })
       }
-      console.log(sectorsLabels)
       if (sectorsLabels.length > 0){
         for (let i = 0; i < sectorsAngles.length - 1; i = i + 1) {
           store.sectors.push({
@@ -261,24 +236,10 @@ watch(
   () => {props.scaleMultiplier, store.sizeMultiplier},
   () => {
     calcParams()
-    calcSectors()
     store.scaleMultiplier = props.scaleMultiplier
   },
   {immediate: true}
 )
-
-const setClickedInfo = () => {}
-
-const setClickedSector = () => {}
-
-const setActionItem = () => {}
-
-const setClickedElement = () => {}
-
-const setClickedLine = () => {}
-
-
-
 
 onMounted(() => {
   let t = 0
@@ -313,7 +274,6 @@ onMounted(() => {
     }
   })
   calcParams()
-  calcSectors()
 })
 
 function downloadURI(uri, name) {
@@ -330,7 +290,6 @@ function downloadURI(uri, name) {
 <template>
   <v-stage
     v-if="store.params.angles.length > 0"
-    :scale="store.scaleMultiplier"
     :width="store.width"
     :height="store.height"
     ref='stageRef'
@@ -349,67 +308,39 @@ function downloadURI(uri, name) {
       <DrawBase
         bgColor='#dad0f1'
         bgColor2='#e8e8e8'
-        @setClickedInfo="setClickedInfo"
-        @setClickedSector="setClickedSector"
       />
       <DrawLineBtwElements
         v-for="line of store.lines"
         :objLabelOut="line.objLabelOut"
         :objLabelIn="line.objLabelIn"
-        @setClickedElement="setClickedElement"
-        @setClickedLine="setClickedLine"
-        @setActionItem="setActionItem"
-        @setClickedInfo="setClickedInfo"
       />
       <DrawArrows />
       <DrawLabels
         v-for="label of store.labelsZero"
         :objLabel="label"
-        @setClickedElement="setClickedElement"
-        @setClickedLine="setClickedLine"
-        @setActionItem=setActionItem
-        @setClickedInfo="setClickedInfo"
       />
     </v-layer>
     <v-layer
-      v-if="clickedElement.isClicked || clickedLine.isClicked || clickedSector.isClicked"
+      v-if="clickedStore.clickedElement.isClicked || clickedStore.clickedLine.isClicked || clickedStore.clickedSector.isClicked"
     >
       <v-rect
         fill='white'
-        :x="clickLayerX"
-        :y="clickLayerY"
-        :width="width * props.scaleMultiplier * 3"
-        :height="height * props.scaleMultiplier * 3"
-        @click="() => {
-          setClickedElement({isClicked: false})
-          setClickedLine({isClicked: false})
-          setClickedInfo(null)
-          setClickedSector({isClicked: false})
-        }"
+        :x="clickedStore.clickLayerX"
+        :y="clickedStore.clickLayerY"
+        :width="store.width * props.scaleMultiplier * 3"
+        :height="store.height * props.scaleMultiplier * 3"
+        @click="() => {clickedStore.resetClicked()}"
         :opacity="0.6"
       />
       <DrawClickedElement
-        v-if="clickedElement.isClicked"
-        :clickedElement="clickedElement"
-        @setClickedElement="setClickedElement"
-        @setClickedLine="setClickedLine"
-        @setActionItem="setActionItem"
-        @setClickedInfo="setClickedInfo"
+        v-if="clickedStore.clickedElement.isClicked"
       />
       <DrawClickedLine
-        v-if="clickedLine.isClicked"
-        :clickedLine="clickedLine"
-        @setClickedElement="setClickedElement"
-        @setClickedLine="setClickedLine"
-        @setActionItem="setActionItem"
-        @setClickedInfo="setClickedInfo"
+        v-if="clickedStore.clickedLine.isClicked"
       />
       <DrawClickedSector
-        v-if="clickedSector.isClicked"
-        :clickedSector="clickedSector"
+        v-if="clickedStore.clickedSector.isClicked"
         bgColor='gray'
-        @setClickedInfo="setClickedInfo"
-        @setClickedSector="setClickedSector"
       />
     </v-layer>
   </v-stage>

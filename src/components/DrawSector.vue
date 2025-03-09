@@ -1,9 +1,11 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useParamStore } from '../store/paramStore'
+import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
 
 const store = useParamStore()
+const clickedStore = useClickedStore()
 
 const props = defineProps({
   sector: Object,
@@ -11,8 +13,6 @@ const props = defineProps({
   shadowed: Boolean,
   opacity: Number,
 })
-
-const emit = defineEmits(["setClickedInfo", "setClickedSector"]) 
 
 const fill = ref(props.bgColor)
 const scale = ref(1)
@@ -23,16 +23,16 @@ if (props.sector.sEnd - arcLength / 2 > 90 && props.sector.sEnd - arcLength / 2 
   r = 1
 
 const handleClick = () => {
-  /*if (flags.oneLevel) {
-    setClickedInfo({
+  if (store.oneLevel) {
+    clickedStore.clickedInfo = {
       type: 'sector',
       id: sector.upperID,
-    })
-    setClickedSector({
+    }
+    clickedStore.clickedSector = {
       isClicked: true,
       sector: sector,
-    })
-  }*/
+    }
+  }
   //console.log('clicked sector of ' + sector.upperID)
 }
 

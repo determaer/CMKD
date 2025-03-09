@@ -1,25 +1,17 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useParamStore } from '../store/paramStore'
+import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
 import DrawSupportLabel from './DrawSupportLabel.vue'
 
 const store = useParamStore()
+const clickedStore = useClickedStore()
 
 const props = defineProps({
   objLabel: Object,
   shadowed: Boolean,
 })
-
-const emit = defineEmits(["setClickedElement", "setClickedLine", "setActionItem", "setClickedInfo"])
-
-const setClickedInfo = () => {}
-
-const setActionItem = () => {}
-
-const setClickedElement = () => {}
-
-const setClickedLine = () => {}
 
 let lAngle = store.params.angles.find(
   (lAngle) => lAngle.labelId === props.objLabel.index
@@ -54,38 +46,39 @@ const handleClick = () => {
   })
   props.objLabel.connections.map((connection) => {
     let label = store.labelsZero.find((label) => label.id === connection)
-    if (label != undefined) arrNextLabels.push(label)
+    if (label) arrNextLabels.push(label)
   })
-  setClickedLine({isClicked: false})
-  setClickedElement({
+  clickedStore.resetClicked()
+  clickedStore.clickedLine = {isClicked: false}
+  clickedStore.clickedElement = {
     isClicked: true,
     objLabel: props.objLabel,
     prevLabels: arrNextLabels,
     nextLabels: arrPrevLabels,
-  })
-  setActionItem({
+  }
+  clickedStore.actionItem = {
     type: 'LabelOnClick',
     objLabel: props.objLabel,
-  })
-  setClickedInfo({
+  }
+  clickedStore.clickedInfo = {
     type: 'label',
     objLabel: props.objLabel,
     prevLabels: arrNextLabels,
     nextLabels: arrPrevLabels,
-  })
+  }
 }
 
 const handleMouseOver = () => {
   scale.value = 1.5
-  setActionItem({
+  clickedStore.actionItem = {
     type: 'LabelOnMouseOver',
     objLabel: props.objLabel,
-  })
+  }
 }
 
 const handleMouseOut = () => {
   scale.value = 1
-  setActionItem(null)
+  clickedStore.actionItem = null
 }
 
 const fillColor = computed(() => {
@@ -188,7 +181,6 @@ const drawTextLabel = computed(() => {
     :supLabelY3="supLabelY3"
     :angles="lAngle"
     :objLabel="objLabel"
-    @setActionItem="setActionItem"
   />
 <!-- Rectangular Label -->  
   <v-rect

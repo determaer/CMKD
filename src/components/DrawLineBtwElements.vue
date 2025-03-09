@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useParamStore } from '../store/paramStore'
+import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
 
 const store = useParamStore()
+const clickedStore = useClickedStore()
 
 const props = defineProps({
   objLabelOut: Object,
   objLabelIn: Object,
 })
-
-const emit = defineEmits(['setClickedLine', 'setClickedElement', 'setActionItem', 'setClickedInfo'])
 
 const scale = ref(1)
 
@@ -82,40 +82,36 @@ onMounted(() => {
     
 const handleClick = () => {
   scale.value = 1
-  emit('setClickedElement', {isClicked: false})
-  emit('setClickedLine',
-  {
+  clickedStore.clickedElement = {isClicked: false}
+  clickedStore.clickedLine = {
     isClicked: true,
     objLabelIn: props.objLabelIn,
     objLabelOut: props.objLabelOut,
-  })
-  emit('setActionItem', 
-  {
+  }
+  clickedStore.actionItem = {
     type: 'LineOnClick',
     objLabelIn: props.objLabelIn,
     objLabelOut: props.objLabelOut,
-  })
-  emit('setClickedInfo',
-  {
+  }
+  clickedStore.clickedInfo = {
     type: 'line',
     objLabelIn: props.objLabelIn,
     objLabelOut: props.objLabelOut,
-  })
+  }
 }
 
 const handleMouseOver = () => {
   scale.value = 3
-  emit('setActionItem', 
-  {
+  clickedStore.actionItem = {
     type: 'LineOnMouseOver',
     objLabelIn: props.objLabelIn,
     objLabelOut: props.objLabelOut,
-  })
+  }
 }
 
 const handleMouseOut = () => {
   scale.value = 1
-  emit('setActionItem', null)
+  clickedStore.actionItem = null
 }
 
 
