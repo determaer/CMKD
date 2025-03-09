@@ -1,6 +1,5 @@
 <script setup>
 import DrawCanvas from './components/DrawCanvas.vue';
-//import { labels } from './legacy/labels';
 import { labels } from './legacy/labelsNew';
 
 </script>
