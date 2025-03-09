@@ -4,15 +4,11 @@ import { useParamStore } from '../store/paramStore'
 import { controlPoint } from '../helpers/controlPoint'
 
 const store = useParamStore()
-
-const props = defineProps({
-  labels: Array,
-})
     
 const arrowsInLabels = ref([])
 const arcBtwLabels = ref([])
 
-props.labels.map((label, index) => {
+store.labelsZero.map((label, index) => {
   if (label.arrowIn) {
     let lAngle = store.params.angles.find(
       (lAngle) => lAngle.labelId === label.index
@@ -35,7 +31,7 @@ props.labels.map((label, index) => {
     ).labelAngle
 
     let endAngle = store.params.angles.find(
-      (lAngle) => lAngle.labelId === props.labels[index + 1].index
+      (lAngle) => lAngle.labelId === store.labelsZero[index + 1].index
     ).labelAngle
 
     arcBtwLabels.value.push({

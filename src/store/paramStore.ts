@@ -49,7 +49,9 @@ export const useParamStore = defineStore('paramStore', () => {
 
   //#region content
 
-
+  const labelsZero = ref([])
+  const sectors = ref([])
+  const lines = ref([])
 
   return {
     width,
@@ -71,5 +73,8 @@ export const useParamStore = defineStore('paramStore', () => {
     showLight,
     showSectorName,
     oneLevel,
+    labelsZero,
+    sectors,
+    lines,
   };
 });

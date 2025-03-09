@@ -8,7 +8,6 @@ const store = useParamStore()
 const props = defineProps({
   bgColor: String,
   bgColor2: String,
-  sectors: Array,
 })
     
 const emit = defineEmits(['setClickedInfo', "setClickedSector"])
@@ -23,7 +22,7 @@ console.log(props.sectors)
 
 <template>
   <DrawSector
-    v-for="sector of sectors"
+    v-for="sector of store.sectors"
     :sector="sector"
     :bgColor="sector.sLevel % 2 === 0 ? bgColor : bgColor2"
     @setClickedInfo="setClickedInfo"

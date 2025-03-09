@@ -8,7 +8,6 @@ const store = useParamStore()
 
 const props = defineProps({
   objLabel: Object,
-  labels: Array,
   shadowed: Boolean,
 })
 
@@ -44,7 +43,7 @@ const handleClick = () => {
   scale.value = 1
   let arrPrevLabels = []
   let arrNextLabels = []
-  props.labels.map((label) => {
+  store.labelsZero.map((label) => {
     if (label.connections.length !== 0) {
       label.connections.map((connection) => {
         if (props.objLabel.id === connection) {
@@ -54,7 +53,7 @@ const handleClick = () => {
     }
   })
   props.objLabel.connections.map((connection) => {
-    let label = props.labels.find((label) => label.id === connection)
+    let label = store.labelsZero.find((label) => label.id === connection)
     if (label != undefined) arrNextLabels.push(label)
   })
   setClickedLine({isClicked: false})

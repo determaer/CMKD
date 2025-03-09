@@ -13,7 +13,7 @@ const props = defineProps({
   supLabelY2: Number,
   supLabelX3: Number,
   supLabelY3: Number,
-  angles: Array,
+  angles: Object,
   objLabel: Object,
 })
 
@@ -31,7 +31,7 @@ const handleMouseOver = () => {
   scale.value = 1.5
   setActionItem({
     type: 'SupportOnMouseOver',
-    objLabel: objLabel,
+    objLabel: props.objLabel,
   })
 }
 
@@ -41,13 +41,13 @@ const handleMouseOut = () => {
 }
 
 const drawDoubleLabel = computed(() => {
-  if (objLabel.num > 2 || (objLabel.num > 1 && !objLabel.isBase && !flags.showAdditionalInCircle))
+  if (props.objLabel.num > 2 || (props.objLabel.num > 1 && !props.objLabel.isBase && !store.showAdditionalInCircle))
     return true
   else return false
 })
 
 const drawTripleLabel = computed(() => {
-  if (objLabel.num > 3 || (objLabel.num > 2 && !objLabel.isBase && !flags.showAdditionalInCircle))
+  if (props.objLabel.num > 3 || (props.objLabel.num > 2 && !props.objLabel.isBase && !store.showAdditionalInCircle))
     return true
   return false
 })
@@ -59,11 +59,11 @@ const coeff = computed(() => {
 </script>
 
 <template>
-  <Canvas.Line
+  <v-line
     :points="[labelX, labelY, supLabelX, supLabelY]"
     stroke='black'
   />
-  <Canvas.Rect
+  <v-rect
     v-if="drawTripleLabel"
     :x="supLabelX3"
     :y="supLabelY3"
@@ -81,7 +81,7 @@ const coeff = computed(() => {
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
   />
-  <Canvas.Rect
+  <v-rect
     v-if="drawDoubleLabel"
     :x="supLabelX2"
     :y="supLabelY2"
@@ -99,7 +99,7 @@ const coeff = computed(() => {
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
   />
-  <Canvas.Rect
+  <v-rect
     :x="supLabelX"
     :y="supLabelY"
     :width="36 * coeff"
@@ -116,7 +116,7 @@ const coeff = computed(() => {
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
   />
-  <Canvas.Text
+  <v-text
     :x="supLabelX"
     :y="supLabelY"
     :text="objLabel.typeText"
@@ -131,7 +131,7 @@ const coeff = computed(() => {
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
   />
-  <Canvas.Text
+  <v-text
     :x="supLabelX"
     :y="supLabelY"
     :text="objLabel.numText"

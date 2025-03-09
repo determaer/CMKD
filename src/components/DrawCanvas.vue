@@ -29,10 +29,6 @@ const emit = defineEmits(['setActionItem','setClickedInfo'])
 const clickLayerX = ref(-1000)
 const clickLayerY = ref(-1000)
 
-const labelsZero = ref([])
-const sectors = ref([])
-const lines = ref([])
-
 const clickedLine = ref({
   isClicked: false,
   objLabelIn: null,
@@ -132,10 +128,9 @@ const calcParams = () => {
     arrOutAngles.push(tIn)
   }
   let arrAngles = []
-  console.log(labelsZero.value)
   for (let i = 0; i < store.discNum; i = i + 1) {
     arrAngles.push({
-      labelId: labelsZero.value[i].index,
+      labelId: store.labelsZero[i].index,
       inAngle: arrInAngles[i],
       outAngle: arrOutAngles[i],
       labelAngle: arrLabelAngles[i],
@@ -144,7 +139,7 @@ const calcParams = () => {
   }
   arrDividerAngles.push(90)
   for (let i = 0; i < store.discNum - 1; i = i + 1) {
-    if (labelsZero.value[i].prop !== labelsZero.value[i + 1].prop) {
+    if (store.labelsZero[i].prop !== store.labelsZero[i + 1].prop) {
       arrDividerAngles.push(
         arrLabelAngles[i] + (arrLabelAngles[i + 1] - arrLabelAngles[i]) / 2
       )
@@ -164,7 +159,7 @@ const calcParams = () => {
   })
 }
     
-const calcAngles = () => {
+const calcSectors = () => {
   for (let i = store.circleNum; i >= 0; i = i - 1) {
     console.log(store.params)
     let sectorsAngles = []
@@ -179,7 +174,7 @@ const calcAngles = () => {
         let start, end1, upperID, shortname
         sectorsAngles.push(0)
         if (store.params.angles.length > 0) {
-          labelsZero.value.map((label) => {
+          store.labelsZero.map((label) => {
             if (label.secStart) {
               start = label.index
               upperID = label.object.parent_id
@@ -214,7 +209,7 @@ const calcAngles = () => {
         sectorsAngles.push(360)
         if (sectorsLabels.length > 0){
           for (let i = 0; i < sectorsAngles.length - 1; i = i + 1) {
-            sectors.value.push({
+            store.sectors.push({
               sStart: sectorsAngles[i],
               sEnd: sectorsAngles[i + 1],
               sStartLID: sectorsLabels[i].sStartLID,
@@ -246,7 +241,7 @@ const calcAngles = () => {
       console.log(sectorsLabels)
       if (sectorsLabels.length > 0){
         for (let i = 0; i < sectorsAngles.length - 1; i = i + 1) {
-          sectors.value.push({
+          store.sectors.push({
             sStart: sectorsAngles[i],
             sEnd: sectorsAngles[i + 1],
             sStartLID: sectorsLabels[i].sStartLID,
@@ -266,7 +261,7 @@ watch(
   () => {props.scaleMultiplier, store.sizeMultiplier},
   () => {
     calcParams()
-    calcAngles()
+    calcSectors()
     store.scaleMultiplier = props.scaleMultiplier
   },
   {immediate: true}
@@ -299,19 +294,18 @@ onMounted(() => {
   }
   store.circleNum = tLevel
   store.discNum = t
-  console.log(labelsZeroLevel)
-  labelsZero.value = labelsZeroLevel
+  store.labelsZero = labelsZeroLevel
 
-  labelsZero.value.map((label, from) => {
+  store.labelsZero.map((label, from) => {
     if (label.connections.length !== 0) {
       label.connections.map((to) => {
         if (props.labels.some((elem) => elem.id == to)){
           if ((store.showLight && (props.redFlags.some((elem_id) => elem_id == to) ||
             (label.score < 0 && label.isBase == true))) || !store.showLight ||
             (props.oneLevel && label.drawAnyCase)){
-              lines.value.push({
-                objLabelOut: labelsZero.value[from],
-                objLabelIn: labelsZero.value.find((x) => x.id === to),
+              store.lines.push({
+                objLabelOut: store.labelsZero[from],
+                objLabelIn: store.labelsZero.find((x) => x.id === to),
               })
           }
         }
@@ -319,11 +313,7 @@ onMounted(() => {
     }
   })
   calcParams()
-  calcAngles()
-  
-  setTimeout(() => {
-    console.log(store.params)
-  }, 2000)
+  calcSectors()
 })
 
 function downloadURI(uri, name) {
@@ -357,14 +347,13 @@ function downloadURI(uri, name) {
         :height="store.height * store.scaleMultiplier * 3"
       />
       <DrawBase
-        :sectors="sectors"
         bgColor='#dad0f1'
         bgColor2='#e8e8e8'
         @setClickedInfo="setClickedInfo"
         @setClickedSector="setClickedSector"
       />
       <DrawLineBtwElements
-        v-for="line of lines"
+        v-for="line of store.lines"
         :objLabelOut="line.objLabelOut"
         :objLabelIn="line.objLabelIn"
         @setClickedElement="setClickedElement"
@@ -372,20 +361,17 @@ function downloadURI(uri, name) {
         @setActionItem="setActionItem"
         @setClickedInfo="setClickedInfo"
       />
-      <DrawArrows
-        :labels="labelsZero"
-      />
+      <DrawArrows />
       <DrawLabels
-        v-for="label of labelsZero"
+        v-for="label of store.labelsZero"
         :objLabel="label"
         @setClickedElement="setClickedElement"
         @setClickedLine="setClickedLine"
-        :labels="labelsZero"
         @setActionItem=setActionItem
         @setClickedInfo="setClickedInfo"
       />
     </v-layer>
-    <!--v-layer
+    <v-layer
       v-if="clickedElement.isClicked || clickedLine.isClicked || clickedSector.isClicked"
     >
       <v-rect
@@ -405,71 +391,27 @@ function downloadURI(uri, name) {
       <DrawClickedElement
         v-if="clickedElement.isClicked"
         :clickedElement="clickedElement"
-        :params="params"
-        :x="xCenter"
-        :y="yCenter"
-        :flags="{
-          showSupportRect: showSupportRect,
-          showAdditionalInCircle:showAdditionalInCircle,
-          defaultRect: defaultRect,
-          showScore: showScore,
-          showLight: showLight,
-          oneLevel: oneLevel,
-        }"
-        :sizeMultiplier="sizeMultiplier"
-        :props.scaleMultiplier="props.scaleMultiplier"
         @setClickedElement="setClickedElement"
         @setClickedLine="setClickedLine"
-        :labels="labelsZero"
         @setActionItem="setActionItem"
         @setClickedInfo="setClickedInfo"
-        :discNum="discNum"
-        :position="position"
       />
       <DrawClickedLine
         v-if="clickedLine.isClicked"
         :clickedLine="clickedLine"
-        :params="params"
-        :x="xCenter"
-        :y="yCenter"
-        :flags="{
-          showSupportRect: showSupportRect,
-          showAdditionalInCircle:showAdditionalInCircle,
-          defaultRect: defaultRect,
-          showScore: showScore,
-          showLight: showLight,
-          oneLevel: oneLevel,
-        }"
-        :sizeMultiplier="sizeMultiplier"
-        :props.scaleMultiplier="props.scaleMultiplier"
         @setClickedElement="setClickedElement"
         @setClickedLine="setClickedLine"
-        :labels="labelsZero"
         @setActionItem="setActionItem"
         @setClickedInfo="setClickedInfo"
-        :discNum="discNum"
-        :position="position"
       />
       <DrawClickedSector
         v-if="clickedSector.isClicked"
-        :x="xCenter"
-        :y="yCenter"
         :clickedSector="clickedSector"
-        :params="params"
         bgColor='gray'
-        :props.scaleMultiplier="props.scaleMultiplier"
-        :sizeMultiplier="sizeMultiplier"
-        :flags="{
-          showSupportRect: showSupportRect,
-          showAdditionalInCircle:showAdditionalInCircle,
-          defaultRect: defaultRect,
-          showScore: showScore,
-          showLight: showLight,
-        }"
         @setClickedInfo="setClickedInfo"
         @setClickedSector="setClickedSector"
       />
-    </v-layer-->
+    </v-layer>
   </v-stage>
 </template>
 
