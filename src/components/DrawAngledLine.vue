@@ -1,10 +1,10 @@
 <script setup>
-
+import { useParamStore } from '../store/paramStore';
 import { controlPoint } from '../helpers/controlPoint';
 
+const store = useParamStore()
+
 const props = defineProps({
-  x: Number,
-  y: Number,
   startRadius: Number,
   endRadius: Number,
   angle: Number,
@@ -12,8 +12,8 @@ const props = defineProps({
   width: Number,
 })
     
-const [startX, startY] = controlPoint(props.x, props.y, props.startRadius, props.angle)
-const [endX, endY] = controlPoint(props.x, props.y, props.endRadius, props.angle)
+const [startX, startY] = controlPoint(store.x, store.y, props.startRadius, props.angle)
+const [endX, endY] = controlPoint(store.x, store.y, props.endRadius, props.angle)
 
 </script>
 

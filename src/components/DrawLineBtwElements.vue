@@ -1,16 +1,13 @@
 <script setup>
-import { controlPoint } from '../helpers/controlPoint'
 import { ref, computed, onMounted } from 'vue'
+import { useParamStore } from '../store/paramStore'
+import { controlPoint } from '../helpers/controlPoint'
+
+const store = useParamStore()
+
 const props = defineProps({
-  x: Number,
-  y: Number,
-  params: Object,
   objLabelOut: Object,
   objLabelIn: Object,
-  scaleMultiplier: Number,
-  flags: Object,
-  discNum: Number,
-  position: Number,
 })
 
 const emit = defineEmits(['setClickedLine', 'setClickedElement', 'setActionItem', 'setClickedInfo'])
@@ -20,11 +17,11 @@ const scale = ref(1)
 const points = ref()
 
 const dash = computed(() => {
-  if ((props.objLabelIn.prop !== 0 || props.objLabelOut.prop !== 0) && !props.flags.oneLevel) return [5, 2]
+  if ((props.objLabelIn.prop !== 0 || props.objLabelOut.prop !== 0) && !store.oneLevel) return [5, 2]
 })
 
 const stroke = computed(() => {
-  if (props.flags.showImportant) {
+  if (store.showImportant) {
     if (props.objLabelOut.score < 0 || (props.objLabelIn.score < 0 && props.objLabelOut.isBase)) {
       return 'red'
     }
@@ -33,28 +30,28 @@ const stroke = computed(() => {
 })
 
 const draw = computed(() => {
-  if (props.position && props.objLabelIn.index > props.position) 
+  if (store.position && props.objLabelIn.index > store.position) 
     return false
   return true
 })
 
 onMounted(() => {
   let radiusCorrection = 0
-  if (props.discNum >= 50) radiusCorrection = 1
+  if (store.discNum >= 50) radiusCorrection = 1
   let bezierCPangle1, bezierCPangle2
   let outAngle, inAngle, outRadius, inRadius
   
   if (props.objLabelIn.prop !== 0 || props.objLabelOut.prop !== 0) {
-    inRadius = props.params.innerRadius
-    outRadius = props.params.linesBtwElementsRadius
-    outAngle = props.params.angles.find((lAngle) => lAngle.labelId === props.objLabelOut.index).inAngle
-    inAngle = props.params.angles.find((lAngle) => lAngle.labelId === props.objLabelIn.index).outAngle
+    inRadius = store.params.innerRadius
+    outRadius = store.params.linesBtwElementsRadius
+    outAngle = store.params.angles.find((lAngle) => lAngle.labelId === props.objLabelOut.index).inAngle
+    inAngle = store.params.angles.find((lAngle) => lAngle.labelId === props.objLabelIn.index).outAngle
   } 
   else {
-    outRadius = props.params.innerRadius
-    inRadius = props.params.linesBtwElementsRadius
-    outAngle = props.params.angles.find((lAngle) => lAngle.labelId === props.objLabelOut.index).outAngle
-    inAngle = props.params.angles.find((lAngle) => lAngle.labelId === props.objLabelIn.index).inAngle
+    outRadius = store.params.innerRadius
+    inRadius = store.params.linesBtwElementsRadius
+    outAngle = store.params.angles.find((lAngle) => lAngle.labelId === props.objLabelOut.index).outAngle
+    inAngle = store.params.angles.find((lAngle) => lAngle.labelId === props.objLabelIn.index).inAngle
   }
 
   let diff = Math.abs(outAngle - inAngle)
@@ -64,22 +61,22 @@ onMounted(() => {
   if (diff < 180) {
     let t = (180 - diff) / 10
     diff = diff / 250
-    radius = 10 * t * props.scaleMultiplier + 50 * radiusCorrection * props.scaleMultiplier
+    radius = 10 * t * store.scaleMultiplier + 50 * radiusCorrection * store.scaleMultiplier
     bezierCPangle1 = outAngle + diff
     bezierCPangle2 = inAngle - diff
   }
   if (diff >= 180) {
     let t = (180 - Math.abs(diff - 360)) / 10
     diff = diff / 250
-    radius = 10 * t * props.scaleMultiplier + 50 * radiusCorrection * props.scaleMultiplier
+    radius = 10 * t * store.scaleMultiplier + 50 * radiusCorrection * store.scaleMultiplier
     bezierCPangle1 = outAngle - diff
     bezierCPangle2 = inAngle + diff
   }
 
-  const [bezierCPX1, bezierCPY1] = controlPoint(props.x, props.y, radius, bezierCPangle1)
-  const [bezierCPX2, bezierCPY2] = controlPoint(props.x, props.y, radius, bezierCPangle2)
-  const [outX, outY] = controlPoint(props.x, props.y, outRadius, outAngle)
-  const [inX, inY] = controlPoint(props.x, props.y, inRadius, inAngle)
+  const [bezierCPX1, bezierCPY1] = controlPoint(store.x, store.y, radius, bezierCPangle1)
+  const [bezierCPX2, bezierCPY2] = controlPoint(store.x, store.y, radius, bezierCPangle2)
+  const [outX, outY] = controlPoint(store.x, store.y, outRadius, outAngle)
+  const [inX, inY] = controlPoint(store.x, store.y, inRadius, inAngle)
   points.value = [outX, outY, bezierCPX1, bezierCPY1, bezierCPX2, bezierCPY2, inX, inY]
 })
     
@@ -130,7 +127,7 @@ const handleMouseOut = () => {
     :bezier="true"
     :points="points"
     :stroke="stroke"
-    :strokeWidth="2.2 * scale * scaleMultiplier"
+    :strokeWidth="2.2 * scale * store.scaleMultiplier"
     :dash="dash"
     @click="handleClick"
     @mouseOver="handleMouseOver"

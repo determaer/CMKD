@@ -1,18 +1,15 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { useParamStore } from '../store/paramStore'
 import { controlPoint } from '../helpers/controlPoint'
 import DrawSupportLabel from './DrawSupportLabel.vue'
+
+const store = useParamStore()
+
 const props = defineProps({
-  x: Number,
-  y: Number,
-  params: Object,
   objLabel: Object,
-  flags: Object,
-  sizeMultiplier: Number,
-  scaleMultiplier: Number,
   labels: Array,
   shadowed: Boolean,
-  position: Number,
 })
 
 const emit = defineEmits(["setClickedElement", "setClickedLine", "setActionItem", "setClickedInfo"])
@@ -25,26 +22,26 @@ const setClickedElement = () => {}
 
 const setClickedLine = () => {}
 
-let lAngle = props.params.angles.find(
+let lAngle = store.params.angles.find(
   (lAngle) => lAngle.labelId === props.objLabel.index
 )
 
 const scale = ref(1)
-const [labelX, labelY] = controlPoint(props.x, props.y, props.params.labelRadius, lAngle.labelAngle)
-const [inInnerX, inInnerY] = controlPoint(props.x, props.y,props.params.innerRadius, lAngle.inAngle)
-const [outInnerX, outInnerY] = controlPoint(props.x, props.y, props.params.innerRadius, lAngle.outAngle)
-const [outMergingX, outMergingY] = controlPoint(props.x, props.y, props.params.mergingPortsRadius, lAngle.outAngle)
-const [inMergingX, inMergingY] = controlPoint(props.x, props.y, props.params.mergingPortsRadius, lAngle.inAngle)
-const [supLabelX, supLabelY] = controlPoint(props.x, props.y, props.params.additionalLabelRadius, lAngle.labelAngle)
-const [arrowX, arrowY] = controlPoint(props.x, props.y, props.params.innerRadius - 1, lAngle.inAngle)
+const [labelX, labelY] = controlPoint(store.x, store.y, store.params.labelRadius, lAngle.labelAngle)
+const [inInnerX, inInnerY] = controlPoint(store.x, store.y,store.params.innerRadius, lAngle.inAngle)
+const [outInnerX, outInnerY] = controlPoint(store.x, store.y, store.params.innerRadius, lAngle.outAngle)
+const [outMergingX, outMergingY] = controlPoint(store.x, store.y, store.params.mergingPortsRadius, lAngle.outAngle)
+const [inMergingX, inMergingY] = controlPoint(store.x, store.y, store.params.mergingPortsRadius, lAngle.inAngle)
+const [supLabelX, supLabelY] = controlPoint(store.x, store.y, store.params.additionalLabelRadius, lAngle.labelAngle)
+const [arrowX, arrowY] = controlPoint(store.x, store.y, store.params.innerRadius - 1, lAngle.inAngle)
 
-const [labelX2, labelY2] = controlPoint(props.x, props.y, props.params.labelRadius + 2.5, lAngle.labelAngle + 0.6)
-const [labelX3, labelY3] = controlPoint(props.x, props.y, props.params.labelRadius + 5, lAngle.labelAngle + 1.2)
-const [supLabelX2, supLabelY2] = controlPoint(props.x, props.y, props.params.additionalLabelRadius + 2.5, lAngle.labelAngle + 0.6)
-const [supLabelX3, supLabelY3] = controlPoint( props.x, props.y, props.params.additionalLabelRadius + 5, lAngle.labelAngle + 1.2)
+const [labelX2, labelY2] = controlPoint(store.x, store.y, store.params.labelRadius + 2.5, lAngle.labelAngle + 0.6)
+const [labelX3, labelY3] = controlPoint(store.x, store.y, store.params.labelRadius + 5, lAngle.labelAngle + 1.2)
+const [supLabelX2, supLabelY2] = controlPoint(store.x, store.y, store.params.additionalLabelRadius + 2.5, lAngle.labelAngle + 0.6)
+const [supLabelX3, supLabelY3] = controlPoint( store.x, store.y, store.params.additionalLabelRadius + 5, lAngle.labelAngle + 1.2)
 
 const handleClick = () => {
-  setScale(1)
+  scale.value = 1
   let arrPrevLabels = []
   let arrNextLabels = []
   props.labels.map((label) => {
@@ -93,7 +90,7 @@ const handleMouseOut = () => {
 }
 
 const fillColor = computed(() => {
-  if (props.flags.showScore) {
+  if (store.showScore) {
     if (props.objLabel.grey) {
       return 'lightgrey'
     } 
@@ -105,26 +102,26 @@ const fillColor = computed(() => {
         return 'red'
       }
     }
-  if (props.objLabel.index > props.position) 
+  if (props.objLabel.index > store.position) 
    return 'yellow'
   }
   return 'white'
 })
 
 const drawSupportLabel = computed(() => {
-  if (props.flags.showSupportRect && (props.objLabel.num > 1 || (!props.objLabel.isBase && !props.flags.showAdditionalInCircle)))
+  if (store.showSupportRect && (props.objLabel.num > 1 || (!props.objLabel.isBase && !store.showAdditionalInCircle)))
     return true
   return false
 })
 
 const cornerRadius = computed(() => {
-  if (props.objLabel.type === 'roundrect' && !props.flags.defaultRect)
+  if (props.objLabel.type === 'roundrect' && !store.defaultRect)
     return 7
   else 0
 })
 
 const coeff = computed(() => {
-  return props.sizeMultiplier * scale.value * props.scaleMultiplier
+  return store.sizeMultiplier * scale.value * store.scaleMultiplier
 })
 
 const fill = computed(() => {
@@ -134,32 +131,32 @@ const fill = computed(() => {
 })
 
 const drawRectLabel = computed(() => {
-  if ((props.objLabel.type === 'rect' || props.objLabel.type === 'roundrect' || props.flags.defaultRect) &&
-    (props.flags.showAdditionalInCircle || props.objLabel.isBase))
+  if ((props.objLabel.type === 'rect' || props.objLabel.type === 'roundrect' || store.defaultRect) &&
+    (store.showAdditionalInCircle || props.objLabel.isBase))
       return true
   else return false
 })
 
 const drawCircleLabel = computed(() => {
-  if (props.objLabel.type === 'circle' && !props.flags.defaultRect && (props.flags.showAdditionalInCircle || props.objLabel.isBase))
+  if (props.objLabel.type === 'circle' && !store.defaultRect && (store.showAdditionalInCircle || props.objLabel.isBase))
     return true
   else return false
 })
 
 const drawDoubleLabel = computed(() => {
-  if (props.objLabel.num > 1 && !props.flags.showSupportRect && !props.flags.showScore)
+  if (props.objLabel.num > 1 && !store.showSupportRect && !store.showScore)
     return true
   else return false
 })
 
 const drawTripleLabel = computed(() => {
- if (props.objLabel.num > 2 && !props.flags.showSupportRect && !props.flags.showScore)
+ if (props.objLabel.num > 2 && !store.showSupportRect && !store.showScore)
   return true
 else return false
 })
 
 const drawTextLabel = computed(() => {
-  if (props.flags.showAdditionalInCircle || props.objLabel.isBase)
+  if (store.showAdditionalInCircle || props.objLabel.isBase)
     return true
   else return false
 })
@@ -170,15 +167,15 @@ const drawTextLabel = computed(() => {
   <v-line
     :points="[inInnerX,inInnerY,inMergingX,inMergingY,labelX,labelY,outMergingX,outMergingY,outInnerX,outInnerY]"
     stroke='black'
-    :strokeWidth="2 * scaleMultiplier"
+    :strokeWidth="2 * store.scaleMultiplier"
     lineJoin='round'
   />
   <v-arrow
     :points="[arrowX, arrowY, inInnerX, inInnerY]"
     stroke='black'
     fill='black'
-    :pointerWidth="10 * sizeMultiplier * scaleMultiplier"
-    :pointerLength="10 * scaleMultiplier"
+    :pointerWidth="10 * store.sizeMultiplier * store.scaleMultiplier"
+    :pointerLength="10 * store.scaleMultiplier"
   />
   <DrawSupportLabel
     v-if="drawSupportLabel"
@@ -190,11 +187,8 @@ const drawTextLabel = computed(() => {
     :supLabelY2="supLabelY2"
     :supLabelX3="supLabelX3"
     :supLabelY3="supLabelY3"
-    :sizeMultiplier="sizeMultiplier"
-    :scaleMultiplier="scaleMultiplier"
     :angles="lAngle"
     :objLabel="objLabel"
-    :flags="flags"
     @setActionItem="setActionItem"
   />
 <!-- Rectangular Label -->  
@@ -206,7 +200,7 @@ const drawTextLabel = computed(() => {
     :height="36 * coeff"
     :fill="fill"
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
       x: 18 * coeff,
       y: 18 * coeff,
@@ -225,7 +219,7 @@ const drawTextLabel = computed(() => {
     :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
       x:18 *coeff,
       y:18 *coeff,
@@ -244,7 +238,7 @@ const drawTextLabel = computed(() => {
     :height= "36 * coeff"
     :fill="fill"
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
       x:18 *coeff,
       y:18 *coeff,
@@ -256,7 +250,7 @@ const drawTextLabel = computed(() => {
     @mouseOut="handleMouseOut"
   />
   <v-rect
-    v-if="flags.showScore && drawRectLabel"
+    v-if="store.showScore && drawRectLabel"
     :x="labelX"
     :y="labelY"
     :width="36 *coeff"
@@ -267,7 +261,7 @@ const drawTextLabel = computed(() => {
     "
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
       x:18 *coeff,
       y:18 *coeff,
@@ -286,7 +280,7 @@ const drawTextLabel = computed(() => {
     :radius="20 * coeff"
     :fill="fill"
     stroke='"black"'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     @click="handleClick"
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
@@ -298,7 +292,7 @@ const drawTextLabel = computed(() => {
     :radius="20 *coeff"
     :fill="fill"
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     @click="handleClick"
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
@@ -310,19 +304,19 @@ const drawTextLabel = computed(() => {
     :radius="20 * coeff"
     :fill="fill"
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     @click="handleClick"
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
   />
   <v-circle
-    v-if="flags.showScore && drawCircleLabel"
+    v-if="store.showScore && drawCircleLabel"
     :x="labelX"
     :y="labelY"
     :radius="20 *coeff"
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :opacity="Math.abs(objLabel.score)"
     @click="handleClick"
     @mouseOver="handleMouseOver"

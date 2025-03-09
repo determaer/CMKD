@@ -1,5 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { useParamStore } from '../store/paramStore';
+
+const store = useParamStore()
 
 const props = defineProps({
   labelX: Number,
@@ -10,11 +13,8 @@ const props = defineProps({
   supLabelY2: Number,
   supLabelX3: Number,
   supLabelY3: Number,
-  sizeMultiplier: Number,
-  scaleMultiplier: Number,
   angles: Array,
   objLabel: Object,
-  flags: Object,
 })
 
 const emit = defineEmits(['setActionItem'])
@@ -52,6 +52,10 @@ const drawTripleLabel = computed(() => {
   return false
 })
 
+const coeff = computed(() => {
+  return store.sizeMultiplier * scale.value * store.scaleMultiplier
+})
+
 </script>
 
 <template>
@@ -63,14 +67,14 @@ const drawTripleLabel = computed(() => {
     v-if="drawTripleLabel"
     :x="supLabelX3"
     :y="supLabelY3"
-    :width="36 * sizeMultiplier * scale * scaleMultiplier"
-    :height="36 * sizeMultiplier * scale * scaleMultiplier"
+    :width="36 * coeff"
+    :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
-      x: 18 * sizeMultiplier * scale * scaleMultiplier,
-      y: 18 * sizeMultiplier * scale * scaleMultiplier,
+      x: 18 * coeff,
+      y: 18 * coeff,
     }"
     :rotation="-angles.labelAngle"
     @click="handleClick"
@@ -81,14 +85,14 @@ const drawTripleLabel = computed(() => {
     v-if="drawDoubleLabel"
     :x="supLabelX2"
     :y="supLabelY2"
-    :width="36 * sizeMultiplier * scale * scaleMultiplier"
-    :height="36 * sizeMultiplier * scale * scaleMultiplier"
+    :width="36 * coeff"
+    :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
-      x: 18 * sizeMultiplier * scale * scaleMultiplier,
-      y: 18 * sizeMultiplier * scale * scaleMultiplier,
+      x: 18 * coeff,
+      y: 18 * coeff,
     }"
     :rotation="-angles.labelAngle"
     @click="handleClick"
@@ -98,14 +102,14 @@ const drawTripleLabel = computed(() => {
   <Canvas.Rect
     :x="supLabelX"
     :y="supLabelY"
-    :width="36 * sizeMultiplier * scale * scaleMultiplier"
-    :height="36 * sizeMultiplier * scale * scaleMultiplier"
+    :width="36 * coeff"
+    :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
-      x: 18 * sizeMultiplier * scale * scaleMultiplier,
-      y: 18 * sizeMultiplier * scale * scaleMultiplier,
+      x: 18 * coeff,
+      y: 18 * coeff,
     }"
     :rotation="-angles.labelAngle"
     @click="handleClick"
@@ -117,11 +121,11 @@ const drawTripleLabel = computed(() => {
     :y="supLabelY"
     :text="objLabel.typeText"
     :offset="{
-      x: 13 * sizeMultiplier * scale * scaleMultiplier,
-      y: 10 * sizeMultiplier * scale * scaleMultiplier,
+      x: 13 * coeff,
+      y: 10 * coeff,
     }"
     fontFamily='Times New Roman'
-    :fontSize="22 * sizeMultiplier * scale * scaleMultiplier"
+    :fontSize="22 * coeff"
     :fontStyle="objLabel.fontStyle"
     @click="handleClick"
     @mouseOver="handleMouseOver"
@@ -132,11 +136,11 @@ const drawTripleLabel = computed(() => {
     :y="supLabelY"
     :text="objLabel.numText"
     :offset="{
-      x: 1 * sizeMultiplier * scale * scaleMultiplier,
-      y: 2 * sizeMultiplier * scale * scaleMultiplier,
+      x: 1 * coeff,
+      y: 2 * coeff,
     }"
     fontFamily="'Times New Roman'"
-    :fontSize="16 * sizeMultiplier * scale * scaleMultiplier"
+    :fontSize="16 * coeff"
     :fontStyle="objLabel.fontStyle"
     @click="handleClick"
     @mouseOver="handleMouseOver"

@@ -1,16 +1,13 @@
 <script setup>
-
 import { computed, ref } from 'vue'
+import { useParamStore } from '../store/paramStore'
 import { controlPoint } from '../helpers/controlPoint'
+
+const store = useParamStore()
+
 const props = defineProps({
-  x: Number,
-  y: Number,
   sector: Object,
-  params: Object,
   bgColor: String,
-  scaleMultiplier: Number,
-  sizeMultiplier: Number,
-  flags: Object,
   shadowed: Boolean,
   opacity: Number,
 })
@@ -40,12 +37,12 @@ const handleClick = () => {
 }
 
 let additional = 0
-if (props.flags.showSupportRect) {
+if (store.showSupportRect) {
   additional = 50
 }
 
-const [labelX, labelY] = controlPoint(props.x, props.y, props.params.labelRadius + 50 * props.sector.sLevel * props.scaleMultiplier, 90 + (props.sector.sEnd - arcLength / 2))
-const [nameX, nameY] = controlPoint(props.x, props.y, props.params.sectorNameRadius + additional, 90 + (props.sector.sEnd - arcLength / 2))
+const [labelX, labelY] = controlPoint(store.x, store.y, store.params.labelRadius + 50 * props.sector.sLevel * store.scaleMultiplier, 90 + (props.sector.sEnd - arcLength / 2))
+const [nameX, nameY] = controlPoint(store.x, store.y, store.params.sectorNameRadius + additional, 90 + (props.sector.sEnd - arcLength / 2))
 
 let fillColor = 'white'
 if (props.sector.objLabel) {
@@ -69,36 +66,40 @@ const labelWithoutLabel = computed(() => {
   else return false
 })
 
+const coeff = computed(() => {
+  return store.sizeMultiplier * scale.value * store.scaleMultiplier
+})
+
 </script>
 
 <template>
   <v-arc
-    :x="x"
-    :y="y"
+    :x="store.x"
+    :y="store.y"
     :angle="360 - arcLength"
     :rotation="-90 - sector.sStart"
-    :outerRadius="params.outerRadius + 50 * sector.sLevel * scaleMultiplier "
-    :innerRadius="params.innerRadius + 50 * sector.sLevel * scaleMultiplier"
+    :outerRadius="store.params.outerRadius + 50 * sector.sLevel * store.scaleMultiplier "
+    :innerRadius="store.params.innerRadius + 50 * sector.sLevel * store.scaleMultiplier"
     :fill="fill"
     stroke='black'
     :opacity="opacity"
     :clockwise="true"
-    :strokeWidth="2 * scaleMultiplier"
+    :strokeWidth="2 * store.scaleMultiplier"
     @click="handleClick"
     @mouseOver="() => {fill = 'gray'}"
     @mouseOut="() => {fill = bgColor}"
   />
   <v-text
-    v-if="flags.showSectorName"
+    v-if="store.showSectorName"
     :x="nameX"
     :y="nameY"
     :text="sector.shortname"
     :offset="{
-      x: 20 * sizeMultiplier * scale * scaleMultiplier,
-      y: 10 * sizeMultiplier * scale * scaleMultiplier,
+      x: 20 * coeff,
+      y: 10 * coeff,
     }"
     fontFamily='Times New Roman'
-    :fontSize="22 * sizeMultiplier * scale * scaleMultiplier"
+    :fontSize="22 * coeff"
     :rotation="-(sector.sEnd - arcLength / 2) - 180 * r"
     @click="handleClick"
     @mouseOver="() => {fill = 'gray'}"
@@ -108,14 +109,14 @@ const labelWithoutLabel = computed(() => {
     v-if="labelWithLabel"
     :x="labelX"
     :y="labelY"
-    :width="36 * sizeMultiplier * scale * scaleMultiplier"
-    :height= "36 * sizeMultiplier * scale * scaleMultiplier"
+    :width="36 * coeff"
+    :height= "36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
-      x: 18 * sizeMultiplier * scale * scaleMultiplier,
-      y: 18 * sizeMultiplier * scale * scaleMultiplier,
+      x: 18 * coeff,
+      y: 18 * coeff,
     }"
     :rotation="-(sector.sEnd - arcLength / 2)"
     @click="handleClick"
@@ -123,18 +124,18 @@ const labelWithoutLabel = computed(() => {
     @mouseOut="() => {scale = 1}"
   />
   <v-rect
-    v-if="labelWithLabel && flags.showScore"
+    v-if="labelWithLabel && store.showScore"
     :x="labelX"
     :y="labelY"
-    :width="36 * sizeMultiplier * scale * scaleMultiplier"
-    :height="36 * sizeMultiplier * scale * scaleMultiplier"
+    :width="36 * coeff"
+    :height="36 * coeff"
     :opacity="Math.abs(sector.objLabel.score)"
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
-    :strokeWidth="1 * scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier"
     :offset="{
-      x: 18 * sizeMultiplier * scale * scaleMultiplier,
-      y: 18 * sizeMultiplier * scale * scaleMultiplier,
+      x: 18 * coeff,
+      y: 18 * coeff,
     }"
     :rotation="-(sector.sEnd - arcLength / 2)"
     @click="handleClick"
@@ -147,11 +148,11 @@ const labelWithoutLabel = computed(() => {
     :y="labelY"
     :text="sector.objLabel.typeText"
     :offset="{
-      x: 13 * sizeMultiplier * scale * scaleMultiplier,
-      y: 10 * sizeMultiplier * scale * scaleMultiplier,
+      x: 13 * coeff,
+      y: 10 * coeff,
     }"
     fontFamily='Times New Roman'
-    :fontSize= "22 * sizeMultiplier * scale * scaleMultiplier"
+    :fontSize= "22 * coeff"
     :fontStyle="sector.objLabel.fontStyle"
     @click="handleClick"
     @mouseOver="() => {scale = 1.5}"
@@ -163,11 +164,11 @@ const labelWithoutLabel = computed(() => {
     :y="labelY"
     :text="sector.objLabel.numText"
     :offset="{
-      x: 1 * sizeMultiplier * scale * scaleMultiplier,
-      y: 2 * sizeMultiplier * scale * scaleMultiplier,
+      x: 1 * coeff,
+      y: 2 * coeff,
     }"
     fontFamily='Times New Roman'
-    :fontSize="16 * sizeMultiplier * scale * scaleMultiplier"
+    :fontSize="16 * coeff"
     :fontStyle="sector.objLabel.fontStyle"
     @click="handleClick"
     @mouseOver="() => {scale = 1.5}"
@@ -179,11 +180,11 @@ const labelWithoutLabel = computed(() => {
     :y="labelY"
     :text="sector.objLabel.typeText + sector.objLabel.numText"
     :offset="{
-      x: 20 * sizeMultiplier * scale * scaleMultiplier,
-      y: 10 * sizeMultiplier * scale * scaleMultiplier,
+      x: 20 * coeff,
+      y: 10 * coeff,
     }"
     fontFamily='Times New Roman'
-    :fontSize="22 * sizeMultiplier * scale * scaleMultiplier"
+    :fontSize="22 * coeff"
     :rotation="-(sector.sEnd - arcLength / 2) - 180 * r"
     :fontStyle="sector.objLabel.fontStyle"
     @click="handleClick"
