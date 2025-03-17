@@ -24,11 +24,6 @@ export const useClickedStore = defineStore('clickedStore', () => {
     sector: null,
   })
 
-  const actionItem = ref({
-    type: '',
-    objLabel: null,
-  })
-
   const clickedInfo = ref({
     type: '',
     objLabel: null,
@@ -52,16 +47,6 @@ export const useClickedStore = defineStore('clickedStore', () => {
       isClicked: false,
       sector: null,
     }
-    actionItem.value = {
-      type: '',
-      objLabel: null,  
-    }
-    clickedInfo.value = {
-      type: '',
-      objLabel: null,
-      prevLabels: [],
-      nextLabels: [],  
-    }
   }
 
   return{
@@ -70,7 +55,6 @@ export const useClickedStore = defineStore('clickedStore', () => {
     clickedLine,
     clickedElement,
     clickedSector,
-    actionItem,
     clickedInfo,
     resetClicked,
   }

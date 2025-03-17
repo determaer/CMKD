@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, provide, onMounted, computed, watch, unref } from 'vue'
+import { ref, onMounted, watch, unref } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { useClickedStore } from '../store/clickedStore'
 import DrawLabels from './DrawLabels.vue'
@@ -47,15 +47,15 @@ defineExpose({
   downloadURI
 })
 
-const emit = defineEmits(['setActionItem','setClickedInfo'])
+const emit = defineEmits(['clicked'])
 
 const stageRef = ref()
 
 watch(
   () => props.width,
   () => {
-    store.scaleMultiplier = props.width / 800
     store.width = props.width
+    store.scaleMultiplier = store.width / 800
     store.x = props.width / 2
     store.y = props.width / 2
   },
@@ -106,6 +106,13 @@ watch(
   {immediate: true}
 )
 
+watch(
+  () => clickedStore.clickedInfo,
+  () => {
+    emit('clicked', clickedStore.clickedInfo)
+  }
+)
+
 onMounted(() => {
   calcLabels(store)
   calcParams(store)
@@ -128,9 +135,6 @@ function downloadURI() {
     :width="store.width"
     :height="store.width"
     ref='stageRef'
-    @click="() => {
-      console.log('www')
-    }"
   >
     <v-layer>
       <v-rect

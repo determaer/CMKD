@@ -89,15 +89,13 @@ const handleClick = () => {
       objLabelIn: props.objLabelIn,
       objLabelOut: props.objLabelOut,
     }
-    clickedStore.actionItem = {
-      type: 'LineOnClick',
-      objLabelIn: props.objLabelIn,
-      objLabelOut: props.objLabelOut,
-    }
     clickedStore.clickedInfo = {
       type: 'line',
-      objLabelIn: props.objLabelIn,
-      objLabelOut: props.objLabelOut,
+      object: {
+        objLabelIn: props.objLabelIn,
+        objLabelOut: props.objLabelOut,
+      }
+      
     }
   })
 }

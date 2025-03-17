@@ -53,13 +53,9 @@ const handleClick = () => {
       prevLabels: arrNextLabels,
       nextLabels: arrPrevLabels,
     }
-    clickedStore.actionItem = {
-      type: 'LabelOnClick',
-      objLabel: props.objLabel,
-    }
     clickedStore.clickedInfo = {
       type: 'label',
-      objLabel: props.objLabel,
+      object: props.objLabel,
       prevLabels: arrNextLabels,
       nextLabels: arrPrevLabels,
     }

@@ -26,7 +26,7 @@ const handleClick = () => {
   if (store.oneLevel) {
     clickedStore.clickedInfo = {
       type: 'sector',
-      id: props.sector.upperID,
+      object: props.sector,
     }
     clickedStore.clickedSector = {
       isClicked: true,

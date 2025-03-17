@@ -22,14 +22,14 @@ const scale = ref(1)
 
 const handleClick = () => {
   scale.value = 1
+  clickedStore.clickedInfo = {
+    type: 'supportLabel',
+    object: props.objLabel,
+  }
 }
 
 const handleMouseOver = () => {
   scale.value = 1.5
-  clickedStore.actionItem = {
-    type: 'SupportOnMouseOver',
-    objLabel: props.objLabel,
-  }
 }
 
 const handleMouseOut = () => {
