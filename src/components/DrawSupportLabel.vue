@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { controlPoint } from '../helpers/controlPoint';
 import { useParamStore } from '../store/paramStore';
 import { useClickedStore } from '../store/clickedStore';
 
@@ -7,17 +8,15 @@ const store = useParamStore()
 const clickedStore = useClickedStore()
 
 const props = defineProps({
-  labelX: Number,
-  labelY: Number,
-  supLabelX: Number,
-  supLabelY: Number,
-  supLabelX2: Number,
-  supLabelY2: Number,
-  supLabelX3: Number,
-  supLabelY3: Number,
   angles: Object,
   objLabel: Object,
 })
+
+const [labelX, labelY] = controlPoint(store.x, store.y, store.params.labelRadius, props.angles.labelAngle)
+const [supLabelX, supLabelY] = controlPoint(store.x, store.y, store.params.additionalLabelRadius, props.angles.labelAngle)
+
+const [supLabelX2, supLabelY2] = controlPoint(store.x, store.y, store.params.additionalLabelRadius + 2.5, props.angles.labelAngle + 0.6)
+const [supLabelX3, supLabelY3] = controlPoint(store.x, store.y, store.params.additionalLabelRadius + 5, props.angles.labelAngle + 1.2)
 
 const scale = ref(1)
 

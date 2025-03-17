@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
@@ -13,7 +13,7 @@ const props = defineProps({
   shadowed: Boolean,
 })
 
-let lAngle = store.params.angles.find(
+const lAngle = store.params.angles.find(
   (lAngle) => lAngle.labelId === props.objLabel.index
 )
 
@@ -23,13 +23,10 @@ const [inInnerX, inInnerY] = controlPoint(store.x, store.y,store.params.innerRad
 const [outInnerX, outInnerY] = controlPoint(store.x, store.y, store.params.innerRadius, lAngle.outAngle)
 const [outMergingX, outMergingY] = controlPoint(store.x, store.y, store.params.mergingPortsRadius, lAngle.outAngle)
 const [inMergingX, inMergingY] = controlPoint(store.x, store.y, store.params.mergingPortsRadius, lAngle.inAngle)
-const [supLabelX, supLabelY] = controlPoint(store.x, store.y, store.params.additionalLabelRadius, lAngle.labelAngle)
 const [arrowX, arrowY] = controlPoint(store.x, store.y, store.params.innerRadius - 1, lAngle.inAngle)
 
 const [labelX2, labelY2] = controlPoint(store.x, store.y, store.params.labelRadius + 2.5, lAngle.labelAngle + 0.6)
 const [labelX3, labelY3] = controlPoint(store.x, store.y, store.params.labelRadius + 5, lAngle.labelAngle + 1.2)
-const [supLabelX2, supLabelY2] = controlPoint(store.x, store.y, store.params.additionalLabelRadius + 2.5, lAngle.labelAngle + 0.6)
-const [supLabelX3, supLabelY3] = controlPoint( store.x, store.y, store.params.additionalLabelRadius + 5, lAngle.labelAngle + 1.2)
 
 const handleClick = () => {
   scale.value = 1
@@ -49,23 +46,24 @@ const handleClick = () => {
     if (label) arrNextLabels.push(label)
   })
   clickedStore.resetClicked()
-  clickedStore.clickedLine = {isClicked: false}
-  clickedStore.clickedElement = {
-    isClicked: true,
-    objLabel: props.objLabel,
-    prevLabels: arrNextLabels,
-    nextLabels: arrPrevLabels,
-  }
-  clickedStore.actionItem = {
-    type: 'LabelOnClick',
-    objLabel: props.objLabel,
-  }
-  clickedStore.clickedInfo = {
-    type: 'label',
-    objLabel: props.objLabel,
-    prevLabels: arrNextLabels,
-    nextLabels: arrPrevLabels,
-  }
+  nextTick(() => {
+    clickedStore.clickedElement = {
+      isClicked: true,
+      objLabel: props.objLabel,
+      prevLabels: arrNextLabels,
+      nextLabels: arrPrevLabels,
+    }
+    clickedStore.actionItem = {
+      type: 'LabelOnClick',
+      objLabel: props.objLabel,
+    }
+    clickedStore.clickedInfo = {
+      type: 'label',
+      objLabel: props.objLabel,
+      prevLabels: arrNextLabels,
+      nextLabels: arrPrevLabels,
+    }
+  })
 }
 
 const handleMouseOver = () => {
@@ -171,14 +169,6 @@ const drawTextLabel = computed(() => {
   />
   <DrawSupportLabel
     v-if="drawSupportLabel"
-    :labelX="labelX"
-    :labelY="labelY"
-    :supLabelX="supLabelX"
-    :supLabelY="supLabelY"
-    :supLabelX2="supLabelX2"
-    :supLabelY2="supLabelY2"
-    :supLabelX3="supLabelX3"
-    :supLabelY3="supLabelY3"
     :angles="lAngle"
     :objLabel="objLabel"
   />

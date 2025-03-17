@@ -14,7 +14,7 @@ import { labels } from './legacy/labelsNew';
     :dialogSized="false"
     :position='99' 
     :extShowSupportRect="false"
-    showImportant
+    :showImportant="true"
   />
 </template>
 

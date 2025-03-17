@@ -44,11 +44,12 @@ watch(
 )
 
 watch(
-  () => props.position,
+  () => props,
   () => {
     store.position = props.position
+    store.oneLevel = props.oneLevel
   },
-  {immediate: true}
+  {immediate: true, deep: true}
 )
 
 watch(

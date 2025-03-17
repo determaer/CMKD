@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
@@ -82,22 +82,24 @@ onMounted(() => {
     
 const handleClick = () => {
   scale.value = 1
-  clickedStore.clickedElement = {isClicked: false}
-  clickedStore.clickedLine = {
-    isClicked: true,
-    objLabelIn: props.objLabelIn,
-    objLabelOut: props.objLabelOut,
-  }
-  clickedStore.actionItem = {
-    type: 'LineOnClick',
-    objLabelIn: props.objLabelIn,
-    objLabelOut: props.objLabelOut,
-  }
-  clickedStore.clickedInfo = {
-    type: 'line',
-    objLabelIn: props.objLabelIn,
-    objLabelOut: props.objLabelOut,
-  }
+  clickedStore.resetClicked()
+  nextTick(() => {
+    clickedStore.clickedLine = {
+      isClicked: true,
+      objLabelIn: props.objLabelIn,
+      objLabelOut: props.objLabelOut,
+    }
+    clickedStore.actionItem = {
+      type: 'LineOnClick',
+      objLabelIn: props.objLabelIn,
+      objLabelOut: props.objLabelOut,
+    }
+    clickedStore.clickedInfo = {
+      type: 'line',
+      objLabelIn: props.objLabelIn,
+      objLabelOut: props.objLabelOut,
+    }
+  })
 }
 
 const handleMouseOver = () => {

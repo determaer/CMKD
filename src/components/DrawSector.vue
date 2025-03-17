@@ -26,14 +26,13 @@ const handleClick = () => {
   if (store.oneLevel) {
     clickedStore.clickedInfo = {
       type: 'sector',
-      id: sector.upperID,
+      id: props.sector.upperID,
     }
     clickedStore.clickedSector = {
       isClicked: true,
-      sector: sector,
+      sector: props.sector,
     }
   }
-  //console.log('clicked sector of ' + sector.upperID)
 }
 
 let additional = 0
