@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
 import { reactive, ref, computed } from 'vue';
+import { Sector } from '../types/sector';
+import { Label } from '../types/label';
+import { Line } from '../types/line';
 
 export const useParamStore = defineStore('paramStore', () => {
 
@@ -20,8 +23,9 @@ export const useParamStore = defineStore('paramStore', () => {
     additionalLabelRadius: 0, //радиус расположения дополнительных элементов
     linesBtwElementsRadius: 0, //радиус конечных точек для линий-соединителей
     mergingPortsRadius: 0, //радиус на котором начинается слияние портов элемента
-    angles: [],
-    dividerAngles: [],
+    sectorNameRadius: 0,
+    angles: <any[]>[],
+    dividerAngles: <number[]>[],
   })
 
   const scaleMultiplier = ref(1)
@@ -46,16 +50,17 @@ export const useParamStore = defineStore('paramStore', () => {
   const showLight = ref(false)
   const showSectorName = ref(false)
   const oneLevel = ref()
+  const showImportant = ref()
 
   //#region content
 
-  const labelsZero = ref([])
-  const sectors = ref([])
-  const lines = ref([])
+  const labels = ref<Label[]>([])
+  const labelsZero = ref<Label[]>([])
+  const sectors = ref<Sector[]>([])
+  const lines = ref<Line[]>([])
 
   return {
     width,
-    height,
     x,
     y,
     circleDivider,
@@ -73,6 +78,8 @@ export const useParamStore = defineStore('paramStore', () => {
     showLight,
     showSectorName,
     oneLevel,
+    showImportant,
+    labels,
     labelsZero,
     sectors,
     lines,

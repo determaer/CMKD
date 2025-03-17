@@ -81,6 +81,8 @@ const handleMouseOut = () => {
 
 const fillColor = computed(() => {
   if (store.showScore) {
+    if (props.objLabel.index > store.position) 
+      return 'yellow'
     if (props.objLabel.grey) {
       return 'lightgrey'
     } 
@@ -92,8 +94,6 @@ const fillColor = computed(() => {
         return 'red'
       }
     }
-  if (props.objLabel.index > store.position) 
-   return 'yellow'
   }
   return 'white'
 })
