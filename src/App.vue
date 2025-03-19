@@ -1,5 +1,5 @@
 <script setup>
-import DrawCanvas from './components/DrawCanvas.vue';
+import CMKD from './components/CMKD.vue';
 import { labels } from './legacy/labelsNew';
 import { onMounted, ref } from 'vue';
 
@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <DrawCanvas 
+  <CMKD 
     ref="cmkd"
     drawingMode='score'
     :width="800"

@@ -1,5 +1,43 @@
-# Vue 3 + Vite
+# Cognitive Maps of Knowledge Diagnosis
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Cognitive Maps of Knowledge Diagnosis (CMKD) - visualization method for describing hierarchical subjects, semantically connected between each others. It can be used for representing such entities like educational courses with purpose to improve learning experience. More details about method in [this paper](https://link.springer.com/chapter/10.1007/978-3-031-73344-4_51)
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Screenshot
+
+![](src/assets/cmkd.png)
+
+## Inputs
+
+| Prop  | Input | Destination |
+| ------------- | ------------- | ------------- | 
+| drawingMode  | 'default', 'score', 'light'  | Defines form of CMKD - excluding not significant lines, applying color on elements, etc |
+| width  | Number  | Width and height of the CMKD block  |
+| labels  | Label[]  | Array of elements, combined like parametric map, including data from learner model, course model  |
+| position  | Number  | Position of the last 'learned' element for simplifying CMKD's connections |
+| showSupportRect  | Boolean  | Including additional material, presented outside of basic trajectory of course in CMKD |
+| showImportant  | Boolean  | Highlighting important connection lines |
+
+## Events
+
+@clicked - return information about sector, connection line or element label when user events click. 
+
+## Save CMKD to PNG
+
+```vue
+<script setup>
+const cmkd = ref()
+//execute this in some event
+cmkd.value.downloadURI()
+</script>
+
+<template>
+  <CMKD 
+    ref="cmkd"
+    ...
+  />
+</template>
+```
+
+## Usage
+
+` npm install @determaer/cmkd `

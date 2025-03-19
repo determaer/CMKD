@@ -1,7 +1,7 @@
 {
-  "name": "cmkd-drawer",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@determaer/cmkd",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,5 +17,22 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.2.0"
-  }
+  },
+  "description": "Cognitive Maps of Knowledge Diagnosis (CMKD) interactive builder",
+  "main": "vite.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/determaer/CMKD.git"
+  },
+  "keywords": [
+    "cmkd",
+    "its",
+    "visualization"
+  ],
+  "author": "determaer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/determaer/CMKD/issues"
+  },
+  "homepage": "https://github.com/determaer/CMKD#readme"
 }
