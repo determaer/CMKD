@@ -33,6 +33,6 @@ export default defineConfig({
           return tag.startsWith('v-') 
         }
       }}
-    )
+    })
   ]
 })
