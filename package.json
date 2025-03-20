@@ -17,10 +17,11 @@
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^22.13.10",
     "konva": "^9.3.18",
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
@@ -28,7 +29,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.2.0"
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vite-plugin-static-copy": "^2.2.0",
+    "vue-tsc": "^2.2.2"
   },
   "description": "Cognitive Maps of Knowledge Diagnosis (CMKD) interactive builder",
   "repository": {
