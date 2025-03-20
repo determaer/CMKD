@@ -1,7 +1,7 @@
 {
   "name": "@determaer/cmkd",
   "private": false,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "main": "./dist/vuessages.umd.js",
   "module": "./dist/vuessages.es.js",
