@@ -27,12 +27,6 @@ export default defineConfig({
   },
   base: '/CMKD',
   plugins: [
-    vue({template: {
-      compilerOptions:{
-        isCustomElement: (tag) => {
-          return tag.startsWith('v-') 
-        }
-      }}
-    })
+    vue()
   ]
 })
