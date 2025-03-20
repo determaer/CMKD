@@ -14,7 +14,9 @@ import { calcParams } from '../helpers/calcParams'
 import { calcLabels } from '../helpers/calcLabels'
 
 const store = useParamStore()
-const clickedStore = useClickedStore()
+const {clickedElement, clickedInfo, clickedLine, clickedSector, clickLayerX, clickLayerY, resetClicked} = useClickedStore()
+
+
 
 const props = defineProps({
   width: {
@@ -54,10 +56,10 @@ const stageRef = ref()
 watch(
   () => props.width,
   () => {
-    store.width = props.width
-    store.scaleMultiplier = store.width / 800
-    store.x = props.width / 2
-    store.y = props.width / 2
+    store.width.value = props.width
+    store.scaleMultiplier.value = store.width.value / 800
+    store.x.value = props.width / 2
+    store.y.value = props.width / 2
   },
   {immediate: true}
 )
@@ -65,10 +67,10 @@ watch(
 watch(
   () => props,
   () => {
-    store.position = props.position
-    store.showImportant = props.showImportant
-    store.showSupportRect = props.showSupportRect
-    store.labels = props.labels
+    store.position.value = props.position
+    store.showImportant.value = props.showImportant
+    store.showSupportRect.value = props.showSupportRect
+    store.labels.value = props.labels
   },
   {immediate: true, deep: true}
 )
@@ -77,22 +79,22 @@ watch(
   () => {props.drawingMode},
   () => {
     if (props.drawingMode == 'default') {
-      store.showAdditionalInCircle = true
-      store.showScore = false
-      store.defaultRect = false
-      store.showLight = false
+      store.showAdditionalInCircle.value = true
+      store.showScore.value = false
+      store.defaultRect.value = false
+      store.showLight.value = false
     }
     if (props.drawingMode == 'score') {
-      store.showAdditionalInCircle = false
-      store.showScore = true
-      store.defaultRect = false
-      store.showLight = false
+      store.showAdditionalInCircle.value = false
+      store.showScore.value = true
+      store.defaultRect.value = false
+      store.showLight.value = false
       }
     if (props.drawingMode == 'light') {
-      store.showAdditionalInCircle = false
-      store.showScore = true
-      store.defaultRect = false
-      store.showLight = true
+      store.showAdditionalInCircle.value = false
+      store.showScore.value = true
+      store.defaultRect.value = false
+      store.showLight.value = true
     }
   },
   {immediate: true}
@@ -101,21 +103,22 @@ watch(
 watch(
   () => {store.scaleMultiplier, store.sizeMultiplier},
   () => {
-    calcParams(store)
+    calcParams()
   },
   {immediate: true}
 )
 
 watch(
-  () => clickedStore.clickedInfo,
+  () => clickedInfo.value,
   () => {
-    emit('clicked', clickedStore.clickedInfo)
+    emit('clicked', clickedInfo.value)
   }
 )
 
 onMounted(() => {
-  calcLabels(store)
-  calcParams(store)
+  calcLabels()
+  calcParams()
+  console.log(store)
 })
 
 function downloadURI() {
@@ -131,54 +134,54 @@ function downloadURI() {
 
 <template>
   <v-stage
-    v-if="store.params.angles.length > 0"
-    :width="store.width"
-    :height="store.width"
+    v-if="store.params.value.angles.length > 0"
+    :width="store.width.value"
+    :height="store.width.value"
     ref='stageRef'
   >
     <v-layer>
       <v-rect
         fill='white'
-        :x="store.x - store.width"
-        :y="store.y - store.width"
-        :width="store.width * store.scaleMultiplier * 3"
-        :height="store.width * store.scaleMultiplier * 3"
+        :x="store.x.value - store.width.value"
+        :y="store.y.value - store.width.value"
+        :width="store.width.value * store.scaleMultiplier.value * 3"
+        :height="store.width.value * store.scaleMultiplier.value * 3"
       />
       <DrawBase
         bgColor='#dad0f1'
         bgColor2='#e8e8e8'
       />
       <DrawLineBtwElements
-        v-for="line of store.lines"
+        v-for="line of store.lines.value"
         :objLabelOut="line.objLabelOut"
         :objLabelIn="line.objLabelIn"
       />
       <DrawArrows />
       <DrawLabels
-        v-for="label of store.labelsZero"
+        v-for="label of store.labelsZero.value"
         :objLabel="label"
       />
     </v-layer>
     <v-layer
-      v-if="clickedStore.clickedElement.isClicked || clickedStore.clickedLine.isClicked || clickedStore.clickedSector.isClicked"
+      v-if="clickedElement.isClicked || clickedLine.isClicked || clickedSector.isClicked"
     >
       <v-rect
         fill='white'
-        :x="clickedStore.clickLayerX"
-        :y="clickedStore.clickLayerY"
-        :width="store.width * store.scaleMultiplier * 3"
-        :height="store.width * store.scaleMultiplier * 3"
-        @click="() => {clickedStore.resetClicked()}"
+        :x="clickLayerX"
+        :y="clickLayerY"
+        :width="store.width.value * store.scaleMultiplier.value * 3"
+        :height="store.width.value * store.scaleMultiplier.value * 3"
+        @click="() => {resetClicked()}"
         :opacity="0.6"
       />
       <DrawClickedElement
-        v-if="clickedStore.clickedElement.isClicked"
+        v-if="clickedElement.isClicked"
       />
       <DrawClickedLine
-        v-if="clickedStore.clickedLine.isClicked"
+        v-if="clickedLine.isClicked"
       />
       <DrawClickedSector
-        v-if="clickedStore.clickedSector.isClicked"
+        v-if="clickedSector.isClicked"
         bgColor='gray'
       />
     </v-layer>

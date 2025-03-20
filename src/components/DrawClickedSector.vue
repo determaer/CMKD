@@ -8,7 +8,7 @@ const clickedStore = useClickedStore()
 
 <template>
   <DrawSector
-    :sector="clickedStore.clickedSector.sector"
+    :sector="clickedStore.clickedSector.value.sector"
     bgColor='gray'
     :opacity=0.5
   />

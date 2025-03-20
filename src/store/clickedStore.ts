@@ -1,9 +1,6 @@
-import { defineStore } from 'pinia';
-import { reactive, ref, computed } from 'vue';
+import { ref } from 'vue';
 
-export const useClickedStore = defineStore('clickedStore', () => {
-
-  const clickLayerX = ref(-1000)
+const clickLayerX = ref(-1000)
   const clickLayerY = ref(-1000)
   
   const clickedLine = ref({
@@ -30,6 +27,8 @@ export const useClickedStore = defineStore('clickedStore', () => {
     prevLabels: [],
     nextLabels: [],
   })
+
+export const useClickedStore = () => {
 
   const resetClicked = () => {
     clickedLine.value = {
@@ -58,4 +57,4 @@ export const useClickedStore = defineStore('clickedStore', () => {
     clickedInfo,
     resetClicked,
   }
-});
+}

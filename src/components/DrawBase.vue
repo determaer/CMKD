@@ -14,14 +14,14 @@ const props = defineProps({
 
 <template>
   <DrawSector
-    v-for="sector of store.sectors"
+    v-for="sector of store.sectors.value"
     :sector="sector"
     :bgColor="sector.sLevel % 2 === 0 ? bgColor : bgColor2"
   />
   <TypeDivider
-    v-for="dAngle of store.params.dividerAngles"
-    :startRadius="store.params.innerRadius"
-    :endRadius="store.params.outerRadius + 50 * store.circleNum * store.scaleMultiplier"
+    v-for="dAngle of store.params.value.dividerAngles"
+    :startRadius="store.params.value.innerRadius"
+    :endRadius="store.params.value.outerRadius + 50 * store.circleNum.value * store.scaleMultiplier.value"
     :angle="dAngle"
   />
 </template>

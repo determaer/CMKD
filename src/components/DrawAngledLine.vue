@@ -12,8 +12,8 @@ const props = defineProps({
   width: Number,
 })
     
-const [startX, startY] = controlPoint(store.x, store.y, props.startRadius, props.angle)
-const [endX, endY] = controlPoint(store.x, store.y, props.endRadius, props.angle)
+const [startX, startY] = controlPoint(store.x.value, store.y.value, props.startRadius, props.angle)
+const [endX, endY] = controlPoint(store.x.value, store.y.value, props.endRadius, props.angle)
 
 </script>
 

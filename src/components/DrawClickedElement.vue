@@ -9,28 +9,28 @@ const labels1 = []
 const lines = []
 
 labels1.push({
-  label: clickedStore.clickedElement.objLabel,
+  label: clickedStore.clickedElement.value.objLabel,
   shadowed: true,
 })
 
-clickedStore.clickedElement.nextLabels.map((nLabel) => {
+clickedStore.clickedElement.value.nextLabels.map((nLabel) => {
   labels1.push({
     label: nLabel,
     shadowed: false,
   })
   lines.push({
-    objLabelIn: clickedStore.clickedElement.objLabel,
+    objLabelIn: clickedStore.clickedElement.value.objLabel,
     objLabelOut: nLabel
   })
 })
-clickedStore.clickedElement.prevLabels.map((pLabel) => {
+clickedStore.clickedElement.value.prevLabels.map((pLabel) => {
   labels1.push({
     label: pLabel,
     shadowed: false
   })
   lines.push({
     objLabelIn: pLabel,
-    objLabelOut: clickedStore.clickedElement.objLabel,
+    objLabelOut: clickedStore.clickedElement.value.objLabel,
   })
 })
 

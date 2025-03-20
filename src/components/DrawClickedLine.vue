@@ -9,14 +9,14 @@ const clickedStore = useClickedStore()
 
 <template>
   <DrawLabels
-    :objLabel="clickedStore.clickedLine.objLabelIn"
+    :objLabel="clickedStore.clickedLine.value.objLabelIn"
   />
   <DrawLabels
-    :objLabel="clickedStore.clickedLine.objLabelOut"
+    :objLabel="clickedStore.clickedLine.value.objLabelOut"
   />
   <DrawLineBtwElements
-    :objLabelIn="clickedStore.clickedLine.objLabelIn"
-    :objLabelOut="clickedStore.clickedLine.objLabelOut"
+    :objLabelIn="clickedStore.clickedLine.value.objLabelIn"
+    :objLabelOut="clickedStore.clickedLine.value.objLabelOut"
   />
 </template>
 

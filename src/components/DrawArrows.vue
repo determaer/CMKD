@@ -8,16 +8,16 @@ const store = useParamStore()
 const arrowsInLabels = ref([])
 const arcBtwLabels = ref([])
 
-store.labelsZero.map((label, index) => {
+store.labelsZero.value.map((label, index) => {
   if (label.arrowIn) {
-    let lAngle = store.params.angles.find(
+    let lAngle = store.params.value.angles.find(
       (lAngle) => lAngle.labelId === label.index
     )
     let startAngle = lAngle.arrowAngle - 1
     let endAngle = lAngle.arrowAngle
-    let [startX, startY] = controlPoint(store.x,store.y, store.params.labelRadius,startAngle)
-    let [endX, endY] = controlPoint(store.x, store.y, store.params.labelRadius, endAngle)
-    if (store.showAdditionalInCircle || label.isBase)
+    let [startX, startY] = controlPoint(store.x.value,store.y.value, store.params.value.labelRadius,startAngle)
+    let [endX, endY] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius, endAngle)
+    if (store.showAdditionalInCircle.value || label.isBase)
       arrowsInLabels.value.push({
         startX: startX,
         startY: startY, 
@@ -26,12 +26,12 @@ store.labelsZero.map((label, index) => {
       })
   }
   if (label.arrowOut) {
-    let startAngle = store.params.angles.find(
+    let startAngle = store.params.value.angles.find(
       (lAngle) => lAngle.labelId === label.index
     ).labelAngle
 
-    let endAngle = store.params.angles.find(
-      (lAngle) => lAngle.labelId === store.labelsZero[index + 1].index
+    let endAngle = store.params.value.angles.find(
+      (lAngle) => lAngle.labelId === store.labelsZero.value[index + 1].index
     ).labelAngle
 
     arcBtwLabels.value.push({
@@ -49,21 +49,21 @@ store.labelsZero.map((label, index) => {
     :points="[a.startX, a.startY, a.endX, a.endY]"
     stroke='black'
     fill='black'
-    :pointerWidth="7 * store.sizeMultiplier * store.scaleMultiplier"
-    :pointerLength="7 * store.scaleMultiplier"
+    :pointerWidth="7 * store.sizeMultiplier.value * store.scaleMultiplier.value"
+    :pointerLength="7 * store.scaleMultiplier.value"
   />
   <v-arc
     v-if="arcBtwLabels.length > 0"
     v-for="a of arcBtwLabels"
-    :x="store.x"
-    :y="store.y"
+    :x="store.x.value"
+    :y="store.y.value"
     stroke='black'
     :angle="a.angle"
-    :innerRadius="store.params.labelRadius"
-    :outerRadius="store.params.labelRadius"
+    :innerRadius="store.params.value.labelRadius"
+    :outerRadius="store.params.value.labelRadius"
     :clockwise="true"
     :rotation="a.rotation"
-    :strokeWidth="2 * store.scaleMultiplier"
+    :strokeWidth="2 * store.scaleMultiplier.value"
   />
 </template>
 

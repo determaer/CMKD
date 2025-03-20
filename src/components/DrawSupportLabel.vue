@@ -22,7 +22,7 @@ const scale = ref(1)
 
 const handleClick = () => {
   scale.value = 1
-  clickedStore.clickedInfo = {
+  clickedStore.clickedInfo.value = {
     type: 'supportLabel',
     object: props.objLabel,
   }
@@ -34,7 +34,6 @@ const handleMouseOver = () => {
 
 const handleMouseOut = () => {
   scale.value = 1
-  clickedStore.actionItem = null
 }
 
 const drawDoubleLabel = computed(() => {

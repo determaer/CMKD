@@ -23,12 +23,12 @@ if (props.sector.sEnd - arcLength / 2 > 90 && props.sector.sEnd - arcLength / 2 
   r = 1
 
 const handleClick = () => {
-  if (store.oneLevel) {
-    clickedStore.clickedInfo = {
+  if (store.oneLevel.value) {
+    clickedStore.clickedInfo.value = {
       type: 'sector',
       object: props.sector,
     }
-    clickedStore.clickedSector = {
+    clickedStore.clickedSector.value = {
       isClicked: true,
       sector: props.sector,
     }
@@ -36,12 +36,12 @@ const handleClick = () => {
 }
 
 let additional = 0
-if (store.showSupportRect) {
+if (store.showSupportRect.value) {
   additional = 50
 }
 
-const [labelX, labelY] = controlPoint(store.x, store.y, store.params.labelRadius + 50 * props.sector.sLevel * store.scaleMultiplier, 90 + (props.sector.sEnd - arcLength / 2))
-const [nameX, nameY] = controlPoint(store.x, store.y, store.params.sectorNameRadius + additional, 90 + (props.sector.sEnd - arcLength / 2))
+const [labelX, labelY] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius + 50 * props.sector.sLevel * store.scaleMultiplier, 90 + (props.sector.sEnd - arcLength / 2))
+const [nameX, nameY] = controlPoint(store.x.value, store.y.value, store.params.value.sectorNameRadius + additional, 90 + (props.sector.sEnd - arcLength / 2))
 
 let fillColor = 'white'
 if (props.sector.objLabel) {
@@ -66,30 +66,30 @@ const labelWithoutLabel = computed(() => {
 })
 
 const coeff = computed(() => {
-  return store.sizeMultiplier * scale.value * store.scaleMultiplier
+  return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value
 })
 
 </script>
 
 <template>
   <v-arc
-    :x="store.x"
-    :y="store.y"
+    :x="store.x.value"
+    :y="store.y.value"
     :angle="360 - arcLength"
     :rotation="-90 - sector.sStart"
-    :outerRadius="store.params.outerRadius + 50 * sector.sLevel * store.scaleMultiplier "
-    :innerRadius="store.params.innerRadius + 50 * sector.sLevel * store.scaleMultiplier"
+    :outerRadius="store.params.value.outerRadius + 50 * sector.sLevel * store.scaleMultiplier.value"
+    :innerRadius="store.params.value.innerRadius + 50 * sector.sLevel * store.scaleMultiplier.value"
     :fill="fill"
     stroke='black'
     :opacity="opacity"
     :clockwise="true"
-    :strokeWidth="2 * store.scaleMultiplier"
+    :strokeWidth="2 * store.scaleMultiplier.value"
     @click="handleClick"
     @mouseOver="() => {fill = 'gray'}"
     @mouseOut="() => {fill = bgColor}"
   />
   <v-text
-    v-if="store.showSectorName"
+    v-if="store.showSectorName.value"
     :x="nameX"
     :y="nameY"
     :text="sector.shortname"
@@ -112,7 +112,7 @@ const coeff = computed(() => {
     :height= "36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * store.scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
       y: 18 * coeff,
@@ -123,7 +123,7 @@ const coeff = computed(() => {
     @mouseOut="() => {scale = 1}"
   />
   <v-rect
-    v-if="labelWithLabel && store.showScore"
+    v-if="labelWithLabel && store.showScore.value"
     :x="labelX"
     :y="labelY"
     :width="36 * coeff"
@@ -131,7 +131,7 @@ const coeff = computed(() => {
     :opacity="Math.abs(sector.objLabel.score)"
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
-    :strokeWidth="1 * store.scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
       y: 18 * coeff,
