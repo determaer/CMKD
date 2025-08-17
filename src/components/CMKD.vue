@@ -43,6 +43,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  forceResetClicked: {
+    type: Boolean,
+    default: false,
+  }
 })
 
 defineExpose({
@@ -52,6 +56,13 @@ defineExpose({
 const emit = defineEmits(['clicked', 'unclicked'])
 
 const stageRef = ref()
+
+watch(
+  () => props.forceResetClicked,
+  () => {
+    if (props.forceResetClicked) resetClicked()
+  }
+)
 
 watch(
   () => props.labels,
