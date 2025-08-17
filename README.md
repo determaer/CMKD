@@ -38,6 +38,14 @@ cmkd.value.downloadURI()
 </template>
 ```
 
-## Usage
+## Installation
 
 ` npm install @determaer/cmkd `
+
+```js
+//src/main.js
+import VueKonva from 'vue-konva'
+//append use(VueKonva) before mount like in example
+createApp(App).use(VueKonva).mount('#app')
+```
+
