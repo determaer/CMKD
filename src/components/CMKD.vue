@@ -49,7 +49,7 @@ defineExpose({
   downloadURI
 })
 
-const emit = defineEmits(['clicked'])
+const emit = defineEmits(['clicked', 'unclicked'])
 
 const stageRef = ref()
 
@@ -181,7 +181,10 @@ function downloadURI() {
         :y="clickLayerY"
         :width="store.width.value * store.scaleMultiplier.value * 3"
         :height="store.width.value * store.scaleMultiplier.value * 3"
-        @click="() => {resetClicked()}"
+        @click="() => {
+          resetClicked()
+          emit('unclicked')
+        }"
         :opacity="0.6"
       />
       <DrawClickedElement
