@@ -54,6 +54,15 @@ const emit = defineEmits(['clicked'])
 const stageRef = ref()
 
 watch(
+  () => props.labels,
+  () => {
+    calcLabels()
+    calcParams()
+  },
+  {deep: true}
+)
+
+watch(
   () => props.width,
   () => {
     store.width.value = props.width
