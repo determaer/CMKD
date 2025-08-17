@@ -109,15 +109,16 @@ export const calcParams = () => {
 
     if (sectorsLabels.length > 0){
       for (let i = 0; i < sectorsAngles.length - 1; i = i + 1) {
-        store.sectors.value.push({
-          sStart: sectorsAngles[i],
-          sEnd: sectorsAngles[i + 1],
-          sStartLID: sectorsLabels[i].sStartLID,
-          sEndLID: sectorsLabels[i].sEndLID,
-          sLevel: sectorsLabels[i].sLevel,
-          object: sectorsLabels[i]?.objLabel,
-          shortname: sectorsLabels[i].shortname ? sectorsLabels[i].shortname : null,
-        })
+        if (sectorsAngles[i] && sectorsLabels[i] && sectorsAngles[i + 1])
+          store.sectors.value.push({
+            sStart: sectorsAngles[i],
+            sEnd: sectorsAngles[i + 1],
+            sStartLID: sectorsLabels[i].sStartLID,
+            sEndLID: sectorsLabels[i].sEndLID,
+            sLevel: sectorsLabels[i].sLevel,
+            object: sectorsLabels[i]?.objLabel,
+            shortname: sectorsLabels[i].shortname ? sectorsLabels[i].shortname : null,
+          })
       }
     }
   }
