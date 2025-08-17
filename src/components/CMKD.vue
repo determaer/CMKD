@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, unref } from 'vue'
+import { ref, onBeforeMount, watch, unref } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { useClickedStore } from '../store/clickedStore'
 import DrawLabels from './DrawLabels.vue'
@@ -56,10 +56,12 @@ const stageRef = ref()
 watch(
   () => props.labels,
   () => {
+    store.resetParams()
+    store.labels.value = props.labels
     calcLabels()
     calcParams()
   },
-  {deep: true}
+  {immediate: true, deep: true}
 )
 
 watch(
@@ -79,7 +81,6 @@ watch(
     store.position.value = props.position
     store.showImportant.value = props.showImportant
     store.showSupportRect.value = props.showSupportRect
-    store.labels.value = props.labels
   },
   {immediate: true, deep: true}
 )
@@ -124,7 +125,7 @@ watch(
   }
 )
 
-onMounted(() => {
+onBeforeMount(() => {
   calcLabels()
   calcParams()
   console.log(store)

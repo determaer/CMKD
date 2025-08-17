@@ -57,6 +57,28 @@ const lines = ref<Line[]>([])
 
 export const useParamStore =  () => {
 
+  function resetParams() {
+    labels.value = []
+    labelsZero.value = []
+    sectors.value = []
+    lines.value = []
+    discNum.value = 0
+    circleNum.value = 0
+    
+    params.value = {
+      outerRadius: 0, 
+      innerRadius: 0, 
+      labelRadius: 0, 
+      additionalLabelRadius: 0, 
+      linesBtwElementsRadius: 0, 
+      mergingPortsRadius: 0, 
+      sectorNameRadius: 0,
+      angles: [],
+      dividerAngles: [],
+    }
+    console.log(labels.value, params.value)
+  }
+
   return {
     width,
     x,
@@ -81,5 +103,6 @@ export const useParamStore =  () => {
     labelsZero,
     sectors,
     lines,
+    resetParams,
   };
 }
