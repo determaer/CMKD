@@ -171,7 +171,7 @@ const drawTextLabel = computed(() => {
     :y="labelY3"
     :width="36 * coeff"
     :height="36 * coeff"
-    :fill="fill"
+    fill="white"
     stroke='black'
     :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
@@ -209,7 +209,7 @@ const drawTextLabel = computed(() => {
     :y="labelY"
     :width="36 * coeff"
     :height= "36 * coeff"
-    :fill="fill"
+    fill="white"
     stroke='black'
     :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
@@ -228,7 +228,7 @@ const drawTextLabel = computed(() => {
     :y="labelY"
     :width="36 *coeff"
     :height="36 *coeff"
-    :opacity="fillColor === 'lightgrey' || shadowed
+    :opacity="fillColor === 'lightgrey' || shadowed || fillColor == 'yellow'
         ? 1
         : Math.abs(objLabel.score)
     "
@@ -251,7 +251,7 @@ const drawTextLabel = computed(() => {
     :x="labelX3"
     :y="labelY3"
     :radius="20 * coeff"
-    :fill="fill"
+    fill="white"
     stroke='"black"'
     :strokeWidth="1 * store.scaleMultiplier.value"
     @click="handleClick"
@@ -263,7 +263,7 @@ const drawTextLabel = computed(() => {
     :x="labelX2"
     :y="labelY2"
     :radius="20 *coeff"
-    :fill="fill"
+    fill="white"
     stroke='black'
     :strokeWidth="1 * store.scaleMultiplier.value"
     @click="handleClick"
@@ -275,7 +275,7 @@ const drawTextLabel = computed(() => {
     :x="labelX"
     :y="labelY"
     :radius="20 * coeff"
-    :fill="fill"
+    fill="white"
     stroke='black'
     :strokeWidth="1 * store.scaleMultiplier.value"
     @click="handleClick"
@@ -290,7 +290,10 @@ const drawTextLabel = computed(() => {
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
     :strokeWidth="1 * store.scaleMultiplier.value"
-    :opacity="Math.abs(objLabel.score)"
+    :opacity="fillColor === 'lightgrey' || shadowed || fillColor == 'yellow'
+        ? 1
+        : Math.abs(objLabel.score)
+    "
     @click="handleClick"
     @mouseOver="handleMouseOver"
     @mouseOut="handleMouseOut"
