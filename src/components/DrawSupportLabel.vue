@@ -12,11 +12,11 @@ const props = defineProps({
   objLabel: Object,
 })
 
-const [labelX, labelY] = controlPoint(store.x, store.y, store.params.labelRadius, props.angles.labelAngle)
-const [supLabelX, supLabelY] = controlPoint(store.x, store.y, store.params.additionalLabelRadius, props.angles.labelAngle)
+const [labelX, labelY] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius, props.angles.labelAngle)
+const [supLabelX, supLabelY] = controlPoint(store.x.value, store.y.value, store.params.value.additionalLabelRadius, props.angles.labelAngle)
 
-const [supLabelX2, supLabelY2] = controlPoint(store.x, store.y, store.params.additionalLabelRadius + 2.5, props.angles.labelAngle + 0.6)
-const [supLabelX3, supLabelY3] = controlPoint(store.x, store.y, store.params.additionalLabelRadius + 5, props.angles.labelAngle + 1.2)
+const [supLabelX2, supLabelY2] = controlPoint(store.x.value, store.y.value, store.params.value.additionalLabelRadius + 2.5, props.angles.labelAngle + 0.6)
+const [supLabelX3, supLabelY3] = controlPoint(store.x.value, store.y.value, store.params.value.additionalLabelRadius + 5, props.angles.labelAngle + 1.2)
 
 const scale = ref(1)
 
@@ -37,19 +37,19 @@ const handleMouseOut = () => {
 }
 
 const drawDoubleLabel = computed(() => {
-  if (props.objLabel.num > 2 || (props.objLabel.num > 1 && !props.objLabel.isBase && !store.showAdditionalInCircle))
+  if (props.objLabel.num > 2 || (props.objLabel.num > 1 && !props.objLabel.isBase && !store.showAdditionalInCircle.value))
     return true
   else return false
 })
 
 const drawTripleLabel = computed(() => {
-  if (props.objLabel.num > 3 || (props.objLabel.num > 2 && !props.objLabel.isBase && !store.showAdditionalInCircle))
+  if (props.objLabel.num > 3 || (props.objLabel.num > 2 && !props.objLabel.isBase && !store.showAdditionalInCircle.value))
     return true
   return false
 })
 
 const coeff = computed(() => {
-  return store.sizeMultiplier * scale.value * store.scaleMultiplier
+  return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value
 })
 
 </script>
@@ -67,7 +67,7 @@ const coeff = computed(() => {
     :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * store.scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
       y: 18 * coeff,
@@ -85,7 +85,7 @@ const coeff = computed(() => {
     :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * store.scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
       y: 18 * coeff,
@@ -102,7 +102,7 @@ const coeff = computed(() => {
     :height="36 * coeff"
     fill='white'
     stroke='black'
-    :strokeWidth="1 * store.scaleMultiplier"
+    :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
       y: 18 * coeff,
