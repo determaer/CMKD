@@ -100,7 +100,7 @@ export const calcParams = () => {
               sEndLID: label.index,
               sLevel: i,
               object: label,
-              upperID: label.object.parent_id,
+              upperID: label.object?.parent_id,
             })
           }
         })

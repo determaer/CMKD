@@ -18,7 +18,7 @@ export const calcLabels = () => {
   }
   store.circleNum.value = tLevel
   store.oneLevel.value = store.circleNum.value == 0
-  if (store.oneLevel) store.showSectorName.value = true
+  if (store.oneLevel.value) store.showSectorName.value = true
   store.discNum.value = t
   store.labelsZero.value = labelsZeroLevel
 
