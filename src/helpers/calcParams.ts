@@ -92,7 +92,8 @@ export const calcParams = () => {
       else { // верхние уровни сводной карты
         store.labels.value.map((label) => {
           if (label.level == i && label.secLength) {
-            const nextAngle = currentAngle + 360 * (label.secLength / store.discNum.value)
+            let nextAngle = currentAngle + 360 * (label.secLength / store.discNum.value)
+            if (nextAngle == 360) nextAngle = 359.99
             sectorsAngles.push(nextAngle)
             currentAngle = nextAngle
             sectorsLabels.push({
@@ -115,7 +116,7 @@ export const calcParams = () => {
           sStartLID: sectorsLabels[i].sStartLID,
           sEndLID: sectorsLabels[i].sEndLID,
           sLevel: sectorsLabels[i].sLevel,
-          object: sectorsLabels[i]?.objLabel,
+          object: sectorsLabels[i].object,
           shortname: sectorsLabels[i].shortname ? sectorsLabels[i].shortname : null,
         })
       }

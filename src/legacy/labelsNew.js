@@ -17,7 +17,7 @@ export const labels = [
       "arrowIn": false,
       "level": 2,
       "isLabel": true,
-      "secLength": 72,
+      "secLength": 36,
       "lowLevel": [],
       "highLevel": [
         90
@@ -73,7 +73,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -103,7 +103,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -132,7 +132,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -162,7 +162,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -192,7 +192,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -222,7 +222,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -253,7 +253,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -285,7 +285,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -315,7 +315,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
@@ -345,7 +345,7 @@ export const labels = [
       "arrowOut": true,
       "arrowIn": false,
       "level": 0,
-      "isLabel": true,
+      "isLabel": false,
       "secLength": 1,
       "lowLevel": [],
       "highLevel": [
