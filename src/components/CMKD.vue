@@ -14,7 +14,7 @@ import { calcParams } from '../helpers/calcParams'
 import { calcLabels } from '../helpers/calcLabels'
 
 const store = useParamStore()
-const {clickedElement, clickedInfo, clickedLine, clickedSector, clickLayerX, clickLayerY, resetClicked} = useClickedStore()
+const {isClickedElement, isClickedLine, isClickedSector, clickedInfo, clickLayerX, clickLayerY, resetClicked} = useClickedStore()
 
 
 
@@ -184,7 +184,7 @@ function downloadURI() {
       />
     </v-layer>
     <v-layer
-      v-if="clickedElement.isClicked || clickedLine.isClicked || clickedSector.isClicked"
+      v-if="isClickedElement || isClickedLine || isClickedSector"
     >
       <v-rect
         fill='white'
@@ -199,13 +199,13 @@ function downloadURI() {
         :opacity="0.6"
       />
       <DrawClickedElement
-        v-if="clickedElement.isClicked"
+        v-if="isClickedElement"
       />
       <DrawClickedLine
-        v-if="clickedLine.isClicked"
+        v-if="isClickedLine"
       />
       <DrawClickedSector
-        v-if="clickedSector.isClicked"
+        v-if="isClickedSector"
         bgColor='gray'
       />
     </v-layer>

@@ -1,37 +1,46 @@
-<script setup>
+<script setup lang="ts">
 import { computed, nextTick, ref } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
 import DrawSupportLabel from './DrawSupportLabel.vue'
-
+import type { Label } from '../types'
 const store = useParamStore()
 const clickedStore = useClickedStore()
 
 const props = defineProps({
-  objLabel: Object,
+  objLabel: {
+    type: Object as () => Label,
+    required: true
+  },
   shadowed: Boolean,
 })
 
 const lAngle = store.params.value.angles.find(
   (lAngle) => lAngle.labelId === props.objLabel.index
-)
+) ?? {
+  labelAngle: 0,
+  labelId: 0,
+  inAngle: 0,
+  outAngle: 0,
+  arrowAngle: 0
+}
 
 const scale = ref(1)
-const [labelX, labelY] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius, lAngle.labelAngle)
-const [inInnerX, inInnerY] = controlPoint(store.x.value, store.y.value,store.params.value.innerRadius, lAngle.inAngle)
-const [outInnerX, outInnerY] = controlPoint(store.x.value, store.y.value, store.params.value.innerRadius, lAngle.outAngle)
-const [outMergingX, outMergingY] = controlPoint(store.x.value, store.y.value, store.params.value.mergingPortsRadius, lAngle.outAngle)
-const [inMergingX, inMergingY] = controlPoint(store.x.value, store.y.value, store.params.value.mergingPortsRadius, lAngle.inAngle)
-const [arrowX, arrowY] = controlPoint(store.x.value, store.y.value, store.params.value.innerRadius - 1, lAngle.inAngle)
+const [labelX, labelY] = controlPoint(store.params.value.labelRadius, lAngle.labelAngle)
+const [inInnerX, inInnerY] = controlPoint(store.params.value.innerRadius, lAngle.inAngle)
+const [outInnerX, outInnerY] = controlPoint(store.params.value.innerRadius, lAngle.outAngle)
+const [outMergingX, outMergingY] = controlPoint(store.params.value.mergingPortsRadius, lAngle.outAngle)
+const [inMergingX, inMergingY] = controlPoint(store.params.value.mergingPortsRadius, lAngle.inAngle)
+const [arrowX, arrowY] = controlPoint(store.params.value.innerRadius - 1, lAngle.inAngle)
 
-const [labelX2, labelY2] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius + 2.5, lAngle.labelAngle + 0.6)
-const [labelX3, labelY3] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius + 5, lAngle.labelAngle + 1.2)
+const [labelX2, labelY2] = controlPoint(store.params.value.labelRadius + 2.5, lAngle.labelAngle + 0.6)
+const [labelX3, labelY3] = controlPoint(store.params.value.labelRadius + 5, lAngle.labelAngle + 1.2)
 
 const handleClick = () => {
   scale.value = 1
-  let arrPrevLabels = []
-  let arrNextLabels = []
+  let arrPrevLabels : Label[] = []
+  let arrNextLabels : Label[] = []
   store.labelsZero.value.map((label) => {
     if (label.connections.length !== 0) {
       label.connections.map((connection) => {
@@ -47,8 +56,8 @@ const handleClick = () => {
   })
   clickedStore.resetClicked()
   nextTick(() => {
+    clickedStore.isClickedElement.value = true
     clickedStore.clickedElement.value = {
-      isClicked: true,
       objLabel: props.objLabel,
       prevLabels: arrNextLabels,
       nextLabels: arrPrevLabels,
@@ -106,11 +115,11 @@ const coeff = computed(() => {
   return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value
 })
 
-const fill = computed(() => {
+/*const fill = computed(() => {
   if (props.objLabel.learnt)
     return 'white'
   else return fillColor.value
-})
+})*/
 
 const drawRectLabel = computed(() => {
   if ((props.objLabel.type === 'rect' || props.objLabel.type === 'roundrect' || store.defaultRect.value) &&

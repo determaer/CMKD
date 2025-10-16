@@ -1,13 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { useParamStore } from '../store/paramStore';
 import DrawAngledLine from './DrawAngledLine.vue';
 
 const store = useParamStore()
 
-const props = defineProps({
-  startRadius: Number,
-  endRadius: Number,
-  angle: Number,
+defineProps({
+  startRadius: {type: Number, required: true},
+  endRadius: {type: Number, required: true},
+  angle: {type: Number, required: true},
 })
 
 </script>

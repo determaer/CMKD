@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { useParamStore } from '../store/paramStore';
 import DrawSector from './DrawSector.vue';
 import TypeDivider from './TypeDivider.vue';
 
 const store = useParamStore()
 
-const props = defineProps({
+defineProps({
   bgColor: String,
   bgColor2: String,
 })

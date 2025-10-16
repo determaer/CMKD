@@ -1,19 +1,16 @@
-<script setup>
-import { useParamStore } from '../store/paramStore';
+<script setup lang="ts">
 import { controlPoint } from '../helpers/controlPoint';
 
-const store = useParamStore()
-
 const props = defineProps({
-  startRadius: Number,
-  endRadius: Number,
-  angle: Number,
+  startRadius: {type: Number, required: true},
+  endRadius: {type: Number, required: true},
+  angle: {type: Number, required: true},
   color: String,
   width: Number,
 })
     
-const [startX, startY] = controlPoint(store.x.value, store.y.value, props.startRadius, props.angle)
-const [endX, endY] = controlPoint(store.x.value, store.y.value, props.endRadius, props.angle)
+const [startX, startY] = controlPoint(props.startRadius, props.angle)
+const [endX, endY] = controlPoint(props.endRadius, props.angle)
 
 </script>
 

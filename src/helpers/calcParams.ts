@@ -1,5 +1,6 @@
 import { useParamStore } from "../store/paramStore"
 import type { Angle } from "../types/angle"
+import { defaultLabel } from "../types/label"
 import type { SectorLabel } from "../types/sector"
 const store = useParamStore()
 
@@ -116,7 +117,7 @@ export const calcParams = () => {
           sStartLID: sectorsLabels[i]?.sStartLID ?? 0,
           sEndLID: sectorsLabels[i]?.sEndLID ?? 0,
           sLevel: sectorsLabels[i]?.sLevel ?? 0,
-          object: sectorsLabels[i]?.object ?? {},
+          object: sectorsLabels[i]?.object ?? defaultLabel,
           shortname: sectorsLabels[i]?.shortname,
         })
       }

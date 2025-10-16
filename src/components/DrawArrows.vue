@@ -1,43 +1,56 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { controlPoint } from '../helpers/controlPoint'
 
 const store = useParamStore()
-    
-const arrowsInLabels = ref([])
-const arcBtwLabels = ref([])
+
+type Arrow = {
+  startX: number,
+  startY: number,
+  endX: number,
+  endY: number,
+}
+
+type Arc = {
+  angle: number,
+  rotation: number
+}
+
+const arrowsInLabels = ref<Arrow[]>([])
+const arcBtwLabels = ref<Arc[]>([])
 
 store.labelsZero.value.map((label, index) => {
   if (label.arrowIn) {
     let lAngle = store.params.value.angles.find(
       (lAngle) => lAngle.labelId === label.index
     )
-    let startAngle = lAngle.arrowAngle - 1
-    let endAngle = lAngle.arrowAngle
-    let [startX, startY] = controlPoint(store.x.value,store.y.value, store.params.value.labelRadius,startAngle)
-    let [endX, endY] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius, endAngle)
-    if (store.showAdditionalInCircle.value || label.isBase)
-      arrowsInLabels.value.push({
-        startX: startX,
-        startY: startY, 
-        endX: endX, 
-        endY: endY,
-      })
+    if (lAngle){
+      let [startX, startY] = controlPoint(store.params.value.labelRadius, lAngle.arrowAngle - 1)
+      let [endX, endY] = controlPoint(store.params.value.labelRadius, lAngle.arrowAngle)
+      if (store.showAdditionalInCircle.value || label.isBase)
+        arrowsInLabels.value.push({
+          startX: startX,
+          startY: startY, 
+          endX: endX, 
+          endY: endY,
+        })
+    }
   }
   if (label.arrowOut) {
     let startAngle = store.params.value.angles.find(
       (lAngle) => lAngle.labelId === label.index
-    ).labelAngle
+    )?.labelAngle
 
     let endAngle = store.params.value.angles.find(
-      (lAngle) => lAngle.labelId === store.labelsZero.value[index + 1].index
-    ).labelAngle
-
-    arcBtwLabels.value.push({
-      angle: startAngle - endAngle,
-      rotation: -startAngle,
-    })
+      (lAngle) => lAngle.labelId === store.labelsZero.value[index + 1]?.index
+    )?.labelAngle
+    if (startAngle && endAngle){
+      arcBtwLabels.value.push({
+        angle: startAngle - endAngle,
+        rotation: -startAngle,
+      })
+    }
   }
 })
 </script>

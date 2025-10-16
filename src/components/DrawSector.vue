@@ -1,14 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useParamStore } from '../store/paramStore'
 import { useClickedStore } from '../store/clickedStore'
 import { controlPoint } from '../helpers/controlPoint'
+import type { Sector } from '../types/sector'
 
 const store = useParamStore()
 const clickedStore = useClickedStore()
 
 const props = defineProps({
-  sector: Object,
+  sector: {
+    type: Object as () => Sector,
+    required: true
+  },
   bgColor: String,
   shadowed: Boolean,
   opacity: Number,
@@ -27,10 +31,8 @@ const handleClick = () => {
       type: 'sector',
       object: props.sector,
     }
-    clickedStore.clickedSector.value = {
-      isClicked: true,
-      sector: props.sector,
-    }
+    clickedStore.isClickedSector.value = true
+    clickedStore.clickedSector.value = props.sector
 }
 
 let additional = 0
@@ -38,8 +40,8 @@ if (store.showSupportRect.value) {
   additional = 50
 }
 
-const [labelX, labelY] = controlPoint(store.x.value, store.y.value, store.params.value.labelRadius + 50 * props.sector.sLevel * store.scaleMultiplier.value, 90 + (props.sector.sEnd - arcLength / 2))
-const [nameX, nameY] = controlPoint(store.x.value, store.y.value, store.params.value.sectorNameRadius + additional, 90 + (props.sector.sEnd - arcLength / 2))
+const [labelX, labelY] = controlPoint(store.params.value.labelRadius + 50 * props.sector.sLevel * store.scaleMultiplier.value, 90 + (props.sector.sEnd - arcLength / 2))
+const [nameX, nameY] = controlPoint(store.params.value.sectorNameRadius + additional, 90 + (props.sector.sEnd - arcLength / 2))
 
 let fillColor = 'white'
 if (props.sector.object) {

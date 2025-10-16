@@ -51,3 +51,27 @@ export function instanceOfLabel(label: unknown): label is Label {
     "drawAnyCase" in label
     )
 }
+
+export const defaultLabel : Label = {
+    id: 0,
+    index: 0,
+    prop: 0,
+    typeText: "u",
+    numText: "1",
+    type: "circle",
+    num: 1,
+    score: 1,
+    isBase: true,
+    connections: [],
+    secStart: true,
+    secEnd: true,
+    fontStyle: "normal",
+    arrowOut: false,
+    arrowIn: false,
+    level: 0,
+    isLabel: true,
+    secLength: 1,
+    grey: false,
+    sectorName: '',
+    drawAnyCase: true,
+  }

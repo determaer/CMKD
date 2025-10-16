@@ -1,51 +1,41 @@
 import { ref } from 'vue';
+import type { Label } from '../types';
+import type { Sector } from '../types/sector';
 
 const clickLayerX = ref(-1000)
   const clickLayerY = ref(-1000)
   
-  const clickedLine = ref({
-    isClicked: false,
-    objLabelIn: null,
-    objLabelOut: null,
-  })
+  const isClickedLine = ref(false)
+  const isClickedElement = ref(false)
+  const isClickedSector = ref(false)
+
+  const clickedLine = ref<{
+    objLabelIn: Label,
+    objLabelOut: Label
+  }>()
   
-  const clickedElement = ref({
-    isClicked: false,
-    objLabel: null, //содержит внутри объекта id элементов далее
-    prevLabels: null, //стрелка к ним
-    nextLabels: null, //стрелка от них
-  })
+  const clickedElement = ref<{
+    objLabel: Label, //содержит внутри объекта id элементов далее
+    prevLabels: Label[], //стрелка к ним
+    nextLabels: Label[], //стрелка от них
+  }>()
 
-  const clickedSector = ref({
-    isClicked: false,
-    sector: null,
-  })
+  const clickedSector = ref<Sector>()
 
-  const clickedInfo = ref({
-    type: '',
-    objLabel: null,
-    prevLabels: [],
-    nextLabels: [],
-  })
+  const clickedInfo = ref<{
+    type: 'supportLabel' | 'sector' | 'line' | 'label',
+    objLabel?: Label,
+    prevLabels?: Label[],
+    nextLabels?: Label[],
+    object?: object,
+  }>()
 
 export const useClickedStore = () => {
 
   const resetClicked = () => {
-    clickedLine.value = {
-      isClicked: false,
-      objLabelIn: null,
-      objLabelOut: null,
-    }
-    clickedElement.value = {
-      isClicked: false,
-      objLabel: null,
-      prevLabels: null, 
-      nextLabels: null,
-    }
-    clickedSector.value = {
-      isClicked: false,
-      sector: null,
-    }
+    isClickedLine.value = false
+    isClickedElement.value = false
+    isClickedSector.value = false
   }
 
   return{
@@ -55,6 +45,9 @@ export const useClickedStore = () => {
     clickedElement,
     clickedSector,
     clickedInfo,
+    isClickedLine,
+    isClickedElement,
+    isClickedSector,
     resetClicked,
   }
 }
