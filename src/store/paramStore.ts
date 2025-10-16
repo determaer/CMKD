@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue';
-import { Sector } from '../types/sector';
-import { Label } from '../types/label';
-import { Line } from '../types/line';
-
+import type { Sector } from '../types/sector';
+import type { Label } from '../types/label';
+import type { Line } from '../types/line';
+import type { Angle } from '../types/angle';
 //#region params
 const width = ref(800)
 const x = ref(0)
@@ -20,7 +20,7 @@ const params = ref({
   linesBtwElementsRadius: 0, //радиус конечных точек для линий-соединителей
   mergingPortsRadius: 0, //радиус на котором начинается слияние портов элемента
   sectorNameRadius: 0,
-  angles: <any[]>[],
+  angles: <Angle[]>[],
   dividerAngles: <number[]>[],
 })
 

@@ -1,10 +1,12 @@
-export const labels = [
+import type { Label } from "../types";
+
+export const labels: Label[] = [
     {
       "id": 97,
       "index": 0,
       "prop": 0,
       "typeText": "u",
-      "numText": 1,
+      "numText": '1',
       "type": "circle",
       "num": 1,
       "score": 1,
@@ -32,7 +34,7 @@ export const labels = [
       "index": 1,
       "prop": 0,
       "typeText": "u",
-      "numText": 2,
+      "numText": '2',
       "type": "roundrect",
       "num": 1,
       "score": 0,
@@ -60,7 +62,7 @@ export const labels = [
       "index": 2,
       "prop": 0,
       "typeText": "u",
-      "numText": 3,
+      "numText": '3',
       "type": "roundrect",
       "num": 1,
       "score": 1,
@@ -89,10 +91,10 @@ export const labels = [
       "index": 3,
       "prop": 0,
       "typeText": "u",
-      "numText": 4,
+      "numText": '4',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         99
@@ -110,7 +112,7 @@ export const labels = [
         90
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t1",
       "drawAnyCase": false
     },
@@ -119,7 +121,7 @@ export const labels = [
       "index": 4,
       "prop": 0,
       "typeText": "u",
-      "numText": 5,
+      "numText": '5',
       "type": "rect",
       "num": 1,
       "score": -1,
@@ -148,10 +150,10 @@ export const labels = [
       "index": 5,
       "prop": 0,
       "typeText": "u",
-      "numText": 6,
+      "numText": '6',
       "type": "rect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         97
@@ -169,7 +171,7 @@ export const labels = [
         90
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t1",
       "drawAnyCase": false
     },
@@ -178,7 +180,7 @@ export const labels = [
       "index": 6,
       "prop": 0,
       "typeText": "u",
-      "numText": 7,
+      "numText": '7',
       "type": "circle",
       "num": 1,
       "score": 1,
@@ -208,7 +210,7 @@ export const labels = [
       "index": 7,
       "prop": 0,
       "typeText": "u",
-      "numText": 8,
+      "numText": '8',
       "type": "roundrect",
       "num": 1,
       "score": 0.3999999999999999,
@@ -238,7 +240,7 @@ export const labels = [
       "index": 8,
       "prop": 0,
       "typeText": "u",
-      "numText": 9,
+      "numText": '9',
       "type": "roundrect",
       "num": 1,
       "score": 1,
@@ -269,10 +271,10 @@ export const labels = [
       "index": 9,
       "prop": 0,
       "typeText": "u",
-      "numText": 10,
+      "numText": '10',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         104,
@@ -292,7 +294,7 @@ export const labels = [
         91
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t2",
       "drawAnyCase": false
     },
@@ -301,7 +303,7 @@ export const labels = [
       "index": 10,
       "prop": 0,
       "typeText": "u",
-      "numText": 11,
+      "numText": '11',
       "type": "rect",
       "num": 1,
       "score": 0.55,
@@ -331,7 +333,7 @@ export const labels = [
       "index": 11,
       "prop": 0,
       "typeText": "u",
-      "numText": 12,
+      "numText": '12',
       "type": "roundrect",
       "num": 1,
       "score": 1,
@@ -361,10 +363,10 @@ export const labels = [
       "index": 12,
       "prop": 0,
       "typeText": "u",
-      "numText": 13,
+      "numText": '13',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         109
@@ -382,7 +384,7 @@ export const labels = [
         92
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t3",
       "drawAnyCase": false
     },
@@ -391,7 +393,7 @@ export const labels = [
       "index": 13,
       "prop": 0,
       "typeText": "u",
-      "numText": 14,
+      "numText": '14',
       "type": "circle",
       "num": 1,
       "score": 0.5,
@@ -421,10 +423,10 @@ export const labels = [
       "index": 14,
       "prop": 0,
       "typeText": "u",
-      "numText": 15,
+      "numText": '15',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         108
@@ -442,7 +444,7 @@ export const labels = [
         93
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t4",
       "drawAnyCase": false
     },
@@ -451,7 +453,7 @@ export const labels = [
       "index": 15,
       "prop": 0,
       "typeText": "u",
-      "numText": 16,
+      "numText": '16',
       "type": "roundrect",
       "num": 1,
       "score": -1,
@@ -481,7 +483,7 @@ export const labels = [
       "index": 16,
       "prop": 0,
       "typeText": "u",
-      "numText": 17,
+      "numText": '17',
       "type": "circle",
       "num": 1,
       "score": 0,
@@ -511,7 +513,7 @@ export const labels = [
       "index": 17,
       "prop": 0,
       "typeText": "u",
-      "numText": 18,
+      "numText": '18',
       "type": "circle",
       "num": 1,
       "score": -1,
@@ -541,7 +543,7 @@ export const labels = [
       "index": 18,
       "prop": 0,
       "typeText": "u",
-      "numText": 19,
+      "numText": '19',
       "type": "roundrect",
       "num": 1,
       "score": 1,
@@ -572,10 +574,10 @@ export const labels = [
       "index": 19,
       "prop": 0,
       "typeText": "u",
-      "numText": 20,
+      "numText": '20',
       "type": "circle",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": false,
       "connections": [
         116
@@ -593,7 +595,7 @@ export const labels = [
         93
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t4",
       "drawAnyCase": false
     },
@@ -602,10 +604,10 @@ export const labels = [
       "index": 20,
       "prop": 0,
       "typeText": "u",
-      "numText": 21,
+      "numText": '21',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         101
@@ -623,7 +625,7 @@ export const labels = [
         94
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t5",
       "drawAnyCase": false
     },
@@ -632,7 +634,7 @@ export const labels = [
       "index": 21,
       "prop": 0,
       "typeText": "u",
-      "numText": 22,
+      "numText": '22',
       "type": "rect",
       "num": 1,
       "score": 0.1,
@@ -662,7 +664,7 @@ export const labels = [
       "index": 22,
       "prop": 0,
       "typeText": "u",
-      "numText": 23,
+      "numText": '23',
       "type": "roundrect",
       "num": 1,
       "score": 1,
@@ -692,10 +694,10 @@ export const labels = [
       "index": 23,
       "prop": 0,
       "typeText": "u",
-      "numText": 24,
+      "numText": '24',
       "type": "circle",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": false,
       "connections": [
         119,
@@ -714,7 +716,7 @@ export const labels = [
         94
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t5",
       "drawAnyCase": false
     },
@@ -723,7 +725,7 @@ export const labels = [
       "index": 24,
       "prop": 0,
       "typeText": "u",
-      "numText": 25,
+      "numText": '25',
       "type": "circle",
       "num": 1,
       "score": 0.8,
@@ -751,7 +753,7 @@ export const labels = [
       "index": 25,
       "prop": 0,
       "typeText": "u",
-      "numText": 26,
+      "numText": '26',
       "type": "rect",
       "num": 1,
       "score": 1,
@@ -781,7 +783,7 @@ export const labels = [
       "index": 26,
       "prop": 0,
       "typeText": "u",
-      "numText": 27,
+      "numText": '27',
       "type": "rect",
       "num": 1,
       "score": 1,
@@ -811,10 +813,10 @@ export const labels = [
       "index": 27,
       "prop": 0,
       "typeText": "u",
-      "numText": 28,
+      "numText": '28',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         105,
@@ -833,7 +835,7 @@ export const labels = [
         95
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t6",
       "drawAnyCase": false
     },
@@ -842,10 +844,10 @@ export const labels = [
       "index": 28,
       "prop": 0,
       "typeText": "u",
-      "numText": 29,
+      "numText": '29',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         124
@@ -863,7 +865,7 @@ export const labels = [
         95
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t6",
       "drawAnyCase": false
     },
@@ -872,7 +874,7 @@ export const labels = [
       "index": 29,
       "prop": 0,
       "typeText": "u",
-      "numText": 30,
+      "numText": '30',
       "type": "roundrect",
       "num": 1,
       "score": 0,
@@ -903,7 +905,7 @@ export const labels = [
       "index": 30,
       "prop": 0,
       "typeText": "u",
-      "numText": 31,
+      "numText": '31',
       "type": "circle",
       "num": 1,
       "score": 1,
@@ -934,10 +936,10 @@ export const labels = [
       "index": 31,
       "prop": 0,
       "typeText": "u",
-      "numText": 32,
+      "numText": '32',
       "type": "circle",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": false,
       "connections": [
         124,
@@ -956,7 +958,7 @@ export const labels = [
         95
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t6",
       "drawAnyCase": false
     },
@@ -965,10 +967,10 @@ export const labels = [
       "index": 32,
       "prop": 0,
       "typeText": "u",
-      "numText": 33,
+      "numText": '33',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         124,
@@ -987,7 +989,7 @@ export const labels = [
         95
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t6",
       "drawAnyCase": false
     },
@@ -996,10 +998,10 @@ export const labels = [
       "index": 33,
       "prop": 0,
       "typeText": "u",
-      "numText": 34,
+      "numText": '34',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         123,
@@ -1021,7 +1023,7 @@ export const labels = [
         95
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t6",
       "drawAnyCase": false
     },
@@ -1030,7 +1032,7 @@ export const labels = [
       "index": 34,
       "prop": 0,
       "typeText": "u",
-      "numText": 35,
+      "numText": '35',
       "type": "circle",
       "num": 1,
       "score": 0.6000000000000001,
@@ -1058,7 +1060,7 @@ export const labels = [
       "index": 35,
       "prop": 0,
       "typeText": "u",
-      "numText": 36,
+      "numText": '36',
       "type": "circle",
       "num": 1,
       "score": 0.6,
@@ -1088,10 +1090,10 @@ export const labels = [
       "index": 36,
       "prop": 0,
       "typeText": "u",
-      "numText": 37,
+      "numText": '37',
       "type": "circle",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": false,
       "connections": [
         132
@@ -1109,7 +1111,7 @@ export const labels = [
         96
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t7",
       "drawAnyCase": false
     },
@@ -1118,10 +1120,10 @@ export const labels = [
       "index": 37,
       "prop": 0,
       "typeText": "u",
-      "numText": 38,
+      "numText": '38',
       "type": "roundrect",
       "num": 1,
-      "score": null,
+      "score": 0,
       "isBase": true,
       "connections": [
         131,
@@ -1141,7 +1143,7 @@ export const labels = [
         96
       ],
       "grey": true,
-      "percent": null,
+      "percent": 0,
       "sectorName": "t7",
       "drawAnyCase": false
     }

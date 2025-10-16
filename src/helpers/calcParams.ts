@@ -1,5 +1,6 @@
 import { useParamStore } from "../store/paramStore"
-
+import type { Angle } from "../types/angle"
+import type { SectorLabel } from "../types/sector"
 const store = useParamStore()
 
 export const calcParams = () => {
@@ -8,8 +9,8 @@ export const calcParams = () => {
   arrInAngles: number[] = [],
   arrOutAngles: number[] = [],
   arrArrowsAngles: number[] = [],
-  arrDividerAngles: number[] = [],
-  arrAngles: object[] = []
+  arrDividerAngles: number[] = [90],
+  arrAngles: Angle[] = []
   for (let i = 1; i <= store.discNum.value * 2; i = i + 2) {
     arrLabelAngles.push(i * (360 / (store.discNum.value * 2)) + 90)
   }
@@ -23,19 +24,20 @@ export const calcParams = () => {
   }
   for (let i = 0; i < store.discNum.value; i = i + 1) {
     arrAngles.push({
-      labelId: store.labelsZero.value[i].index,
-      inAngle: arrInAngles[i],
-      outAngle: arrOutAngles[i],
-      labelAngle: arrLabelAngles[i],
-      arrowAngle: arrArrowsAngles[i],
+      labelId: store.labelsZero.value[i]?.index ?? 0,
+      inAngle: arrInAngles[i] ?? 0,
+      outAngle: arrOutAngles[i] ?? 0,
+      labelAngle: arrLabelAngles[i] ?? 0,
+      arrowAngle: arrArrowsAngles[i] ?? 0 ,
     })
   }
 
-  arrDividerAngles.push(90)
   for (let i = 0; i < store.discNum.value - 1; i = i + 1) {
-    if (store.labelsZero.value[i].prop !== store.labelsZero.value[i + 1].prop) {
+    if (store.labelsZero.value[i]?.prop !== store.labelsZero.value[i + 1]?.prop) {
+      const firstArrLabelAngle = arrLabelAngles[i] ?? 0
+      const secondArrLabelAngle = arrLabelAngles[i + 1] ?? 0
       arrDividerAngles.push(
-        arrLabelAngles[i] + (arrLabelAngles[i + 1] - arrLabelAngles[i]) / 2
+        firstArrLabelAngle + (secondArrLabelAngle - firstArrLabelAngle) / 2
       )
     }
   }
@@ -55,13 +57,13 @@ export const calcParams = () => {
   // расчёт секторов
   for (let i = store.circleNum.value; i >= 0; i = i - 1) {
     const sectorsAngles : number[] = []
-    const sectorsLabels : any[] = []
+    const sectorsLabels : SectorLabel[] = []
     let currentAngle = 0
     sectorsAngles.push(0)
 
     if (store.params.value.angles.length > 0) {
       if (i == 0) { // классическая карта или нижний уровень сводной карты
-        let start, end1
+        let start: number
         if (store.params.value.angles.length > 0) {
           store.labelsZero.value.map((label) => {
             if (label.secStart) start = label.index
@@ -70,20 +72,19 @@ export const calcParams = () => {
               if (end != store.labels.value.length - 1) {
                 let angle1 = store.params.value.angles.find((lAngle) => lAngle.labelId === end + 1)?.labelAngle
                 let angle2 = store.params.value.angles.find((lAngle) => lAngle.labelId === end)?.labelAngle
-                let angle = angle2 + (angle1 - angle2) / 2
-                sectorsAngles.push(angle - 90)
+                if (angle1 && angle2){
+                  let angle = angle2 + (angle1 - angle2) / 2
+                  sectorsAngles.push(angle - 90)
+                }
               }
 
-              end1 = label.index
               sectorsLabels.push({
                 sStartLID: start,
-                sEndLID: end1,
-                upperID: label.object?.parent_id,
+                sEndLID: label.index,
                 sLevel: 0,
                 shortname: label.sectorName,
                 object: label,
               })
-              start = null
             }
           })
         }
@@ -101,7 +102,6 @@ export const calcParams = () => {
               sEndLID: label.index,
               sLevel: i,
               object: label,
-              upperID: label.object?.parent_id,
             })
           }
         })
@@ -111,13 +111,13 @@ export const calcParams = () => {
     if (sectorsLabels.length > 0){
       for (let i = 0; i < sectorsAngles.length - 1; i = i + 1) {
         store.sectors.value.push({
-          sStart: sectorsAngles[i],
-          sEnd: sectorsAngles[i + 1],
-          sStartLID: sectorsLabels[i].sStartLID,
-          sEndLID: sectorsLabels[i].sEndLID,
-          sLevel: sectorsLabels[i].sLevel,
-          object: sectorsLabels[i].object,
-          shortname: sectorsLabels[i].shortname ? sectorsLabels[i].shortname : null,
+          sStart: sectorsAngles[i] ?? 0,
+          sEnd: sectorsAngles[i + 1] ?? 0,
+          sStartLID: sectorsLabels[i]?.sStartLID ?? 0,
+          sEndLID: sectorsLabels[i]?.sEndLID ?? 0,
+          sLevel: sectorsLabels[i]?.sLevel ?? 0,
+          object: sectorsLabels[i]?.object ?? {},
+          shortname: sectorsLabels[i]?.shortname,
         })
       }
     }

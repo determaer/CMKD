@@ -1,4 +1,4 @@
-import { Label } from "./label";
+import type { Label } from "./label";
 
 export interface Line {
   objLabelIn: Label

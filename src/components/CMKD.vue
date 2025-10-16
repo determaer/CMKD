@@ -9,7 +9,7 @@ import DrawClickedElement from './DrawClickedElement.vue'
 import DrawClickedLine from './DrawClickedLine.vue'
 import DrawClickedSector from './DrawClickedSector.vue'
 import DrawArrows from './DrawArrows.vue'
-import { Label } from '../types/label'
+import type { Label } from '../types/label'
 import { calcParams } from '../helpers/calcParams'
 import { calcLabels } from '../helpers/calcLabels'
 

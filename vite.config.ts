@@ -1,32 +1,33 @@
 import { defineConfig } from 'vite'
 import path from "path";
 import vue from '@vitejs/plugin-vue'
+import dts from 'vite-plugin-dts';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
-// https://vite.dev/config/
 export default defineConfig({
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
+  plugins: [
+    vue(), 
+    dts({
+      rollupTypes: true,
+      tsconfigPath: "./tsconfig.app.json",
+    }),
+    cssInjectedByJsPlugin({ useStrictCSP: true, relativeCSSInjection: false }), 
+  ],
   build: {
     lib: {
+      name: 'vue3-cmkd',
       entry: path.resolve(__dirname, 'src/index.ts'),
-      name: "vuessages",
-      fileName: (format) => `vuessages.${format}.js`,
+      fileName: (format) => `vue3-cmkd.${format}.js`,
     },
+    emptyOutDir: true,
     rollupOptions: {
-      external: ["vue"],
+      external: ['vue'],
       output: {
-        exports: "named",
+        exports: 'named',
         globals: {
-          vue: "Vue",
+          vue: 'Vue',
         },
       },
     },
   },
-  base: '/CMKD',
-  plugins: [
-    vue()
-  ]
 })

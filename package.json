@@ -1,36 +1,49 @@
 {
   "name": "@determaer/cmkd",
   "private": false,
-  "version": "1.0.19",
+  "version": "1.1.0",
   "type": "module",
-  "main": "./dist/vuessages.umd.js",
-  "module": "./dist/vuessages.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/vuessages.es.js",
-      "require": "./dist/vuessages.umd.js"
-    }
-  },
+  "main": "./dist/vue3-cmkd.umd.js",
+  "module": "./dist/vue3-cmkd.es.js",
+  "types": "./dist/index.d.ts",
+  "styles": "./dist/style.css",
   "files": [
     "dist"
   ],
-  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/vue3-cmkd.umd.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/vue3-cmkd.umd.js"
+      }
+    }
+  },
+  "peerDependencies": {
+    "vue": "^3.5.22"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vue-tsc --emitDeclarationOnly",
+    "build": "vite build && vue-tsc",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/node": "^22.13.10",
     "konva": "^9.3.18",
     "vue": "^3.5.13",
     "vue-konva": "^3.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
-    "typescript": "^5.7.3",
-    "vite": "^6.2.0",
-    "vue-tsc": "^2.2.2"
+    "@types/node": "^24.6.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "typescript": "~5.7.3",
+    "vite": "^7.1.7",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-dts": "^4.5.4",
+    "vue-tsc": "^3.1.0"
   },
   "description": "Cognitive Maps of Knowledge Diagnosis (CMKD) interactive builder",
   "repository": {

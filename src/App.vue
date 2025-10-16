@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import CMKD from './components/CMKD.vue';
-import { labels } from './legacy/labelsNew';
+import { labels } from './legacy/labelsNew.ts';
 import { onMounted, ref } from 'vue';
 
 const cmkd = ref()
 
-const clickedElement = (info) => {
+const clickedElement = (info: any) => {
   console.log(info)
 }
 
