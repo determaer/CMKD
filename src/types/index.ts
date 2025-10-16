@@ -1,6 +1,3 @@
-import type { Label, instanceOfLabel } from "./label";
+import { type Label, instanceOfLabel } from "./label";
 
-export type{
-  Label,
-  instanceOfLabel
-}
+export {type Label, instanceOfLabel}

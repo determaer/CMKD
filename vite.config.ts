@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     vue(), 
     dts({
-      rollupTypes: true,
+      //rollupTypes: true,
       tsconfigPath: "./tsconfig.app.json",
     }),
     cssInjectedByJsPlugin({ useStrictCSP: true, relativeCSSInjection: false }), 

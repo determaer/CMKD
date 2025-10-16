@@ -53,7 +53,10 @@ defineExpose({
   downloadURI
 })
 
-const emit = defineEmits(['clicked', 'unclicked'])
+const emit = defineEmits<{
+  clicked: [typeof clickedInfo.value],
+  unclicked: []
+}>()
 
 const stageRef = ref()
 
