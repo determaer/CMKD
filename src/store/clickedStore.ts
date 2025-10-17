@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import type { Label } from '../types';
 import type { Sector } from '../types/sector';
+import type { Line } from '../types/line';
 
 const clickLayerX = ref(-1000)
   const clickLayerY = ref(-1000)
@@ -9,10 +10,7 @@ const clickLayerX = ref(-1000)
   const isClickedElement = ref(false)
   const isClickedSector = ref(false)
 
-  const clickedLine = ref<{
-    objLabelIn: Label,
-    objLabelOut: Label
-  }>()
+  const clickedLine = ref<Line>()
   
   const clickedElement = ref<{
     objLabel: Label, //содержит внутри объекта id элементов далее
@@ -27,7 +25,7 @@ const clickLayerX = ref(-1000)
     objLabel?: Label,
     prevLabels?: Label[],
     nextLabels?: Label[],
-    object?: object,
+    object?: Label | Line | Sector,
   }>()
 
 export const useClickedStore = () => {
