@@ -1,7 +1,5 @@
 import { ref, computed } from 'vue';
-import type { Sector } from '../types/sector';
-import type { Label } from '../types/label';
-import type { Line } from '../types/line';
+import type { Label, Sector, Line } from '../types';
 import type { Angle } from '../types/angle';
 //#region params
 const width = ref(800)

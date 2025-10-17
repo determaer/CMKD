@@ -1,7 +1,5 @@
 import { ref } from 'vue';
-import type { Label } from '../types';
-import type { Sector } from '../types/sector';
-import type { Line } from '../types/line';
+import type { Info, Label, Sector, Line } from '../types';
 
 const clickLayerX = ref(-1000)
   const clickLayerY = ref(-1000)
@@ -20,13 +18,7 @@ const clickLayerX = ref(-1000)
 
   const clickedSector = ref<Sector>()
 
-  const clickedInfo = ref<{
-    type: 'supportLabel' | 'sector' | 'line' | 'label',
-    objLabel?: Label,
-    prevLabels?: Label[],
-    nextLabels?: Label[],
-    object?: Label | Line | Sector,
-  }>()
+  const clickedInfo = ref<Info>()
 
 export const useClickedStore = () => {
 
