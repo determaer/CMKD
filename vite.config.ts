@@ -5,7 +5,7 @@ import dts from 'vite-plugin-dts';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 export default defineConfig({
-  base: '/cmkd',
+  base: '/CMKD',
   plugins: [
     vue(), 
     dts({
