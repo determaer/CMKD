@@ -1,29 +1,32 @@
 <script setup lang="ts">
-import CMKD from './components/CMKD.vue';
-import { labels } from './legacy/labelsNew.ts';
-import { onMounted, ref } from 'vue';
+import CMKD from "./components/CMKD.vue";
+import { labels } from "./legacy/labelsNew.ts";
+import { onMounted /*, useTemplateRef*/ } from "vue";
 
-const cmkd = ref()
+//const cmkd = useTemplateRef("cmkd");
 
 onMounted(() => {
   setTimeout(() => {
-    // загрузка изображения карты - cmkd.value.downloadURI()
-  }, 1000)
-})
+    // загрузка изображения карты - cmkd.value?.downloadURI();
+  }, 1000);
+});
 </script>
 
 <template>
-  <CMKD 
+  <CMKD
     ref="cmkd"
-    drawingMode='score'
+    drawingMode="score"
     :width="800"
     :labels="labels"
-    :position='9' 
+    :position="99"
     :showSupportRect="false"
-    :showImportant="true" 
-    @clicked="(info) => {console.log(info)}"
+    :showImportant="false"
+    @clicked="
+      (info) => {
+        console.log(info);
+      }
+    "
   />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
