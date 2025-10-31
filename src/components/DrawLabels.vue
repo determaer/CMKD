@@ -8,13 +8,10 @@ import type { Label } from "../types";
 const store = useParamStore();
 const clickedStore = useClickedStore();
 
-const props = defineProps({
-  objLabel: {
-    type: Object as () => Label,
-    required: true,
-  },
-  shadowed: Boolean,
-});
+const props = defineProps<{
+  objLabel: Label;
+  shadowed?: boolean;
+}>();
 
 const lAngle = store.params.value.angles.find(
   (lAngle) => lAngle.labelId === props.objLabel.index,

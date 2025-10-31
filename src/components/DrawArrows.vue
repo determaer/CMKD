@@ -37,4 +37,3 @@ calcArrows(arrowsInLabels.value, arcBtwLabels.value);
 </template>
 
 <style scoped></style>
-

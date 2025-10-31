@@ -9,16 +9,10 @@ import type { Angle } from "../types/angle";
 const store = useParamStore();
 const clickedStore = useClickedStore();
 
-const props = defineProps({
-  angles: {
-    type: Object as () => Angle,
-    required: true,
-  },
-  objLabel: {
-    type: Object as () => Label,
-    required: true,
-  },
-});
+const props = defineProps<{
+  angles: Angle;
+  objLabel: Label;
+}>();
 
 const [labelX, labelY] = controlPoint(
   store.params.value.labelRadius,
