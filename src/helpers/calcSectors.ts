@@ -19,16 +19,16 @@ export const calcSectors = () => {
           store.labelsZero.value.map((label) => {
             if (label.secStart) start = label.index;
             if (label.secEnd) {
-              let end = label.index;
+              const end = label.index;
               if (end != store.labels.value.length - 1) {
-                let angle1 = store.params.value.angles.find(
-                  (lAngle) => lAngle.labelId === end + 1
+                const angle1 = store.params.value.angles.find(
+                  (lAngle) => lAngle.labelId === end + 1,
                 )?.labelAngle;
-                let angle2 = store.params.value.angles.find(
-                  (lAngle) => lAngle.labelId === end
+                const angle2 = store.params.value.angles.find(
+                  (lAngle) => lAngle.labelId === end,
                 )?.labelAngle;
                 if (angle1 && angle2) {
-                  let angle = angle2 + (angle1 - angle2) / 2 - 90;
+                  const angle = angle2 + (angle1 - angle2) / 2 - 90;
                   sectorsAngles.push(angle);
                 }
               }

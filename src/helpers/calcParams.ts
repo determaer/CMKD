@@ -16,9 +16,9 @@ export const calcParams = () => {
   }
 
   for (let i = 1; i < store.pointNum.value; i = i + store.circleDivider) {
-    let tIn = (i + 1) * (360 / store.pointNum.value) + 90;
-    let tOut = (i + 2) * (360 / store.pointNum.value) + 90;
-    let tArrow = tIn - 2 * store.sizeMultiplier.value;
+    const tIn = (i + 1) * (360 / store.pointNum.value) + 90;
+    const tOut = (i + 2) * (360 / store.pointNum.value) + 90;
+    const tArrow = tIn - 2 * store.sizeMultiplier.value;
     arrArrowsAngles.push(tArrow);
     arrInAngles.push(tOut);
     arrOutAngles.push(tIn);
@@ -32,7 +32,7 @@ export const calcParams = () => {
       const firstArrLabelAngle = arrLabelAngles[i] ?? 0;
       const secondArrLabelAngle = arrLabelAngles[i + 1] ?? 0;
       arrDividerAngles.push(
-        firstArrLabelAngle + (secondArrLabelAngle - firstArrLabelAngle) / 2
+        firstArrLabelAngle + (secondArrLabelAngle - firstArrLabelAngle) / 2,
       );
     }
     arrAngles.push({

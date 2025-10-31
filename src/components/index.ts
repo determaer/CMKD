@@ -1,5 +1,3 @@
-import CMKD from "./CMKD.vue"
+import CMKD from "./CMKD.vue";
 
-export {
-  CMKD
-}
+export { CMKD };

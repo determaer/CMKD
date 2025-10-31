@@ -2,16 +2,16 @@ import type { Label } from "./label";
 import { instanceOfLabel } from "./label";
 
 export interface Line {
-  objLabelIn: Label
-  objLabelOut: Label
+  objLabelIn: Label;
+  objLabelOut: Label;
 }
 
 export function instanceOfLine(line: unknown): line is Line {
-  return(
+  return (
     line instanceof Object &&
-    'objLabelIn' in line &&
+    "objLabelIn" in line &&
     "objLabelOut" in line &&
     instanceOfLabel(line.objLabelIn) &&
     instanceOfLabel(line.objLabelOut)
-    )
+  );
 }
