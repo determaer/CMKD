@@ -1,80 +1,98 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { controlPoint } from '../helpers/controlPoint';
-import { useParamStore } from '../store/paramStore';
-import { useClickedStore } from '../store/clickedStore';
-import type { Label } from '../types';
-import type { Angle } from '../types/angle';
+import { computed, ref } from "vue";
+import { controlPoint } from "../helpers/controlPoint";
+import { useParamStore } from "../store/paramStore";
+import { useClickedStore } from "../store/clickedStore";
+import type { Label } from "../types";
+import type { Angle } from "../types/angle";
 
-const store = useParamStore()
-const clickedStore = useClickedStore()
+const store = useParamStore();
+const clickedStore = useClickedStore();
 
 const props = defineProps({
   angles: {
     type: Object as () => Angle,
-    required: true
+    required: true,
   },
   objLabel: {
     type: Object as () => Label,
-    required: true
+    required: true,
   },
-})
+});
 
-const [labelX, labelY] = controlPoint(store.params.value.labelRadius, props.angles.labelAngle)
-const [supLabelX, supLabelY] = controlPoint(store.params.value.additionalLabelRadius, props.angles.labelAngle)
+const [labelX, labelY] = controlPoint(
+  store.params.value.labelRadius,
+  props.angles.labelAngle,
+);
+const [supLabelX, supLabelY] = controlPoint(
+  store.params.value.additionalLabelRadius,
+  props.angles.labelAngle,
+);
 
-const [supLabelX2, supLabelY2] = controlPoint(store.params.value.additionalLabelRadius + 2.5, props.angles.labelAngle + 0.6)
-const [supLabelX3, supLabelY3] = controlPoint(store.params.value.additionalLabelRadius + 5, props.angles.labelAngle + 1.2)
+const [supLabelX2, supLabelY2] = controlPoint(
+  store.params.value.additionalLabelRadius + 2.5,
+  props.angles.labelAngle + 0.6,
+);
+const [supLabelX3, supLabelY3] = controlPoint(
+  store.params.value.additionalLabelRadius + 5,
+  props.angles.labelAngle + 1.2,
+);
 
-const scale = ref(1)
+const scale = ref(1);
 
 const handleClick = () => {
-  scale.value = 1
+  scale.value = 1;
   clickedStore.clickedInfo.value = {
-    type: 'supportLabel',
+    type: "supportLabel",
     object: props.objLabel,
-  }
-}
+  };
+};
 
 const handleMouseOver = () => {
-  scale.value = 1.5
-}
+  scale.value = 1.5;
+};
 
 const handleMouseOut = () => {
-  scale.value = 1
-}
+  scale.value = 1;
+};
 
 const drawDoubleLabel = computed(() => {
-  if (props.objLabel.num > 2 || (props.objLabel.num > 1 && !props.objLabel.isBase && !store.showAdditionalInCircle.value))
-    return true
-  else return false
-})
+  if (
+    props.objLabel.num > 2 ||
+    (props.objLabel.num > 1 &&
+      !props.objLabel.isBase &&
+      !store.showAdditionalInCircle.value)
+  )
+    return true;
+  else return false;
+});
 
 const drawTripleLabel = computed(() => {
-  if (props.objLabel.num > 3 || (props.objLabel.num > 2 && !props.objLabel.isBase && !store.showAdditionalInCircle.value))
-    return true
-  return false
-})
+  if (
+    props.objLabel.num > 3 ||
+    (props.objLabel.num > 2 &&
+      !props.objLabel.isBase &&
+      !store.showAdditionalInCircle.value)
+  )
+    return true;
+  return false;
+});
 
 const coeff = computed(() => {
-  return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value
-})
-
+  return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value;
+});
 </script>
 
 <template>
-  <v-line
-    :points="[labelX, labelY, supLabelX, supLabelY]"
-    stroke='black'
-  />
+  <v-line :points="[labelX, labelY, supLabelX, supLabelY]" stroke="black" />
   <v-rect
     v-if="drawTripleLabel"
     :x="supLabelX3"
     :y="supLabelY3"
     :width="36 * coeff"
     :height="36 * coeff"
-    fill='white'
-    stroke='black'
+    fill="white"
+    stroke="black"
     :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
@@ -82,8 +100,8 @@ const coeff = computed(() => {
     }"
     :rotation="-angles.labelAngle"
     @click="handleClick"
-    @mouseOver="handleMouseOver"
-    @mouseOut="handleMouseOut"
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="drawDoubleLabel"
@@ -91,8 +109,8 @@ const coeff = computed(() => {
     :y="supLabelY2"
     :width="36 * coeff"
     :height="36 * coeff"
-    fill='white'
-    stroke='black'
+    fill="white"
+    stroke="black"
     :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
@@ -100,16 +118,16 @@ const coeff = computed(() => {
     }"
     :rotation="-angles.labelAngle"
     @click="handleClick"
-    @mouseOver="handleMouseOver"
-    @mouseOut="handleMouseOut"
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-rect
     :x="supLabelX"
     :y="supLabelY"
     :width="36 * coeff"
     :height="36 * coeff"
-    fill='white'
-    stroke='black'
+    fill="white"
+    stroke="black"
     :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
@@ -117,8 +135,8 @@ const coeff = computed(() => {
     }"
     :rotation="-angles.labelAngle"
     @click="handleClick"
-    @mouseOver="handleMouseOver"
-    @mouseOut="handleMouseOut"
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-text
     :x="supLabelX"
@@ -128,12 +146,12 @@ const coeff = computed(() => {
       x: 13 * coeff,
       y: 10 * coeff,
     }"
-    fontFamily='Times New Roman'
+    fontFamily="Times New Roman"
     :fontSize="22 * coeff"
     :fontStyle="objLabel.fontStyle"
     @click="handleClick"
-    @mouseOver="handleMouseOver"
-    @mouseOut="handleMouseOut"
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-text
     :x="supLabelX"
@@ -147,10 +165,9 @@ const coeff = computed(() => {
     :fontSize="16 * coeff"
     :fontStyle="objLabel.fontStyle"
     @click="handleClick"
-    @mouseOver="handleMouseOver"
-    @mouseOut="handleMouseOut"
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

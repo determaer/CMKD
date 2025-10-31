@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const scale = ref(1);
 
-const points = ref<Number[]>();
+const points = ref<number[]>();
 
 const dash = computed(() => {
   if (
@@ -22,6 +22,7 @@ const dash = computed(() => {
     !store.oneLevel.value
   )
     return [5, 2];
+  return null;
 });
 
 const stroke = computed(() => {
@@ -83,8 +84,8 @@ const handleMouseOut = () => {
     :strokeWidth="2.2 * scale * store.scaleMultiplier.value"
     :dash="dash"
     @click="handleClick"
-    @mouseOver="handleMouseOver"
-    @mouseOut="handleMouseOut"
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
 </template>
 

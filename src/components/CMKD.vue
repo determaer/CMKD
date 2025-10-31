@@ -31,11 +31,11 @@ const {
   showImportant = false,
   ...props
 } = defineProps<{
-  width: number;
-  drawingMode: "default" | "score" | "light";
-  position: number;
-  showSupportRect: boolean;
-  showImportant: boolean;
+  width?: number;
+  drawingMode?: "default" | "score" | "light";
+  position?: number;
+  showSupportRect?: boolean;
+  showImportant?: boolean;
   labels: Label[];
 }>();
 
@@ -58,7 +58,7 @@ watch(
     store.labels.value = props.labels;
     calcCMKD();
   },
-  { immediate: true, deep: true }
+  { immediate: true, deep: true },
 );
 
 watch(
@@ -69,7 +69,7 @@ watch(
     store.x.value = width / 2;
     store.y.value = width / 2;
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(
@@ -79,7 +79,7 @@ watch(
     store.showImportant.value = showImportant;
     store.showSupportRect.value = showSupportRect;
   },
-  { immediate: true, deep: true }
+  { immediate: true, deep: true },
 );
 
 watch(
@@ -104,24 +104,22 @@ watch(
       store.showLight.value = true;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(
-  () => {
-    store.scaleMultiplier, store.sizeMultiplier;
-  },
+  () => [store.scaleMultiplier, store.sizeMultiplier],
   () => {
     calcCMKD(true);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(
   () => clickedInfo.value,
   () => {
     emit("clicked", clickedInfo.value);
-  }
+  },
 );
 
 onBeforeMount(() => {
@@ -142,9 +140,9 @@ function downloadURI() {
 <template>
   <v-stage
     v-if="store.params.value.angles.length > 0"
+    ref="stageRef"
     :width="store.width.value"
     :height="store.width.value"
-    ref="stageRef"
   >
     <v-layer>
       <v-rect
@@ -157,11 +155,16 @@ function downloadURI() {
       <DrawBase bgColor="#dad0f1" bgColor2="#e8e8e8" />
       <DrawLineBtwElements
         v-for="line of store.lines.value"
+        :key="String(line.objLabelIn.id) + line.objLabelOut.id"
         :objLabelOut="line.objLabelOut"
         :objLabelIn="line.objLabelIn"
       />
       <DrawArrows />
-      <DrawLabels v-for="label of store.labelsZero.value" :objLabel="label" />
+      <DrawLabels
+        v-for="label of store.labelsZero.value"
+        :key="label.id"
+        :objLabel="label"
+      />
     </v-layer>
     <v-layer v-if="isClickedElement || isClickedLine || isClickedSector">
       <v-rect
@@ -170,13 +173,13 @@ function downloadURI() {
         :y="clickLayerY"
         :width="store.width.value * store.scaleMultiplier.value * 3"
         :height="store.width.value * store.scaleMultiplier.value * 3"
+        :opacity="0.6"
         @click="
           () => {
             resetClicked();
             emit('unclicked');
           }
         "
-        :opacity="0.6"
       />
       <DrawClickedElement v-if="isClickedElement" />
       <DrawClickedLine v-if="isClickedLine" />

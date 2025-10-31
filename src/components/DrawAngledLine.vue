@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { controlPoint } from '../helpers/controlPoint';
+import { controlPoint } from "../helpers/controlPoint";
 
-const props = defineProps({
-  startRadius: {type: Number, required: true},
-  endRadius: {type: Number, required: true},
-  angle: {type: Number, required: true},
-  color: String,
-  width: Number,
-})
-    
-const [startX, startY] = controlPoint(props.startRadius, props.angle)
-const [endX, endY] = controlPoint(props.endRadius, props.angle)
+const props = defineProps<{
+  startRadius: number;
+  endRadius: number;
+  angle: number;
+  color: string;
+  width: number;
+}>();
 
+const [startX, startY] = controlPoint(props.startRadius, props.angle);
+const [endX, endY] = controlPoint(props.endRadius, props.angle);
 </script>
 
 <template>
@@ -22,5 +21,4 @@ const [endX, endY] = controlPoint(props.endRadius, props.angle)
   />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
