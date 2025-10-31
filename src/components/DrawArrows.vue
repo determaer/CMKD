@@ -1,64 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useParamStore } from "../store/paramStore";
-import { controlPoint } from "../helpers/controlPoint";
+import { calcArrows, type Arrow, type Arc } from "../helpers/calcArrows";
 
 const store = useParamStore();
-
-type Arrow = {
-  startX: number;
-  startY: number;
-  endX: number;
-  endY: number;
-};
-
-type Arc = {
-  angle: number;
-  rotation: number;
-};
 
 const arrowsInLabels = ref<Arrow[]>([]);
 const arcBtwLabels = ref<Arc[]>([]);
 
-store.labelsZero.value.map((label, index) => {
-  if (label.arrowIn) {
-    let lAngle = store.params.value.angles.find(
-      (lAngle) => lAngle.labelId === label.index,
-    );
-    if (lAngle) {
-      let [startX, startY] = controlPoint(
-        store.params.value.labelRadius,
-        lAngle.arrowAngle - 1,
-      );
-      let [endX, endY] = controlPoint(
-        store.params.value.labelRadius,
-        lAngle.arrowAngle,
-      );
-      if (store.showAdditionalInCircle.value || label.isBase)
-        arrowsInLabels.value.push({
-          startX: startX,
-          startY: startY,
-          endX: endX,
-          endY: endY,
-        });
-    }
-  }
-  if (label.arrowOut) {
-    let startAngle = store.params.value.angles.find(
-      (lAngle) => lAngle.labelId === label.index,
-    )?.labelAngle;
-
-    let endAngle = store.params.value.angles.find(
-      (lAngle) => lAngle.labelId === store.labelsZero.value[index + 1]?.index,
-    )?.labelAngle;
-    if (startAngle && endAngle) {
-      arcBtwLabels.value.push({
-        angle: startAngle - endAngle,
-        rotation: -startAngle,
-      });
-    }
-  }
-});
+calcArrows(arrowsInLabels.value, arcBtwLabels.value);
 </script>
 
 <template v-if="arcBtwLabels.length > 0">
@@ -87,3 +37,4 @@ store.labelsZero.value.map((label, index) => {
 </template>
 
 <style scoped></style>
+
