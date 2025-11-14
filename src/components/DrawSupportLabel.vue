@@ -12,24 +12,25 @@ const clickedStore = useClickedStore();
 const props = defineProps<{
   angles: Angle;
   objLabel: Label;
+  labelXY: [number, number];
 }>();
-
-const [labelX, labelY] = controlPoint(
-  store.radiuses.value.labelRadius,
-  props.angles.labelAngle,
+const supLabelXY = computed(() =>
+  controlPoint(
+    store.radiuses.value.additionalLabelRadius,
+    props.angles.labelAngle,
+  ),
 );
-const [supLabelX, supLabelY] = controlPoint(
-  store.radiuses.value.additionalLabelRadius,
-  props.angles.labelAngle,
+const supLabelXY2 = computed(() =>
+  controlPoint(
+    store.radiuses.value.additionalLabelRadius + 2.5,
+    props.angles.labelAngle + 0.6,
+  ),
 );
-
-const [supLabelX2, supLabelY2] = controlPoint(
-  store.radiuses.value.additionalLabelRadius + 2.5,
-  props.angles.labelAngle + 0.6,
-);
-const [supLabelX3, supLabelY3] = controlPoint(
-  store.radiuses.value.additionalLabelRadius + 5,
-  props.angles.labelAngle + 1.2,
+const supLabelXY3 = computed(() =>
+  controlPoint(
+    store.radiuses.value.additionalLabelRadius + 5,
+    props.angles.labelAngle + 1.2,
+  ),
 );
 
 const scale = ref(1);
@@ -75,93 +76,85 @@ const drawTripleLabel = computed(() => {
 const coeff = computed(() => {
   return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value;
 });
+
+const labelConfig = computed(() => ({
+  width: 36 * coeff.value,
+  height: 36 * coeff.value,
+  strokeWidth: 1 * store.scaleMultiplier.value,
+  offset: {
+    x: 18 * coeff.value,
+    y: 18 * coeff.value,
+  },
+  rotation: -props.angles.labelAngle,
+}));
+
+const textConfig = computed(() => ({
+  x: supLabelXY.value[0],
+  y: supLabelXY.value[1],
+  fontFamily: "Times New Roman",
+  fontStyle: props.objLabel.fontStyle,
+}));
 </script>
 
 <template>
-  <v-line :points="[labelX, labelY, supLabelX, supLabelY]" stroke="black" />
+  <v-line
+    :points="[labelXY[0], labelXY[1], supLabelXY[0], supLabelXY[1]]"
+    stroke="black"
+  />
   <v-rect
     v-if="drawTripleLabel"
-    :x="supLabelX3"
-    :y="supLabelY3"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :config="labelConfig"
+    :x="supLabelXY3[0]"
+    :y="supLabelXY3[1]"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-angles.labelAngle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="drawDoubleLabel"
-    :x="supLabelX2"
-    :y="supLabelY2"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :config="labelConfig"
+    :x="supLabelXY2[0]"
+    :y="supLabelXY2[1]"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-angles.labelAngle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
-    :x="supLabelX"
-    :y="supLabelY"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :config="labelConfig"
+    :x="supLabelXY[0]"
+    :y="supLabelXY[1]"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-angles.labelAngle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    :x="supLabelX"
-    :y="supLabelY"
+    :config="textConfig"
     :text="objLabel.typeText"
     :offset="{
       x: 13 * coeff,
       y: 10 * coeff,
     }"
-    fontFamily="Times New Roman"
     :fontSize="22 * coeff"
-    :fontStyle="objLabel.fontStyle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    :x="supLabelX"
-    :y="supLabelY"
+    :config="textConfig"
     :text="objLabel.numText"
     :offset="{
       x: 1 * coeff,
       y: 2 * coeff,
     }"
-    fontFamily="'Times New Roman'"
     :fontSize="16 * coeff"
-    :fontStyle="objLabel.fontStyle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
 </template>
-
-<style scoped></style>

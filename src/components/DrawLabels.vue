@@ -228,6 +228,7 @@ const textConfig = computed(() => ({
     v-if="drawSupportLabel"
     :angles="lAngle"
     :objLabel="objLabel"
+    :labelXY="labelXY"
   />
   <!-- Label -->
   <v-rect
@@ -313,5 +314,3 @@ const textConfig = computed(() => ({
     @mouse-out="handleMouseOut"
   />
 </template>
-
-<style scoped></style>
