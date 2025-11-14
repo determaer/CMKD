@@ -99,6 +99,7 @@ const textConfig = computed(() => ({
 <template>
   <v-line
     :points="[labelXY[0], labelXY[1], supLabelXY[0], supLabelXY[1]]"
+    :strokeWidth="2 * store.scaleMultiplier.value"
     stroke="black"
   />
   <v-rect

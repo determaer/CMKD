@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, watch, unref } from "vue";
+import { ref, watch, unref, watchEffect } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import DrawLabels from "./DrawLabels.vue";
@@ -62,47 +62,27 @@ watch(
   { immediate: true, deep: true },
 );
 
-watch(
-  () => width,
-  () => {
-    store.width.value = width;
-    store.scaleMultiplier.value = store.width.value / 800;
-    store.x.value = width / 2;
-    store.y.value = width / 2;
-    store.updateCMKD();
-  },
-  { immediate: true },
-);
-
-watch(
-  () => [position, showImportant, showSupportRect],
-  () => {
-    store.position.value = position;
-    store.showImportant.value = showImportant;
-    store.showSupportRect.value = showSupportRect;
-    store.updateCMKD();
-  },
-  { immediate: true, deep: true },
-);
+watchEffect(() => {
+  store.width.value = width;
+  store.position.value = position;
+  store.showImportant.value = showImportant;
+  store.showSupportRect.value = showSupportRect;
+  store.updateCMKD();
+});
 
 watch(
   () => drawingMode,
   () => {
-    if (drawingMode == "default") {
-      store.showAdditionalInCircle.value = true;
-      store.showScore.value = false;
-      store.showLight.value = false;
-    }
-    if (drawingMode == "score") {
-      store.showAdditionalInCircle.value = false;
-      store.showScore.value = true;
-      store.showLight.value = false;
-    }
-    if (drawingMode == "light") {
-      store.showAdditionalInCircle.value = false;
-      store.showScore.value = true;
-      store.showLight.value = true;
-    }
+    const map = {
+      default: [true, false, false],
+      score: [false, true, false],
+      light: [false, true, true],
+    } as const;
+    [
+      store.showAdditionalInCircle.value,
+      store.showScore.value,
+      store.showLight.value,
+    ] = map[drawingMode];
     store.updateCMKD();
   },
   { immediate: true },
@@ -122,11 +102,6 @@ watch(
     emit("clicked", clickedInfo.value);
   },
 );
-
-onBeforeMount(() => {
-  calcCMKD();
-  console.log(store);
-});
 
 function downloadURI() {
   var link = document.createElement("a");
@@ -148,8 +123,8 @@ function downloadURI() {
     <v-layer>
       <v-rect
         fill="white"
-        :x="store.x.value - store.width.value"
-        :y="store.y.value - store.width.value"
+        :x="store.centerPoint.value - store.width.value"
+        :y="store.centerPoint.value - store.width.value"
         :width="store.width.value * store.scaleMultiplier.value * 3"
         :height="store.width.value * store.scaleMultiplier.value * 3"
       />

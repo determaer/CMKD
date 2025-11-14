@@ -24,8 +24,8 @@ calcArrows(arrowsInLabels.value, arcBtwLabels.value);
   <v-arc
     v-for="a of arcBtwLabels"
     :key="`${store.reloadCount.value}-${a.angle}-arc-base-trajectory`"
-    :x="store.x.value"
-    :y="store.y.value"
+    :x="store.centerPoint.value"
+    :y="store.centerPoint.value"
     stroke="black"
     :angle="a.angle"
     :innerRadius="store.radiuses.value.labelRadius"

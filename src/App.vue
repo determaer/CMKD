@@ -6,7 +6,7 @@ import { onMounted, ref /*, useTemplateRef*/ } from "vue";
 //const cmkd = useTemplateRef("cmkd");
 const showSupportRect = ref(true);
 const labelref = ref(labels);
-
+const ref1 = ref(800);
 onMounted(() => {
   setTimeout(() => {
     // загрузка изображения карты - cmkd.value?.downloadURI();
@@ -32,6 +32,8 @@ onMounted(() => {
       sectorName: "",
       drawAnyCase: true,
     });
+
+    ref1.value = 1500;
     console.log(labelref.value);
   }, 3000);
 });
@@ -41,8 +43,8 @@ onMounted(() => {
   <input type="checkbox" v-model="showSupportRect" />
   <CMKD
     ref="cmkd"
-    drawingMode="default"
-    :width="800"
+    drawingMode="score"
+    :width="ref1"
     :labels="labelref"
     :position="99"
     :showSupportRect="showSupportRect"

@@ -3,40 +3,36 @@ import type { Label, Sector, Line } from "../types";
 import type { Angle } from "../types/angle";
 //#region params
 const width = ref(800);
-const x = ref(0);
-const y = ref(0);
+const centerPoint = computed(() => width.value / 2);
 const circleNum = ref(0);
 const discNum = ref(0);
 const circleDivider = 5;
-const pointNum = computed(() => {
-  return discNum.value * circleDivider;
-});
+const pointNum = computed(() => discNum.value * circleDivider);
 
 const manyLabelsCorrection = computed(() => (discNum.value < 50 ? 0 : 50));
-const haveSupportsCorrection = computed(() => {
-  return showSupportRect.value ? 50 : 0;
-});
+const haveSupportsCorrection = computed(() =>
+  showSupportRect.value ? 50 * scaleMultiplier.value : 0,
+);
+const generalCorrection = (baseRadius: number) =>
+  (baseRadius + manyLabelsCorrection.value) * scaleMultiplier.value;
 
-const radiuses = computed(() => {
-  const generalCorrection = (baseRadius: number) =>
-    (baseRadius + manyLabelsCorrection.value) * scaleMultiplier.value;
-  return {
-    outerRadius: generalCorrection(250),
-    innerRadius: generalCorrection(200),
-    labelRadius: generalCorrection(225),
-    additionalLabelRadius: generalCorrection(285),
-    linesBtwElementsRadius: generalCorrection(190),
-    mergingPortsRadius: generalCorrection(212),
-    sectorNameRadius: generalCorrection(265) + haveSupportsCorrection.value,
-  };
-});
+const radiuses = computed(() => ({
+  outerRadius: generalCorrection(250),
+  innerRadius: generalCorrection(200),
+  labelRadius: generalCorrection(225),
+  additionalLabelRadius: generalCorrection(285),
+  linesBtwElementsRadius: generalCorrection(190),
+  mergingPortsRadius: generalCorrection(212),
+  sectorNameRadius: generalCorrection(265) + haveSupportsCorrection.value,
+}));
 
 const angles = ref({
   angles: <Angle[]>[],
   dividerAngles: <number[]>[],
 });
 
-const scaleMultiplier = ref(1);
+const scaleMultiplier = computed(() => width.value / 800);
+
 const sizeMultiplier = computed(() => {
   if (discNum.value <= 10) return 1;
   if (discNum.value > 10 && discNum.value < 20) return 0.9;
@@ -59,10 +55,7 @@ const showLight = ref(false);
 const oneLevel = ref(false);
 const showImportant = ref();
 
-const showSectorName = computed(() => {
-  if (oneLevel.value) return true;
-  return false;
-});
+const showSectorName = computed(() => (oneLevel.value ? true : false));
 
 //#region content
 
@@ -72,13 +65,13 @@ const sectors = ref<Sector[]>([]);
 const lines = ref<Line[]>([]);
 const reloadCount = ref(0);
 
-const updateCMKD = () => {
-  setTimeout(() => {
-    reloadCount.value++;
-  }, 0);
-};
-
 export const useParamStore = () => {
+  function updateCMKD() {
+    setTimeout(() => {
+      reloadCount.value++;
+    }, 0);
+  }
+
   function resetParams() {
     labels.value = [];
     labelsZero.value = [];
@@ -95,8 +88,7 @@ export const useParamStore = () => {
 
   return {
     width,
-    x,
-    y,
+    centerPoint,
     circleDivider,
     circleNum,
     discNum,

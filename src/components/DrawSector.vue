@@ -96,8 +96,8 @@ const innerRadius = computed(
 
 <template>
   <v-arc
-    :x="store.x.value"
-    :y="store.y.value"
+    :x="store.centerPoint.value"
+    :y="store.centerPoint.value"
     :angle="360 - arcLength"
     :rotation="-90 - sector.sStart"
     :outerRadius="outerRadius"
