@@ -3,7 +3,6 @@ import type { Label } from "../types";
 export const labels: Label[] = [
   /*{
     id: 97,
-    index: 0,
     prop: 0,
     typeText: "u",
     numText: "1",
@@ -29,7 +28,6 @@ export const labels: Label[] = [
   },
   {
     id: 98,
-    index: 1,
     prop: 0,
     typeText: "u",
     numText: "2",
@@ -55,7 +53,6 @@ export const labels: Label[] = [
   },*/
   {
     id: 99,
-    index: 2,
     prop: 0,
     typeText: "u",
     numText: "3",
@@ -81,7 +78,6 @@ export const labels: Label[] = [
   },
   {
     id: 101,
-    index: 3,
     prop: 0,
     typeText: "u",
     numText: "4",
@@ -107,7 +103,6 @@ export const labels: Label[] = [
   },
   {
     id: 102,
-    index: 4,
     prop: 0,
     typeText: "u",
     numText: "5",
@@ -133,7 +128,6 @@ export const labels: Label[] = [
   },
   {
     id: 103,
-    index: 5,
     prop: 0,
     typeText: "u",
     numText: "6",
@@ -159,7 +153,6 @@ export const labels: Label[] = [
   },
   {
     id: 104,
-    index: 6,
     prop: 0,
     typeText: "u",
     numText: "7",
@@ -185,7 +178,6 @@ export const labels: Label[] = [
   },
   {
     id: 105,
-    index: 7,
     prop: 0,
     typeText: "u",
     numText: "8",
@@ -211,7 +203,6 @@ export const labels: Label[] = [
   },
   {
     id: 106,
-    index: 8,
     prop: 0,
     typeText: "u",
     numText: "9",
@@ -237,7 +228,6 @@ export const labels: Label[] = [
   },
   {
     id: 107,
-    index: 9,
     prop: 0,
     typeText: "u",
     numText: "10",
@@ -263,7 +253,6 @@ export const labels: Label[] = [
   },
   {
     id: 108,
-    index: 10,
     prop: 0,
     typeText: "u",
     numText: "11",
@@ -289,7 +278,6 @@ export const labels: Label[] = [
   },
   {
     id: 109,
-    index: 11,
     prop: 0,
     typeText: "u",
     numText: "12",
@@ -315,7 +303,6 @@ export const labels: Label[] = [
   },
   {
     id: 110,
-    index: 12,
     prop: 0,
     typeText: "u",
     numText: "13",
@@ -341,7 +328,6 @@ export const labels: Label[] = [
   },
   {
     id: 111,
-    index: 13,
     prop: 0,
     typeText: "u",
     numText: "14",
@@ -367,7 +353,6 @@ export const labels: Label[] = [
   },
   {
     id: 112,
-    index: 14,
     prop: 0,
     typeText: "u",
     numText: "15",
@@ -393,7 +378,6 @@ export const labels: Label[] = [
   },
   {
     id: 113,
-    index: 15,
     prop: 0,
     typeText: "u",
     numText: "16",
@@ -419,7 +403,6 @@ export const labels: Label[] = [
   },
   {
     id: 114,
-    index: 16,
     prop: 0,
     typeText: "u",
     numText: "17",
@@ -445,7 +428,6 @@ export const labels: Label[] = [
   },
   {
     id: 115,
-    index: 17,
     prop: 0,
     typeText: "u",
     numText: "18",
@@ -471,7 +453,6 @@ export const labels: Label[] = [
   },
   {
     id: 116,
-    index: 18,
     prop: 0,
     typeText: "u",
     numText: "19",
@@ -497,7 +478,6 @@ export const labels: Label[] = [
   },
   {
     id: 117,
-    index: 19,
     prop: 0,
     typeText: "u",
     numText: "20",
@@ -523,7 +503,6 @@ export const labels: Label[] = [
   },
   {
     id: 118,
-    index: 20,
     prop: 0,
     typeText: "u",
     numText: "21",
@@ -549,7 +528,6 @@ export const labels: Label[] = [
   },
   {
     id: 119,
-    index: 21,
     prop: 0,
     typeText: "u",
     numText: "22",
@@ -575,7 +553,6 @@ export const labels: Label[] = [
   },
   {
     id: 120,
-    index: 22,
     prop: 0,
     typeText: "u",
     numText: "23",
@@ -601,7 +578,6 @@ export const labels: Label[] = [
   },
   {
     id: 121,
-    index: 23,
     prop: 0,
     typeText: "u",
     numText: "24",
@@ -627,7 +603,6 @@ export const labels: Label[] = [
   },
   {
     id: 122,
-    index: 24,
     prop: 0,
     typeText: "u",
     numText: "25",
@@ -653,7 +628,6 @@ export const labels: Label[] = [
   },
   {
     id: 123,
-    index: 25,
     prop: 0,
     typeText: "u",
     numText: "26",
@@ -679,7 +653,6 @@ export const labels: Label[] = [
   },
   {
     id: 124,
-    index: 26,
     prop: 0,
     typeText: "u",
     numText: "27",
@@ -705,7 +678,6 @@ export const labels: Label[] = [
   },
   {
     id: 125,
-    index: 27,
     prop: 0,
     typeText: "u",
     numText: "28",
@@ -731,7 +703,6 @@ export const labels: Label[] = [
   },
   {
     id: 126,
-    index: 28,
     prop: 0,
     typeText: "u",
     numText: "29",
@@ -757,7 +728,6 @@ export const labels: Label[] = [
   },
   {
     id: 127,
-    index: 29,
     prop: 0,
     typeText: "u",
     numText: "30",
@@ -783,7 +753,6 @@ export const labels: Label[] = [
   },
   {
     id: 128,
-    index: 30,
     prop: 0,
     typeText: "u",
     numText: "31",
@@ -809,7 +778,6 @@ export const labels: Label[] = [
   },
   {
     id: 129,
-    index: 31,
     prop: 0,
     typeText: "u",
     numText: "32",
@@ -835,7 +803,6 @@ export const labels: Label[] = [
   },
   {
     id: 130,
-    index: 32,
     prop: 0,
     typeText: "u",
     numText: "33",
@@ -861,7 +828,6 @@ export const labels: Label[] = [
   },
   {
     id: 135,
-    index: 33,
     prop: 0,
     typeText: "u",
     numText: "34",
@@ -887,7 +853,6 @@ export const labels: Label[] = [
   },
   {
     id: 131,
-    index: 34,
     prop: 0,
     typeText: "u",
     numText: "35",
@@ -913,7 +878,6 @@ export const labels: Label[] = [
   },
   {
     id: 132,
-    index: 35,
     prop: 0,
     typeText: "u",
     numText: "36",
@@ -939,7 +903,6 @@ export const labels: Label[] = [
   },
   {
     id: 133,
-    index: 36,
     prop: 0,
     typeText: "u",
     numText: "37",
@@ -965,7 +928,6 @@ export const labels: Label[] = [
   },
   {
     id: 134,
-    index: 37,
     prop: 0,
     typeText: "u",
     numText: "38",

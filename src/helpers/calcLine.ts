@@ -6,10 +6,14 @@ const store = useParamStore();
 export const calcLine = (objLabelIn: Label, objLabelOut: Label) => {
   const radiusCorrection = store.discNum.value >= 50 ? 1 : 0;
   const objLabelInAngles = store.angles.value.angles.find(
-    (lAngle) => lAngle.labelId === objLabelIn.index,
+    (lAngle) =>
+      lAngle.labelId ===
+      store.labelsZero.value.findIndex((label) => objLabelIn.id == label.id),
   );
   const objLabelOutAngles = store.angles.value.angles.find(
-    (lAngle) => lAngle.labelId === objLabelOut.index,
+    (lAngle) =>
+      lAngle.labelId ===
+      store.labelsZero.value.findIndex((label) => objLabelOut.id == label.id),
   );
   let bezierCPangle1: number,
     bezierCPangle2: number,

@@ -18,7 +18,7 @@ export const calcArrows = (arrowsInLabels: Arrow[], arcBtwLabels: Arc[]) => {
   store.labelsZero.value.forEach((label, index) => {
     if (label.arrowIn) {
       const lAngle = store.angles.value.angles.find(
-        (lAngle) => lAngle.labelId === label.index,
+        (lAngle) => lAngle.labelId === index,
       );
       if (lAngle) {
         const [startX, startY] = controlPoint(
@@ -40,11 +40,11 @@ export const calcArrows = (arrowsInLabels: Arrow[], arcBtwLabels: Arc[]) => {
     }
     if (label.arrowOut) {
       const startAngle = store.angles.value.angles.find(
-        (lAngle) => lAngle.labelId === label.index,
+        (lAngle) => lAngle.labelId === index,
       )?.labelAngle;
 
       const endAngle = store.angles.value.angles.find(
-        (lAngle) => lAngle.labelId === store.labelsZero.value[index + 1]?.index,
+        (lAngle) => lAngle.labelId === index + 1,
       )?.labelAngle;
       if (startAngle && endAngle) {
         arcBtwLabels.push({

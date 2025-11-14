@@ -14,7 +14,7 @@ calcArrows(arrowsInLabels.value, arcBtwLabels.value);
 <template v-if="arcBtwLabels.length > 0">
   <v-arrow
     v-for="a of arrowsInLabels"
-    :key="a"
+    :key="`${store.reloadCount.value}-${a.startX}-arrow-base-trajectory`"
     :points="[a.startX, a.startY, a.endX, a.endY]"
     stroke="black"
     fill="black"
@@ -23,7 +23,7 @@ calcArrows(arrowsInLabels.value, arcBtwLabels.value);
   />
   <v-arc
     v-for="a of arcBtwLabels"
-    :key="a"
+    :key="`${store.reloadCount.value}-${a.angle}-arc-base-trajectory`"
     :x="store.x.value"
     :y="store.y.value"
     stroke="black"

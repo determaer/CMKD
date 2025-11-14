@@ -13,10 +13,14 @@ const props = defineProps<{
   shadowed?: boolean;
 }>();
 
+const objLabelIndex = computed(() =>
+  store.labelsZero.value.findIndex((label) => label.id == props.objLabel.id),
+);
+
 const lAngle = computed(
   () =>
     store.angles.value.angles.find(
-      (lAngle) => lAngle.labelId === props.objLabel.index,
+      (lAngle) => lAngle.labelId === objLabelIndex.value,
     ) ?? {
       labelAngle: 0,
       labelId: 0,
@@ -27,7 +31,7 @@ const lAngle = computed(
 );
 
 const scale = ref(1);
-//computed(() => ())
+
 const labelXY = computed(() =>
   controlPoint(store.radiuses.value.labelRadius, lAngle.value.labelAngle),
 );
@@ -104,7 +108,7 @@ const handleMouseOut = () => {
 
 const fillColor = computed(() => {
   if (store.showScore.value) {
-    if (props.objLabel.index > store.position.value) return "yellow";
+    if (objLabelIndex.value > store.position.value) return "yellow";
     if (props.objLabel.grey) {
       return "lightgrey";
     } else {
@@ -199,6 +203,7 @@ const textConfig = computed(() => ({
 
 <template>
   <v-line
+    :key="`${store.reloadCount.value}-${objLabel.id}-lines-label`"
     :points="[
       inInnerXY[0],
       inInnerXY[1],
@@ -216,6 +221,7 @@ const textConfig = computed(() => ({
     lineJoin="round"
   />
   <v-arrow
+    :key="`${store.reloadCount.value}-${objLabel.id}-arrow-label`"
     :points="[arrowXY[0], arrowXY[1], inInnerXY[0], inInnerXY[1]]"
     stroke="black"
     fill="black"
@@ -233,7 +239,7 @@ const textConfig = computed(() => ({
   <!-- Label -->
   <v-rect
     v-if="drawTripleLabel && drawRectLabel"
-    :key="`${drawSupportLabel}-${objLabel.id}-3-label`"
+    :key="`${store.reloadCount.value}-${objLabel.id}-3-label`"
     :config="labelConfig"
     :x="labelXY3[0]"
     :y="labelXY3[1]"
@@ -245,7 +251,7 @@ const textConfig = computed(() => ({
   />
   <v-rect
     v-if="drawDoubleLabel && drawRectLabel"
-    :key="`${drawSupportLabel}-${objLabel.id}-2-label`"
+    :key="`${store.reloadCount.value}-${objLabel.id}-2-label`"
     :config="labelConfig"
     :x="labelXY2[0]"
     :y="labelXY2[1]"
@@ -257,7 +263,7 @@ const textConfig = computed(() => ({
   />
   <v-rect
     v-if="drawRectLabel"
-    :key="`${drawSupportLabel}-${objLabel.id}-1-label`"
+    :key="`${store.reloadCount.value}-${objLabel.id}-1-label`"
     :config="labelConfig"
     :x="labelXY[0]"
     :y="labelXY[1]"
@@ -269,7 +275,7 @@ const textConfig = computed(() => ({
   />
   <v-rect
     v-if="store.showScore.value && drawRectLabel"
-    :key="`${drawSupportLabel}-${objLabel.id}-scored-label`"
+    :key="`${store.reloadCount.value}-${objLabel.id}-scored-label`"
     :config="labelConfig"
     :x="labelXY[0]"
     :y="labelXY[1]"
@@ -287,7 +293,7 @@ const textConfig = computed(() => ({
   <!-- Text in label -->
   <v-text
     v-if="drawTextLabel"
-    :key="`${drawSupportLabel}-${objLabel.id}-type-text`"
+    :key="`${store.reloadCount.value}-${objLabel.id}-type-text`"
     :config="textConfig"
     :text="objLabel.typeText"
     :offset="{
@@ -301,7 +307,7 @@ const textConfig = computed(() => ({
   />
   <v-text
     v-if="drawTextLabel"
-    :key="`${drawSupportLabel}-${objLabel.id}-num-text`"
+    :key="`${store.reloadCount.value}-${objLabel.id}-num-text`"
     :config="textConfig"
     :text="objLabel.numText"
     :offset="{

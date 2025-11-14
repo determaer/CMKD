@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from "vue";
+import { ref, computed, nextTick } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import type { Label } from "../types";
@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const scale = ref(1);
 
-const points = ref<number[]>();
+const points = computed(() => calcLine(props.objLabelIn, props.objLabelOut));
 
 const dash = computed(() => {
   if (
@@ -38,13 +38,12 @@ const stroke = computed(() => {
 });
 
 const draw = computed(() => {
-  if (store.position.value && props.objLabelIn.index > store.position.value)
+  const objLabelInIndex = store.labelsZero.value.findIndex(
+    (label) => label.id == props.objLabelIn.id,
+  );
+  if (store.position.value && objLabelInIndex > store.position.value)
     return false;
   return true;
-});
-
-onMounted(() => {
-  points.value = calcLine(props.objLabelIn, props.objLabelOut);
 });
 
 const handleClick = () => {
@@ -78,6 +77,7 @@ const handleMouseOut = () => {
 <template>
   <v-line
     v-if="draw"
+    :key="`${store.reloadCount.value}-${objLabelIn.id}-${objLabelOut.id}-line`"
     :bezier="true"
     :points="points"
     :stroke="stroke"
@@ -89,4 +89,3 @@ const handleMouseOut = () => {
   />
 </template>
 
-<style scoped></style>

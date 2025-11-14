@@ -16,10 +16,10 @@ export const calcSectors = () => {
         // классическая карта или нижний уровень сводной карты
         let start: number;
         if (store.angles.value.angles.length > 0) {
-          store.labelsZero.value.map((label) => {
-            if (label.secStart) start = label.index;
+          store.labelsZero.value.map((label, index) => {
+            if (label.secStart) start = index;
             if (label.secEnd) {
-              const end = label.index;
+              const end = index;
               if (end != store.labels.value.length - 1) {
                 const angle1 = store.angles.value.angles.find(
                   (lAngle) => lAngle.labelId === end + 1,
@@ -35,7 +35,7 @@ export const calcSectors = () => {
 
               sectorsLabels.push({
                 sStartLID: start,
-                sEndLID: label.index,
+                sEndLID: index,
                 sLevel: 0,
                 shortname: label.sectorName,
                 object: label,
@@ -46,7 +46,7 @@ export const calcSectors = () => {
         sectorsAngles.push(360);
       } else {
         // верхние уровни сводной карты
-        store.labels.value.map((label) => {
+        store.labels.value.map((label, index) => {
           if (label.level == i && label.secLength) {
             let nextAngle =
               currentAngle + 360 * (label.secLength / store.discNum.value);
@@ -54,8 +54,8 @@ export const calcSectors = () => {
             sectorsAngles.push(nextAngle);
             currentAngle = nextAngle;
             sectorsLabels.push({
-              sStartLID: label.index,
-              sEndLID: label.index,
+              sStartLID: index,
+              sEndLID: index,
               sLevel: i,
               object: label,
             });

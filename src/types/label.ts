@@ -1,6 +1,5 @@
 export interface Label {
   id: number; // идентификатор
-  index: number; // порядковый номер
   prop: number; // принадлежность к группе
   typeText: string; // буквенное обозначение элемента
   numText: string; // цифровое обозначение элемента
@@ -30,7 +29,6 @@ export function instanceOfLabel(label: unknown): label is Label {
   return (
     label instanceof Object &&
     "id" in label &&
-    "index" in label &&
     "prop" in label &&
     "typeText" in label &&
     "numText" in label &&
@@ -54,7 +52,6 @@ export function instanceOfLabel(label: unknown): label is Label {
 
 export const defaultLabel: Label = {
   id: 0,
-  index: 0,
   prop: 0,
   typeText: "u",
   numText: "1",

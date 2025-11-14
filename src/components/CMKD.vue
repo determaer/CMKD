@@ -57,6 +57,7 @@ watch(
     store.resetParams();
     store.labels.value = labels;
     calcCMKD();
+    store.updateCMKD();
   },
   { immediate: true, deep: true },
 );
@@ -68,6 +69,7 @@ watch(
     store.scaleMultiplier.value = store.width.value / 800;
     store.x.value = width / 2;
     store.y.value = width / 2;
+    store.updateCMKD();
   },
   { immediate: true },
 );
@@ -78,6 +80,7 @@ watch(
     store.position.value = position;
     store.showImportant.value = showImportant;
     store.showSupportRect.value = showSupportRect;
+    store.updateCMKD();
   },
   { immediate: true, deep: true },
 );
@@ -100,6 +103,7 @@ watch(
       store.showScore.value = true;
       store.showLight.value = true;
     }
+    store.updateCMKD();
   },
   { immediate: true },
 );
@@ -107,7 +111,7 @@ watch(
 watch(
   () => [store.scaleMultiplier, store.sizeMultiplier],
   () => {
-    calcCMKD(true);
+    store.updateCMKD();
   },
   { immediate: true },
 );

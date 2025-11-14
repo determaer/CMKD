@@ -36,7 +36,7 @@ export const calcAngles = () => {
       );
     }
     arrAngles.push({
-      labelId: store.labelsZero.value[i]?.index ?? 0,
+      labelId: i ?? 0,
       inAngle: arrInAngles[i] ?? 0,
       outAngle: arrOutAngles[i] ?? 0,
       labelAngle: arrLabelAngles[i] ?? 0,

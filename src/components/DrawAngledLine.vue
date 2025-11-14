@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { controlPoint } from "../helpers/controlPoint";
+import { useParamStore } from "../store/paramStore";
+
+const { reloadCount } = useParamStore();
 
 const props = defineProps<{
   startRadius: number;
@@ -15,6 +18,7 @@ const [endX, endY] = controlPoint(props.endRadius, props.angle);
 
 <template>
   <v-line
+    :key="`${reloadCount}-angled-line`"
     :points="[startX, startY, endX, endY]"
     :stroke="color"
     :strokeWidth="width"

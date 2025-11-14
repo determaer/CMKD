@@ -70,6 +70,13 @@ const labels = ref<Label[]>([]);
 const labelsZero = ref<Label[]>([]);
 const sectors = ref<Sector[]>([]);
 const lines = ref<Line[]>([]);
+const reloadCount = ref(0);
+
+const updateCMKD = () => {
+  setTimeout(() => {
+    reloadCount.value++;
+  }, 0);
+};
 
 export const useParamStore = () => {
   function resetParams() {
@@ -84,7 +91,6 @@ export const useParamStore = () => {
       angles: [],
       dividerAngles: [],
     };
-    console.log(labels.value, angles.value);
   }
 
   return {
@@ -112,6 +118,8 @@ export const useParamStore = () => {
     labelsZero,
     sectors,
     lines,
+    reloadCount,
     resetParams,
+    updateCMKD,
   };
 };
