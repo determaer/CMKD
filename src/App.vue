@@ -23,6 +23,7 @@ onMounted(() => {
     :position="99"
     :showSupportRect="showSupportRect"
     :showImportant="false"
+    :showDefaultRect="false"
     @clicked="
       (info) => {
         console.log(info);

@@ -13,49 +13,50 @@ const props = defineProps<{
   shadowed?: boolean;
 }>();
 
-const lAngle = store.angles.value.angles.find(
-  (lAngle) => lAngle.labelId === props.objLabel.index,
-) ?? {
-  labelAngle: 0,
-  labelId: 0,
-  inAngle: 0,
-  outAngle: 0,
-  arrowAngle: 0,
-};
+const lAngle = computed(
+  () =>
+    store.angles.value.angles.find(
+      (lAngle) => lAngle.labelId === props.objLabel.index,
+    ) ?? {
+      labelAngle: 0,
+      labelId: 0,
+      inAngle: 0,
+      outAngle: 0,
+      arrowAngle: 0,
+    },
+);
 
 const scale = ref(1);
-const [labelX, labelY] = controlPoint(
-  store.radiuses.value.labelRadius,
-  lAngle.labelAngle,
+//computed(() => ())
+const labelXY = computed(() =>
+  controlPoint(store.radiuses.value.labelRadius, lAngle.value.labelAngle),
 );
-const [inInnerX, inInnerY] = controlPoint(
-  store.radiuses.value.innerRadius,
-  lAngle.inAngle,
+const inInnerXY = computed(() =>
+  controlPoint(store.radiuses.value.innerRadius, lAngle.value.inAngle),
 );
-const [outInnerX, outInnerY] = controlPoint(
-  store.radiuses.value.innerRadius,
-  lAngle.outAngle,
+const outInnerXY = computed(() =>
+  controlPoint(store.radiuses.value.innerRadius, lAngle.value.outAngle),
 );
-const [outMergingX, outMergingY] = controlPoint(
-  store.radiuses.value.mergingPortsRadius,
-  lAngle.outAngle,
+const outMergingXY = computed(() =>
+  controlPoint(store.radiuses.value.mergingPortsRadius, lAngle.value.outAngle),
 );
-const [inMergingX, inMergingY] = controlPoint(
-  store.radiuses.value.mergingPortsRadius,
-  lAngle.inAngle,
+const inMergingXY = computed(() =>
+  controlPoint(store.radiuses.value.mergingPortsRadius, lAngle.value.inAngle),
 );
-const [arrowX, arrowY] = controlPoint(
-  store.radiuses.value.innerRadius - 1,
-  lAngle.inAngle,
+const arrowXY = computed(() =>
+  controlPoint(store.radiuses.value.innerRadius - 1, lAngle.value.inAngle),
 );
-
-const [labelX2, labelY2] = controlPoint(
-  store.radiuses.value.labelRadius + 2.5,
-  lAngle.labelAngle + 0.6,
+const labelXY2 = computed(() =>
+  controlPoint(
+    store.radiuses.value.labelRadius + 2.5,
+    lAngle.value.labelAngle + 0.6,
+  ),
 );
-const [labelX3, labelY3] = controlPoint(
-  store.radiuses.value.labelRadius + 5,
-  lAngle.labelAngle + 1.2,
+const labelXY3 = computed(() =>
+  controlPoint(
+    store.radiuses.value.labelRadius + 5,
+    lAngle.value.labelAngle + 1.2,
+  ),
 );
 
 const handleClick = () => {
@@ -128,8 +129,12 @@ const drawSupportLabel = computed(() => {
 });
 
 const cornerRadius = computed(() => {
-  if (props.objLabel.type === "roundrect" && !store.defaultRect.value) return 7;
-  else return 0;
+  const r = {
+    rect: 0,
+    roundrect: 7 * scale.value,
+    circle: 18 * scale.value,
+  };
+  return r[props.objLabel.type];
 });
 
 const coeff = computed(() => {
@@ -143,23 +148,7 @@ const coeff = computed(() => {
 })*/
 
 const drawRectLabel = computed(() => {
-  if (
-    (props.objLabel.type === "rect" ||
-      props.objLabel.type === "roundrect" ||
-      store.defaultRect.value) &&
-    (store.showAdditionalInCircle.value || props.objLabel.isBase)
-  )
-    return true;
-  else return false;
-});
-
-const drawCircleLabel = computed(() => {
-  if (
-    props.objLabel.type === "circle" &&
-    !store.defaultRect.value &&
-    (store.showAdditionalInCircle.value || props.objLabel.isBase)
-  )
-    return true;
+  if (store.showAdditionalInCircle.value || props.objLabel.isBase) return true;
   else return false;
 });
 
@@ -187,28 +176,47 @@ const drawTextLabel = computed(() => {
   if (store.showAdditionalInCircle.value || props.objLabel.isBase) return true;
   else return false;
 });
+
+const labelConfig = computed(() => ({
+  width: 36 * coeff.value,
+  height: 36 * coeff.value,
+  strokeWidth: 1 * store.scaleMultiplier.value,
+  offset: {
+    x: 18 * coeff.value,
+    y: 18 * coeff.value,
+  },
+  rotation: -lAngle.value.labelAngle,
+  cornerRadius: cornerRadius.value,
+}));
+
+const textConfig = computed(() => ({
+  x: labelXY.value[0],
+  y: labelXY.value[1],
+  fontFamily: "Times New Roman",
+  fontStyle: props.objLabel.fontStyle,
+}));
 </script>
 
 <template>
   <v-line
     :points="[
-      inInnerX,
-      inInnerY,
-      inMergingX,
-      inMergingY,
-      labelX,
-      labelY,
-      outMergingX,
-      outMergingY,
-      outInnerX,
-      outInnerY,
+      inInnerXY[0],
+      inInnerXY[1],
+      inMergingXY[0],
+      inMergingXY[1],
+      labelXY[0],
+      labelXY[1],
+      outMergingXY[0],
+      outMergingXY[1],
+      outInnerXY[0],
+      outInnerXY[1],
     ]"
     stroke="black"
     :strokeWidth="2 * store.scaleMultiplier.value"
     lineJoin="round"
   />
   <v-arrow
-    :points="[arrowX, arrowY, inInnerX, inInnerY]"
+    :points="[arrowXY[0], arrowXY[1], inInnerXY[0], inInnerXY[1]]"
     stroke="black"
     fill="black"
     :pointerWidth="
@@ -221,70 +229,49 @@ const drawTextLabel = computed(() => {
     :angles="lAngle"
     :objLabel="objLabel"
   />
-  <!-- Rectangular Label -->
+  <!-- Label -->
   <v-rect
     v-if="drawTripleLabel && drawRectLabel"
-    :x="labelX3"
-    :y="labelY3"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :key="`${drawSupportLabel}-${objLabel.id}-3-label`"
+    :config="labelConfig"
+    :x="labelXY3[0]"
+    :y="labelXY3[1]"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-lAngle.labelAngle"
-    :cornerRadius="cornerRadius"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="drawDoubleLabel && drawRectLabel"
-    :x="labelX2"
-    :y="labelY2"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :key="`${drawSupportLabel}-${objLabel.id}-2-label`"
+    :config="labelConfig"
+    :x="labelXY2[0]"
+    :y="labelXY2[1]"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-lAngle.labelAngle"
-    :cornerRadius="cornerRadius"
     @сlick="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="drawRectLabel"
-    :x="labelX"
-    :y="labelY"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :key="`${drawSupportLabel}-${objLabel.id}-1-label`"
+    :config="labelConfig"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-lAngle.labelAngle"
-    :cornerRadius="cornerRadius"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="store.showScore.value && drawRectLabel"
-    :x="labelX"
-    :y="labelY"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    :key="`${drawSupportLabel}-${objLabel.id}-scored-label`"
+    :config="labelConfig"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :opacity="
       fillColor === 'lightgrey' || shadowed || fillColor == 'yellow'
         ? 1
@@ -292,67 +279,6 @@ const drawTextLabel = computed(() => {
     "
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-lAngle.labelAngle"
-    :cornerRadius="cornerRadius"
-    @click="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <!--Circular Label-->
-  <v-circle
-    v-if="drawCircleLabel && drawTripleLabel"
-    :x="labelX3"
-    :y="labelY3"
-    :radius="20 * coeff"
-    fill="white"
-    stroke='"black"'
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    @click="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <v-circle
-    v-if="drawCircleLabel && drawDoubleLabel"
-    :x="labelX2"
-    :y="labelY2"
-    :radius="20 * coeff"
-    fill="white"
-    stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    @click="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <v-circle
-    v-if="drawCircleLabel"
-    :x="labelX"
-    :y="labelY"
-    :radius="20 * coeff"
-    fill="white"
-    stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    @click="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <v-circle
-    v-if="store.showScore.value && drawCircleLabel"
-    :x="labelX"
-    :y="labelY"
-    :radius="20 * coeff"
-    :fill="shadowed ? 'white' : fillColor"
-    :stroke="shadowed ? fillColor : 'black'"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :opacity="
-      fillColor === 'lightgrey' || shadowed || fillColor == 'yellow'
-        ? 1
-        : Math.abs(objLabel.score)
-    "
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -360,32 +286,28 @@ const drawTextLabel = computed(() => {
   <!-- Text in label -->
   <v-text
     v-if="drawTextLabel"
-    :x="labelX"
-    :y="labelY"
+    :key="`${drawSupportLabel}-${objLabel.id}-type-text`"
+    :config="textConfig"
     :text="objLabel.typeText"
     :offset="{
       x: 14 * coeff,
       y: 10 * coeff,
     }"
-    fontFamily="Times New Roman"
     :fontSize="objLabel.typeText.length === 1 ? 22 * coeff : 15 * coeff"
-    :fontStyle="objLabel.fontStyle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
     v-if="drawTextLabel"
-    :x="labelX"
-    :y="labelY"
+    :key="`${drawSupportLabel}-${objLabel.id}-num-text`"
+    :config="textConfig"
     :text="objLabel.numText"
     :offset="{
       x: 3 * coeff,
       y: 4 * coeff,
     }"
-    fontFamily="Times New Roman"
     :fontSize="16 * coeff"
-    :fontStyle="objLabel.fontStyle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"

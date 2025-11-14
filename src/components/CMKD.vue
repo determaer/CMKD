@@ -29,7 +29,7 @@ const {
   position = 9999,
   showSupportRect = false,
   showImportant = false,
-  ...props
+  labels,
 } = defineProps<{
   width?: number;
   drawingMode?: "default" | "score" | "light";
@@ -52,10 +52,10 @@ const emit = defineEmits<{
 const stageRef = ref();
 
 watch(
-  () => props.labels,
+  () => labels,
   () => {
     store.resetParams();
-    store.labels.value = props.labels;
+    store.labels.value = labels;
     calcCMKD();
   },
   { immediate: true, deep: true },
@@ -88,19 +88,16 @@ watch(
     if (drawingMode == "default") {
       store.showAdditionalInCircle.value = true;
       store.showScore.value = false;
-      store.defaultRect.value = false;
       store.showLight.value = false;
     }
     if (drawingMode == "score") {
       store.showAdditionalInCircle.value = false;
       store.showScore.value = true;
-      store.defaultRect.value = false;
       store.showLight.value = false;
     }
     if (drawingMode == "light") {
       store.showAdditionalInCircle.value = false;
       store.showScore.value = true;
-      store.defaultRect.value = false;
       store.showLight.value = true;
     }
   },

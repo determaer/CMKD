@@ -4,7 +4,7 @@ export interface Label {
   prop: number; // принадлежность к группе
   typeText: string; // буквенное обозначение элемента
   numText: string; // цифровое обозначение элемента
-  type: string; // фигурное обозначение элемента
+  type: "rect" | "roundrect" | "circle"; // фигурное обозначение элемента
   num: number; // количество представлений информации элементом
   score: number; // значение результата освоения элемента (-1; 1)
   isBase: boolean; // часть основной траектории
@@ -75,3 +75,4 @@ export const defaultLabel: Label = {
   sectorName: "",
   drawAnyCase: true,
 };
+
