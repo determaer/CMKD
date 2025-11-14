@@ -4,7 +4,7 @@ import { labels } from "./legacy/labelsNew.ts";
 import { onMounted, ref /*, useTemplateRef*/ } from "vue";
 
 //const cmkd = useTemplateRef("cmkd");
-const showSupportRect = ref(false);
+const showSupportRect = ref(true);
 
 onMounted(() => {
   setTimeout(() => {
@@ -17,7 +17,7 @@ onMounted(() => {
   <input type="checkbox" v-model="showSupportRect" />
   <CMKD
     ref="cmkd"
-    drawingMode="score"
+    drawingMode="default"
     :width="800"
     :labels="labels"
     :position="99"

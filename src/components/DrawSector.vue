@@ -16,15 +16,6 @@ const props = defineProps<{
 }>();
 
 const fill = ref(props.bgColor);
-const scale = ref(1);
-
-let arcLength = props.sector.sEnd - props.sector.sStart;
-let r = 0;
-if (
-  props.sector.sEnd - arcLength / 2 > 90 &&
-  props.sector.sEnd - arcLength / 2 < 270
-)
-  r = 1;
 
 const handleClick = () => {
   clickedStore.clickedInfo.value = {
@@ -35,30 +26,44 @@ const handleClick = () => {
   clickedStore.clickedSector.value = props.sector;
 };
 
+const handleMouseOver = () => {
+  fill.value = "gray";
+};
+
+const handleMouseOut = () => {
+  fill.value = props.bgColor;
+};
+
+const targetAngle = computed(
+  () => props.sector.sEnd - (props.sector.sEnd - props.sector.sStart) / 2,
+);
+
+const arcLength = computed(() => props.sector.sEnd - props.sector.sStart);
+
 const labelXY = computed<[number, number]>(() => {
   return controlPoint(
     store.radiuses.value.labelRadius +
       50 * props.sector.sLevel * store.scaleMultiplier.value,
-    90 + (props.sector.sEnd - arcLength / 2),
+    90 + targetAngle.value,
   );
 });
 
 const nameXY = computed<[number, number]>(() => {
   return controlPoint(
     store.radiuses.value.sectorNameRadius,
-    90 + (props.sector.sEnd - arcLength / 2),
+    90 + targetAngle.value,
   );
 });
 
-let fillColor = "white";
-if (props.sector.object) {
+const labelFillColor = computed(() => {
   if (props.sector.object.score > 0) {
-    fillColor = "green";
+    return "green";
   }
   if (props.sector.object.score < 0) {
-    fillColor = "red";
+    return "red";
   }
-}
+  return "white";
+});
 
 const labelWithLabel = computed(() => {
   if (props.sector.object && props.sector.object.isLabel) return true;
@@ -66,8 +71,27 @@ const labelWithLabel = computed(() => {
 });
 
 const coeff = computed(() => {
-  return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value;
+  return store.sizeMultiplier.value * store.scaleMultiplier.value;
 });
+
+const nameRotation = computed(() => {
+  const angleCorrection =
+    targetAngle.value > 90 && targetAngle.value < 270 ? 1 : 0;
+
+  return -(props.sector.sEnd - arcLength.value / 2) - 180 * angleCorrection;
+});
+
+const outerRadius = computed(
+  () =>
+    store.radiuses.value.outerRadius +
+    50 * props.sector.sLevel * store.scaleMultiplier.value,
+);
+
+const innerRadius = computed(
+  () =>
+    store.radiuses.value.innerRadius +
+    50 * props.sector.sLevel * store.scaleMultiplier.value,
+);
 </script>
 
 <template>
@@ -76,30 +100,16 @@ const coeff = computed(() => {
     :y="store.y.value"
     :angle="360 - arcLength"
     :rotation="-90 - sector.sStart"
-    :outerRadius="
-      store.radiuses.value.outerRadius +
-      50 * sector.sLevel * store.scaleMultiplier.value
-    "
-    :innerRadius="
-      store.radiuses.value.innerRadius +
-      50 * sector.sLevel * store.scaleMultiplier.value
-    "
+    :outerRadius="outerRadius"
+    :innerRadius="innerRadius"
     :fill="fill"
     stroke="black"
     :opacity="opacity"
     :clockwise="true"
     :strokeWidth="2 * store.scaleMultiplier.value"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        fill = 'gray';
-      }
-    "
-    @mouse-out="
-      () => {
-        fill = bgColor;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-text
     v-if="store.showSectorName.value"
@@ -112,18 +122,10 @@ const coeff = computed(() => {
     }"
     fontFamily="Times New Roman"
     :fontSize="22 * coeff"
-    :rotation="-(sector.sEnd - arcLength / 2) - 180 * r"
+    :rotation="nameRotation"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        fill = 'gray';
-      }
-    "
-    @mouse-out="
-      () => {
-        fill = bgColor;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="labelWithLabel && sector.object.level != 0"
@@ -140,16 +142,8 @@ const coeff = computed(() => {
     }"
     :rotation="-(sector.sEnd - arcLength / 2)"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        scale = 1.5;
-      }
-    "
-    @mouse-out="
-      () => {
-        scale = 1;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-rect
     v-if="labelWithLabel && store.showScore.value && sector.object.level != 0"
@@ -158,8 +152,8 @@ const coeff = computed(() => {
     :width="36 * coeff"
     :height="36 * coeff"
     :opacity="Math.abs(sector.object.score)"
-    :fill="shadowed ? 'white' : fillColor"
-    :stroke="shadowed ? fillColor : 'black'"
+    :fill="shadowed ? 'white' : labelFillColor"
+    :stroke="shadowed ? labelFillColor : 'black'"
     :strokeWidth="1 * store.scaleMultiplier.value"
     :offset="{
       x: 18 * coeff,
@@ -167,16 +161,8 @@ const coeff = computed(() => {
     }"
     :rotation="-(sector.sEnd - arcLength / 2)"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        scale = 1.5;
-      }
-    "
-    @mouse-out="
-      () => {
-        scale = 1;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-text
     v-if="labelWithLabel && sector.object.level != 0"
@@ -191,16 +177,8 @@ const coeff = computed(() => {
     :fontSize="22 * coeff"
     :fontStyle="sector.object.fontStyle"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        scale = 1.5;
-      }
-    "
-    @mouse-out="
-      () => {
-        scale = 1;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-text
     v-if="labelWithLabel && sector.object.level != 0"
@@ -215,16 +193,8 @@ const coeff = computed(() => {
     :fontSize="16 * coeff"
     :fontStyle="sector.object.fontStyle"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        scale = 1.5;
-      }
-    "
-    @mouse-out="
-      () => {
-        scale = 1;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
   <v-text
     v-if="!labelWithLabel && sector.object.level != 0"
@@ -237,20 +207,10 @@ const coeff = computed(() => {
     }"
     fontFamily="Times New Roman"
     :fontSize="22 * coeff"
-    :rotation="-(sector.sEnd - arcLength / 2) - 180 * r"
+    :rotation="nameRotation"
     :fontStyle="sector.object.fontStyle"
     @click="handleClick"
-    @mouse-over="
-      () => {
-        fill = 'gray';
-      }
-    "
-    @mouse-out="
-      () => {
-        fill = bgColor;
-      }
-    "
+    @mouse-over="handleMouseOver"
+    @mouse-out="handleMouseOut"
   />
 </template>
-
-<style scoped></style>
