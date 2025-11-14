@@ -2,7 +2,7 @@ import { useParamStore } from "../store/paramStore";
 import type { Angle } from "../types/angle";
 const store = useParamStore();
 
-export const calcParams = () => {
+export const calcAngles = () => {
   // расчёт опорных углов и окружностей
   const arrLabelAngles: number[] = [],
     arrInAngles: number[] = [],
@@ -44,16 +44,9 @@ export const calcParams = () => {
     });
   }
 
-  const add = store.discNum.value < 50 ? 0 : 50;
-  store.params.value = {
-    outerRadius: (250 + add) * store.scaleMultiplier.value,
-    innerRadius: (200 + add) * store.scaleMultiplier.value,
-    labelRadius: (225 + add) * store.scaleMultiplier.value,
-    additionalLabelRadius: (285 + add) * store.scaleMultiplier.value,
-    linesBtwElementsRadius: (190 + add) * store.scaleMultiplier.value,
-    mergingPortsRadius: (212 + add) * store.scaleMultiplier.value,
-    sectorNameRadius: (265 + add) * store.scaleMultiplier.value,
+  store.angles.value = {
     dividerAngles: arrDividerAngles,
     angles: arrAngles,
   };
 };
+

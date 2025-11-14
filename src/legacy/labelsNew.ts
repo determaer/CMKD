@@ -1,7 +1,7 @@
 import type { Label } from "../types";
 
 export const labels: Label[] = [
-  {
+  /*{
     id: 97,
     index: 0,
     prop: 0,
@@ -52,7 +52,7 @@ export const labels: Label[] = [
     percent: 50,
     sectorName: "t1",
     drawAnyCase: false,
-  },
+  },*/
   {
     id: 99,
     index: 2,
@@ -60,7 +60,7 @@ export const labels: Label[] = [
     typeText: "u",
     numText: "3",
     type: "roundrect",
-    num: 1,
+    num: 3,
     score: 1,
     isBase: true,
     connections: [],
@@ -684,7 +684,7 @@ export const labels: Label[] = [
     typeText: "u",
     numText: "27",
     type: "rect",
-    num: 1,
+    num: 4,
     score: 1,
     isBase: true,
     connections: [123],

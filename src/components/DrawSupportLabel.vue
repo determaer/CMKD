@@ -15,20 +15,20 @@ const props = defineProps<{
 }>();
 
 const [labelX, labelY] = controlPoint(
-  store.params.value.labelRadius,
+  store.radiuses.value.labelRadius,
   props.angles.labelAngle,
 );
 const [supLabelX, supLabelY] = controlPoint(
-  store.params.value.additionalLabelRadius,
+  store.radiuses.value.additionalLabelRadius,
   props.angles.labelAngle,
 );
 
 const [supLabelX2, supLabelY2] = controlPoint(
-  store.params.value.additionalLabelRadius + 2.5,
+  store.radiuses.value.additionalLabelRadius + 2.5,
   props.angles.labelAngle + 0.6,
 );
 const [supLabelX3, supLabelY3] = controlPoint(
-  store.params.value.additionalLabelRadius + 5,
+  store.radiuses.value.additionalLabelRadius + 5,
   props.angles.labelAngle + 1.2,
 );
 

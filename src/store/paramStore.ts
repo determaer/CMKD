@@ -12,14 +12,26 @@ const pointNum = computed(() => {
   return discNum.value * circleDivider;
 });
 
-const params = ref({
-  outerRadius: 0, //внешний радиус окружности диаграммы
-  innerRadius: 0, //внутренний радиус окружности диаграммы
-  labelRadius: 0, //радиус расположения элементов
-  additionalLabelRadius: 0, //радиус расположения дополнительных элементов
-  linesBtwElementsRadius: 0, //радиус конечных точек для линий-соединителей
-  mergingPortsRadius: 0, //радиус на котором начинается слияние портов элемента
-  sectorNameRadius: 0,
+const manyLabelsCorrection = computed(() => (discNum.value < 50 ? 0 : 50));
+const haveSupportsCorrection = computed(() => {
+  return showSupportRect.value ? 50 : 0;
+});
+
+const radiuses = computed(() => {
+  const generalCorrection = (baseRadius: number) =>
+    (baseRadius + manyLabelsCorrection.value) * scaleMultiplier.value;
+  return {
+    outerRadius: generalCorrection(250),
+    innerRadius: generalCorrection(200),
+    labelRadius: generalCorrection(225),
+    additionalLabelRadius: generalCorrection(285),
+    linesBtwElementsRadius: generalCorrection(190),
+    mergingPortsRadius: generalCorrection(212),
+    sectorNameRadius: generalCorrection(265) + haveSupportsCorrection.value,
+  };
+});
+
+const angles = ref({
   angles: <Angle[]>[],
   dividerAngles: <number[]>[],
 });
@@ -68,18 +80,11 @@ export const useParamStore = () => {
     discNum.value = 0;
     circleNum.value = 0;
 
-    params.value = {
-      outerRadius: 0,
-      innerRadius: 0,
-      labelRadius: 0,
-      additionalLabelRadius: 0,
-      linesBtwElementsRadius: 0,
-      mergingPortsRadius: 0,
-      sectorNameRadius: 0,
+    angles.value = {
       angles: [],
       dividerAngles: [],
     };
-    console.log(labels.value, params.value);
+    console.log(labels.value, angles.value);
   }
 
   return {
@@ -90,7 +95,8 @@ export const useParamStore = () => {
     circleNum,
     discNum,
     pointNum,
-    params,
+    angles,
+    radiuses,
     scaleMultiplier,
     sizeMultiplier,
     position,

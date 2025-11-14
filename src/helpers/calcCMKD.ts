@@ -1,9 +1,10 @@
 import { calcLabels } from "./calcLabels";
-import { calcParams } from "./calcParams";
+import { calcAngles } from "./calcAngles";
 import { calcSectors } from "./calcSectors";
 
 export const calcCMKD = (skipLabels?: boolean) => {
   if (!skipLabels) calcLabels();
-  calcParams();
+  calcAngles();
   calcSectors();
 };
+

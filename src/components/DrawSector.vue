@@ -35,20 +35,20 @@ const handleClick = () => {
   clickedStore.clickedSector.value = props.sector;
 };
 
-let additional = 0;
-if (store.showSupportRect.value) {
-  additional = 50;
-}
+const labelXY = computed<[number, number]>(() => {
+  return controlPoint(
+    store.radiuses.value.labelRadius +
+      50 * props.sector.sLevel * store.scaleMultiplier.value,
+    90 + (props.sector.sEnd - arcLength / 2),
+  );
+});
 
-const [labelX, labelY] = controlPoint(
-  store.params.value.labelRadius +
-    50 * props.sector.sLevel * store.scaleMultiplier.value,
-  90 + (props.sector.sEnd - arcLength / 2),
-);
-const [nameX, nameY] = controlPoint(
-  store.params.value.sectorNameRadius + additional,
-  90 + (props.sector.sEnd - arcLength / 2),
-);
+const nameXY = computed<[number, number]>(() => {
+  return controlPoint(
+    store.radiuses.value.sectorNameRadius,
+    90 + (props.sector.sEnd - arcLength / 2),
+  );
+});
 
 let fillColor = "white";
 if (props.sector.object) {
@@ -77,11 +77,11 @@ const coeff = computed(() => {
     :angle="360 - arcLength"
     :rotation="-90 - sector.sStart"
     :outerRadius="
-      store.params.value.outerRadius +
+      store.radiuses.value.outerRadius +
       50 * sector.sLevel * store.scaleMultiplier.value
     "
     :innerRadius="
-      store.params.value.innerRadius +
+      store.radiuses.value.innerRadius +
       50 * sector.sLevel * store.scaleMultiplier.value
     "
     :fill="fill"
@@ -103,8 +103,8 @@ const coeff = computed(() => {
   />
   <v-text
     v-if="store.showSectorName.value"
-    :x="nameX"
-    :y="nameY"
+    :x="nameXY[0]"
+    :y="nameXY[1]"
     :text="sector.shortname"
     :offset="{
       x: 20 * coeff,
@@ -127,8 +127,8 @@ const coeff = computed(() => {
   />
   <v-rect
     v-if="labelWithLabel && sector.object.level != 0"
-    :x="labelX"
-    :y="labelY"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :width="36 * coeff"
     :height="36 * coeff"
     fill="white"
@@ -153,8 +153,8 @@ const coeff = computed(() => {
   />
   <v-rect
     v-if="labelWithLabel && store.showScore.value && sector.object.level != 0"
-    :x="labelX"
-    :y="labelY"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :width="36 * coeff"
     :height="36 * coeff"
     :opacity="Math.abs(sector.object.score)"
@@ -180,8 +180,8 @@ const coeff = computed(() => {
   />
   <v-text
     v-if="labelWithLabel && sector.object.level != 0"
-    :x="labelX"
-    :y="labelY"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :text="sector.object.typeText"
     :offset="{
       x: 13 * coeff,
@@ -204,8 +204,8 @@ const coeff = computed(() => {
   />
   <v-text
     v-if="labelWithLabel && sector.object.level != 0"
-    :x="labelX"
-    :y="labelY"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :text="sector.object.numText"
     :offset="{
       x: 1 * coeff,
@@ -228,8 +228,8 @@ const coeff = computed(() => {
   />
   <v-text
     v-if="!labelWithLabel && sector.object.level != 0"
-    :x="labelX"
-    :y="labelY"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :text="sector.object.typeText + sector.object.numText"
     :offset="{
       x: 20 * coeff,

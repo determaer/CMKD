@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import CMKD from "./components/CMKD.vue";
 import { labels } from "./legacy/labelsNew.ts";
-import { onMounted /*, useTemplateRef*/ } from "vue";
+import { onMounted, ref /*, useTemplateRef*/ } from "vue";
 
 //const cmkd = useTemplateRef("cmkd");
+const showSupportRect = ref(false);
 
 onMounted(() => {
   setTimeout(() => {
@@ -13,13 +14,14 @@ onMounted(() => {
 </script>
 
 <template>
+  <input type="checkbox" v-model="showSupportRect" />
   <CMKD
     ref="cmkd"
     drawingMode="score"
     :width="800"
     :labels="labels"
     :position="99"
-    :showSupportRect="false"
+    :showSupportRect="showSupportRect"
     :showImportant="false"
     @clicked="
       (info) => {

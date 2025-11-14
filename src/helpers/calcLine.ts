@@ -5,10 +5,10 @@ const store = useParamStore();
 
 export const calcLine = (objLabelIn: Label, objLabelOut: Label) => {
   const radiusCorrection = store.discNum.value >= 50 ? 1 : 0;
-  const objLabelInAngles = store.params.value.angles.find(
+  const objLabelInAngles = store.angles.value.angles.find(
     (lAngle) => lAngle.labelId === objLabelIn.index,
   );
-  const objLabelOutAngles = store.params.value.angles.find(
+  const objLabelOutAngles = store.angles.value.angles.find(
     (lAngle) => lAngle.labelId === objLabelOut.index,
   );
   let bezierCPangle1: number,
@@ -19,13 +19,13 @@ export const calcLine = (objLabelIn: Label, objLabelOut: Label) => {
     inRadius: number;
 
   if (objLabelIn.prop !== 0 || objLabelOut.prop !== 0) {
-    inRadius = store.params.value.innerRadius;
-    outRadius = store.params.value.linesBtwElementsRadius;
+    inRadius = store.radiuses.value.innerRadius;
+    outRadius = store.radiuses.value.linesBtwElementsRadius;
     outAngle = objLabelOutAngles?.inAngle ?? 0;
     inAngle = objLabelInAngles?.outAngle ?? 0;
   } else {
-    outRadius = store.params.value.innerRadius;
-    inRadius = store.params.value.linesBtwElementsRadius;
+    outRadius = store.radiuses.value.innerRadius;
+    inRadius = store.radiuses.value.linesBtwElementsRadius;
     outAngle = objLabelOutAngles?.outAngle ?? 0;
     inAngle = objLabelInAngles?.inAngle ?? 0;
   }

@@ -19,11 +19,11 @@ defineProps<{
     :bgColor="sector.sLevel % 2 === 0 ? bgColor : bgColor2"
   />
   <TypeDivider
-    v-for="dAngle of store.params.value.dividerAngles"
+    v-for="dAngle of store.angles.value.dividerAngles"
     :key="dAngle"
-    :startRadius="store.params.value.innerRadius"
+    :startRadius="store.radiuses.value.innerRadius"
     :endRadius="
-      store.params.value.outerRadius +
+      store.radiuses.value.outerRadius +
       50 * store.circleNum.value * store.scaleMultiplier.value
     "
     :angle="dAngle"
@@ -31,3 +31,4 @@ defineProps<{
 </template>
 
 <style scoped></style>
+

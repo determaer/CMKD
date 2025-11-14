@@ -13,7 +13,7 @@ const props = defineProps<{
   shadowed?: boolean;
 }>();
 
-const lAngle = store.params.value.angles.find(
+const lAngle = store.angles.value.angles.find(
   (lAngle) => lAngle.labelId === props.objLabel.index,
 ) ?? {
   labelAngle: 0,
@@ -25,36 +25,36 @@ const lAngle = store.params.value.angles.find(
 
 const scale = ref(1);
 const [labelX, labelY] = controlPoint(
-  store.params.value.labelRadius,
+  store.radiuses.value.labelRadius,
   lAngle.labelAngle,
 );
 const [inInnerX, inInnerY] = controlPoint(
-  store.params.value.innerRadius,
+  store.radiuses.value.innerRadius,
   lAngle.inAngle,
 );
 const [outInnerX, outInnerY] = controlPoint(
-  store.params.value.innerRadius,
+  store.radiuses.value.innerRadius,
   lAngle.outAngle,
 );
 const [outMergingX, outMergingY] = controlPoint(
-  store.params.value.mergingPortsRadius,
+  store.radiuses.value.mergingPortsRadius,
   lAngle.outAngle,
 );
 const [inMergingX, inMergingY] = controlPoint(
-  store.params.value.mergingPortsRadius,
+  store.radiuses.value.mergingPortsRadius,
   lAngle.inAngle,
 );
 const [arrowX, arrowY] = controlPoint(
-  store.params.value.innerRadius - 1,
+  store.radiuses.value.innerRadius - 1,
   lAngle.inAngle,
 );
 
 const [labelX2, labelY2] = controlPoint(
-  store.params.value.labelRadius + 2.5,
+  store.radiuses.value.labelRadius + 2.5,
   lAngle.labelAngle + 0.6,
 );
 const [labelX3, labelY3] = controlPoint(
-  store.params.value.labelRadius + 5,
+  store.radiuses.value.labelRadius + 5,
   lAngle.labelAngle + 1.2,
 );
 
