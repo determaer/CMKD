@@ -26,13 +26,13 @@ const dash = computed(() => {
 });
 
 const stroke = computed(() => {
-  if (store.showImportant.value) {
-    if (
-      props.objLabelOut.score < 0 ||
-      (props.objLabelIn.score < 0 && props.objLabelOut.isBase)
-    ) {
-      return "red";
-    }
+  if (
+    store.showImportant.value &&
+    props.objLabelOut.isBase &&
+    props.objLabelIn.isBase &&
+    (props.objLabelOut.score < 0 || props.objLabelIn.score < 0)
+  ) {
+    return "red";
   }
   return "black";
 });
@@ -88,4 +88,3 @@ const handleMouseOut = () => {
     @mouse-out="handleMouseOut"
   />
 </template>
-

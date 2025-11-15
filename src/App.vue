@@ -6,7 +6,6 @@ import { onMounted, ref /*, useTemplateRef*/ } from "vue";
 //const cmkd = useTemplateRef("cmkd");
 const showSupportRect = ref(true);
 const labelref = ref(labels);
-const ref1 = ref(800);
 onMounted(() => {
   setTimeout(() => {
     // загрузка изображения карты - cmkd.value?.downloadURI();
@@ -33,7 +32,6 @@ onMounted(() => {
       drawAnyCase: true,
     });
 
-    ref1.value = 1500;
     console.log(labelref.value);
   }, 3000);
 });
@@ -44,11 +42,11 @@ onMounted(() => {
   <CMKD
     ref="cmkd"
     drawingMode="score"
-    :width="ref1"
+    :width="800"
     :labels="labelref"
     :position="99"
-    :showSupportRect="showSupportRect"
-    :showImportant="false"
+    :showSupportRect="false"
+    :showImportant="showSupportRect"
     :showDefaultRect="false"
     @clicked="
       (info) => {
