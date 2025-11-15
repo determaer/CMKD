@@ -10,7 +10,6 @@ import DrawClickedLine from "./DrawClickedLine.vue";
 import DrawClickedSector from "./DrawClickedSector.vue";
 import DrawArrows from "./DrawArrows.vue";
 import type { Label } from "../types/label";
-import { calcCMKD } from "../helpers/calcCMKD";
 
 const store = useParamStore();
 const {
@@ -56,9 +55,7 @@ const stageRef = ref();
 watch(
   () => labels,
   () => {
-    store.resetParams();
     store.labels.value = labels;
-    calcCMKD();
     store.updateCMKD();
   },
   { immediate: true, deep: true },

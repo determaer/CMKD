@@ -1,8 +1,9 @@
 import { ref, computed } from "vue";
-import type { Label, Sector } from "../types";
+import type { Label } from "../types";
 import { calcLines } from "../helpers/calcLines";
 import { calcAngles } from "../helpers/calcAngles";
 import { calcDividerAngles } from "../helpers/calcDividerAngles";
+import { calcSectors } from "../helpers/calcSectors";
 //#region params
 const width = ref(800);
 const centerPoint = computed(() => width.value / 2);
@@ -79,7 +80,15 @@ const labels = ref<Label[]>([]);
 const labelsZero = computed(() =>
   labels.value.filter((label) => label.level == 0),
 );
-const sectors = ref<Sector[]>([]);
+const sectors = computed(() =>
+  calcSectors(
+    circleNum.value,
+    discNum.value,
+    angles.value,
+    labelsZero.value,
+    labels.value,
+  ),
+);
 const lines = computed(() =>
   calcLines(labelsZero.value, showLight.value, showAdditionalInCircle.value),
 );
@@ -90,11 +99,6 @@ export const useParamStore = () => {
     setTimeout(() => {
       reloadCount.value++;
     }, 0);
-  }
-
-  function resetParams() {
-    labels.value = [];
-    sectors.value = [];
   }
 
   return {
@@ -124,7 +128,6 @@ export const useParamStore = () => {
     sectors,
     lines,
     reloadCount,
-    resetParams,
     updateCMKD,
   };
 };

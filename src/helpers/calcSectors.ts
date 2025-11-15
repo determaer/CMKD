@@ -1,30 +1,36 @@
-import { useParamStore } from "../store/paramStore";
-import { defaultLabel } from "../types/label";
-import type { SectorLabel } from "../types/sector";
-const store = useParamStore();
+import type { Angle } from "../types/angle";
+import { defaultLabel, type Label } from "../types/label";
+import type { Sector, SectorLabel } from "../types/sector";
 
-export const calcSectors = () => {
-  // расчёт секторов
-  for (let i = store.circleNum.value; i >= 0; i = i - 1) {
-    const sectorsAngles: number[] = [];
+export const calcSectors = (
+  circleNum: number,
+  discNum: number,
+  angles: Angle[],
+  labelsZero: Label[],
+  labels: Label[],
+) => {
+  const sectors: Sector[] = [];
+
+  for (let i = circleNum; i >= 0; i = i - 1) {
+    const sectorsAngles: number[] = [0];
     const sectorsLabels: SectorLabel[] = [];
     let currentAngle = 0;
-    sectorsAngles.push(0);
 
-    if (store.angles.value.length > 0) {
+    if (angles.length > 0) {
       if (i == 0) {
         // классическая карта или нижний уровень сводной карты
         let start: number;
-        if (store.angles.value.length > 0) {
-          store.labelsZero.value.map((label, index) => {
+        if (angles.length > 0) {
+          labelsZero.map((label, index) => {
             if (label.secStart) start = index;
             if (label.secEnd) {
               const end = index;
-              if (end != store.labels.value.length - 1) {
-                const angle1 = store.angles.value.find(
+
+              if (end != labels.length - 1) {
+                const angle1 = angles.find(
                   (lAngle) => lAngle.labelId === end + 1,
                 )?.labelAngle;
-                const angle2 = store.angles.value.find(
+                const angle2 = angles.find(
                   (lAngle) => lAngle.labelId === end,
                 )?.labelAngle;
                 if (angle1 && angle2) {
@@ -46,10 +52,9 @@ export const calcSectors = () => {
         sectorsAngles.push(360);
       } else {
         // верхние уровни сводной карты
-        store.labels.value.map((label, index) => {
+        labels.map((label, index) => {
           if (label.level == i && label.secLength) {
-            let nextAngle =
-              currentAngle + 360 * (label.secLength / store.discNum.value);
+            let nextAngle = currentAngle + 360 * (label.secLength / discNum);
             if (nextAngle == 360) nextAngle = 359.99;
             sectorsAngles.push(nextAngle);
             currentAngle = nextAngle;
@@ -66,7 +71,7 @@ export const calcSectors = () => {
 
     if (sectorsLabels.length > 0) {
       for (let i = 0; i < sectorsAngles.length - 1; i = i + 1) {
-        store.sectors.value.push({
+        sectors.push({
           sStart: sectorsAngles[i] ?? 0,
           sEnd: sectorsAngles[i + 1] ?? 0,
           sStartLID: sectorsLabels[i]?.sStartLID ?? 0,
@@ -78,4 +83,6 @@ export const calcSectors = () => {
       }
     }
   }
+
+  return sectors;
 };
