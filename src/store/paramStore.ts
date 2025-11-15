@@ -1,7 +1,8 @@
 import { ref, computed } from "vue";
 import type { Label, Sector } from "../types";
-import type { Angle } from "../types/angle";
 import { calcLines } from "../helpers/calcLines";
+import { calcAngles } from "../helpers/calcAngles";
+import { calcDividerAngles } from "../helpers/calcDividerAngles";
 //#region params
 const width = ref(800);
 const centerPoint = computed(() => width.value / 2);
@@ -32,10 +33,18 @@ const radiuses = computed(() => ({
   sectorNameRadius: generalCorrection(265) + haveSupportsCorrection.value,
 }));
 
-const angles = ref({
-  angles: <Angle[]>[],
-  dividerAngles: <number[]>[],
-});
+const angles = computed(() =>
+  calcAngles(
+    discNum.value,
+    pointNum.value,
+    circleDivider,
+    sizeMultiplier.value,
+  ),
+);
+
+const dividerAngles = computed(() =>
+  calcDividerAngles(discNum.value, angles.value, labelsZero.value),
+);
 
 const scaleMultiplier = computed(() => width.value / 800);
 
@@ -86,11 +95,6 @@ export const useParamStore = () => {
   function resetParams() {
     labels.value = [];
     sectors.value = [];
-
-    angles.value = {
-      angles: [],
-      dividerAngles: [],
-    };
   }
 
   return {
@@ -101,6 +105,7 @@ export const useParamStore = () => {
     discNum,
     pointNum,
     angles,
+    dividerAngles,
     radiuses,
     scaleMultiplier,
     sizeMultiplier,

@@ -27,13 +27,10 @@ const endRadius = computed(
     :bgColor="sector.sLevel % 2 === 0 ? bgColor : bgColor2"
   />
   <TypeDivider
-    v-for="dAngle of store.angles.value.dividerAngles"
+    v-for="dAngle of store.dividerAngles.value"
     :key="`${store.reloadCount}-${dAngle}-type-divider`"
     :startRadius="startRadius"
     :endRadius="endRadius"
     :angle="dAngle"
   />
 </template>
-
-<style scoped></style>
-

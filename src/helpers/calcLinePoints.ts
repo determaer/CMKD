@@ -5,12 +5,12 @@ const store = useParamStore();
 
 export const calcLinePoint = (objLabelIn: Label, objLabelOut: Label) => {
   const radiusCorrection = store.discNum.value >= 50 ? 1 : 0;
-  const objLabelInAngles = store.angles.value.angles.find(
+  const objLabelInAngles = store.angles.value.find(
     (lAngle) =>
       lAngle.labelId ===
       store.labelsZero.value.findIndex((label) => objLabelIn.id == label.id),
   );
-  const objLabelOutAngles = store.angles.value.angles.find(
+  const objLabelOutAngles = store.angles.value.find(
     (lAngle) =>
       lAngle.labelId ===
       store.labelsZero.value.findIndex((label) => objLabelOut.id == label.id),

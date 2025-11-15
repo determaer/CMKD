@@ -19,7 +19,7 @@ const objLabelIndex = computed(() =>
 
 const lAngle = computed(
   () =>
-    store.angles.value.angles.find(
+    store.angles.value.find(
       (lAngle) => lAngle.labelId === objLabelIndex.value,
     ) ?? {
       labelAngle: 0,

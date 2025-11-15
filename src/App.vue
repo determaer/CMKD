@@ -11,7 +11,7 @@ onMounted(() => {
     // загрузка изображения карты - cmkd.value?.downloadURI();
     labelref.value.push({
       id: 1500,
-      prop: 0,
+      prop: 1,
       typeText: "u",
       numText: "1",
       type: "circle",

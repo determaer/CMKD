@@ -118,7 +118,7 @@ function downloadURI() {
 
 <template>
   <v-stage
-    v-if="store.angles.value.angles.length > 0"
+    v-if="store.angles.value.length > 0"
     ref="stageRef"
     :width="store.width.value"
     :height="store.width.value"

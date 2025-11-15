@@ -1,52 +1,39 @@
-import { useParamStore } from "../store/paramStore";
 import type { Angle } from "../types/angle";
-const store = useParamStore();
 
-export const calcAngles = () => {
-  // расчёт опорных углов и окружностей
-  const arrLabelAngles: number[] = [],
-    arrInAngles: number[] = [],
-    arrOutAngles: number[] = [],
-    arrArrowsAngles: number[] = [],
-    arrDividerAngles: number[] = [90],
-    arrAngles: Angle[] = [];
+export const calcAngles = (
+  discNum: number,
+  pointNum: number,
+  circleDivider: number,
+  sizeMultiplier: number,
+) => {
+  const labelAngles: number[] = [],
+    inAngles: number[] = [],
+    outAngles: number[] = [],
+    arrowsAngles: number[] = [],
+    angles: Angle[] = [];
 
-  for (let i = 1; i <= store.discNum.value * 2; i = i + 2) {
-    arrLabelAngles.push(i * (360 / (store.discNum.value * 2)) + 90);
+  for (let i = 1; i <= discNum * 2; i = i + 2) {
+    labelAngles.push(i * (360 / (discNum * 2)) + 90);
   }
 
-  for (let i = 1; i < store.pointNum.value; i = i + store.circleDivider) {
-    const tIn = (i + 1) * (360 / store.pointNum.value) + 90;
-    const tOut = (i + 2) * (360 / store.pointNum.value) + 90;
-    const tArrow = tIn - 2 * store.sizeMultiplier.value;
-    arrArrowsAngles.push(tArrow);
-    arrInAngles.push(tOut);
-    arrOutAngles.push(tIn);
+  for (let i = 1; i < pointNum; i = i + circleDivider) {
+    const tIn = (i + 1) * (360 / pointNum) + 90;
+    const tOut = (i + 2) * (360 / pointNum) + 90;
+    const tArrow = tIn - 2 * sizeMultiplier;
+    arrowsAngles.push(tArrow);
+    inAngles.push(tOut);
+    outAngles.push(tIn);
   }
 
-  for (let i = 0; i < store.discNum.value; i = i + 1) {
-    if (
-      store.discNum.value < i - 1 &&
-      store.labelsZero.value[i]?.prop !== store.labelsZero.value[i + 1]?.prop
-    ) {
-      const firstArrLabelAngle = arrLabelAngles[i] ?? 0;
-      const secondArrLabelAngle = arrLabelAngles[i + 1] ?? 0;
-      arrDividerAngles.push(
-        firstArrLabelAngle + (secondArrLabelAngle - firstArrLabelAngle) / 2,
-      );
-    }
-    arrAngles.push({
-      labelId: i ?? 0,
-      inAngle: arrInAngles[i] ?? 0,
-      outAngle: arrOutAngles[i] ?? 0,
-      labelAngle: arrLabelAngles[i] ?? 0,
-      arrowAngle: arrArrowsAngles[i] ?? 0,
+  for (let i = 0; i < discNum; i = i + 1) {
+    angles.push({
+      labelId: i,
+      inAngle: inAngles[i] ?? 0,
+      outAngle: outAngles[i] ?? 0,
+      labelAngle: labelAngles[i] ?? 0,
+      arrowAngle: arrowsAngles[i] ?? 0,
     });
   }
 
-  store.angles.value = {
-    dividerAngles: arrDividerAngles,
-    angles: arrAngles,
-  };
+  return angles;
 };
-
