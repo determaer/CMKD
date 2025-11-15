@@ -47,13 +47,14 @@ const position = ref();
 
 //#region flags
 
-const showSupportRect = ref();
+const showSupportRect = ref(false);
 const showAdditionalInCircle = ref(true);
 const defaultRect = ref(true);
 const showScore = ref(false);
 const showLight = ref(false);
 const oneLevel = ref(false);
-const showImportant = ref();
+const showImportant = ref(false);
+const showDefaultRect = ref(false);
 
 const showSectorName = computed(() => (oneLevel.value ? true : false));
 
@@ -99,6 +100,7 @@ export const useParamStore = () => {
     sizeMultiplier,
     position,
     showSupportRect,
+    showDefaultRect,
     showAdditionalInCircle,
     defaultRect,
     showScore,

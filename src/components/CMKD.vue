@@ -29,6 +29,7 @@ const {
   position = 9999,
   showSupportRect = false,
   showImportant = false,
+  showDefaultRect = false,
   labels,
 } = defineProps<{
   width?: number;
@@ -36,6 +37,7 @@ const {
   position?: number;
   showSupportRect?: boolean;
   showImportant?: boolean;
+  showDefaultRect?: boolean;
   labels: Label[];
 }>();
 
@@ -67,6 +69,7 @@ watchEffect(() => {
   store.position.value = position;
   store.showImportant.value = showImportant;
   store.showSupportRect.value = showSupportRect;
+  store.showDefaultRect.value = showDefaultRect;
   store.updateCMKD();
 });
 

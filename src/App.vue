@@ -41,13 +41,13 @@ onMounted(() => {
   <input type="checkbox" v-model="showSupportRect" />
   <CMKD
     ref="cmkd"
-    drawingMode="score"
+    drawingMode="default"
     :width="800"
     :labels="labelref"
     :position="99"
     :showSupportRect="false"
-    :showImportant="showSupportRect"
-    :showDefaultRect="false"
+    :showImportant="false"
+    :showDefaultRect="showSupportRect"
     @clicked="
       (info) => {
         console.log(info);

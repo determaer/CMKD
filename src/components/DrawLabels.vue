@@ -138,7 +138,8 @@ const cornerRadius = computed(() => {
     roundrect: 7 * scale.value,
     circle: 18 * scale.value,
   };
-  return r[props.objLabel.type];
+  if (!store.showDefaultRect.value) return r[props.objLabel.type];
+  return r["rect"];
 });
 
 const coeff = computed(() => {
