@@ -152,12 +152,6 @@ const coeff = computed(() => {
   return store.sizeMultiplier.value * scale.value * store.scaleMultiplier.value;
 });
 
-/*const fill = computed(() => {
-  if (props.objLabel.learnt)
-    return 'white'
-  else return fillColor.value
-})*/
-
 const drawRectLabel = computed(() => {
   if (store.showAdditionalInCircle.value || props.objLabel.isBase) return true;
   else return false;
@@ -188,14 +182,24 @@ const drawTextLabel = computed(() => {
   else return false;
 });
 
+const typeTextFontSize = computed(() =>
+  props.objLabel.typeText.length == 1 ? 22 * coeff.value : 15 * coeff.value,
+);
+
+const scoredLabelOpacity = computed(() =>
+  fillColor.value === "lightgrey" ||
+  props.shadowed ||
+  fillColor.value == "yellow"
+    ? 1
+    : Math.abs(props.objLabel.score),
+);
+
 const labelConfig = computed(() => ({
   width: 36 * coeff.value,
   height: 36 * coeff.value,
   strokeWidth: 1 * store.scaleMultiplier.value,
-  offset: {
-    x: 18 * coeff.value,
-    y: 18 * coeff.value,
-  },
+  offsetX: 18 * coeff.value,
+  offsetY: 18 * coeff.value,
   rotation: -lAngle.value.labelAngle,
   cornerRadius: cornerRadius.value,
 }));
@@ -286,11 +290,7 @@ const textConfig = computed(() => ({
     :config="labelConfig"
     :x="labelXY[0]"
     :y="labelXY[1]"
-    :opacity="
-      fillColor === 'lightgrey' || shadowed || fillColor == 'yellow'
-        ? 1
-        : Math.abs(objLabel.score)
-    "
+    :opacity="scoredLabelOpacity"
     :fill="shadowed ? 'white' : fillColor"
     :stroke="shadowed ? fillColor : 'black'"
     @click="handleClick"
@@ -303,11 +303,9 @@ const textConfig = computed(() => ({
     :key="`${store.reloadCount.value}-${objLabel.id}-type-text`"
     :config="textConfig"
     :text="objLabel.typeText"
-    :offset="{
-      x: 14 * coeff,
-      y: 10 * coeff,
-    }"
-    :fontSize="objLabel.typeText.length === 1 ? 22 * coeff : 15 * coeff"
+    :offsetX="14 * coeff"
+    :offsetY="10 * coeff"
+    :fontSize="typeTextFontSize"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -317,10 +315,8 @@ const textConfig = computed(() => ({
     :key="`${store.reloadCount.value}-${objLabel.id}-num-text`"
     :config="textConfig"
     :text="objLabel.numText"
-    :offset="{
-      x: 3 * coeff,
-      y: 4 * coeff,
-    }"
+    :offsetX="3 * coeff"
+    :offsetY="4 * coeff"
     :fontSize="16 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"

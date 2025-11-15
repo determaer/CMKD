@@ -81,10 +81,8 @@ const labelConfig = computed(() => ({
   width: 36 * coeff.value,
   height: 36 * coeff.value,
   strokeWidth: 1 * store.scaleMultiplier.value,
-  offset: {
-    x: 18 * coeff.value,
-    y: 18 * coeff.value,
-  },
+  offsetX: 18 * coeff.value,
+  offsetY: 18 * coeff.value,
   rotation: -props.angles.labelAngle,
 }));
 
@@ -137,10 +135,8 @@ const textConfig = computed(() => ({
   <v-text
     :config="textConfig"
     :text="objLabel.typeText"
-    :offset="{
-      x: 13 * coeff,
-      y: 10 * coeff,
-    }"
+    :offsetX="13 * coeff"
+    :offsetY="10 * coeff"
     :fontSize="22 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"
@@ -149,10 +145,8 @@ const textConfig = computed(() => ({
   <v-text
     :config="textConfig"
     :text="objLabel.numText"
-    :offset="{
-      x: 1 * coeff,
-      y: 2 * coeff,
-    }"
+    :offsetX="1 * coeff"
+    :offsetY="2 * coeff"
     :fontSize="16 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"
