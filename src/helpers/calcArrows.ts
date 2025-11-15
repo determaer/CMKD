@@ -14,7 +14,9 @@ export type Arc = {
   rotation: number;
 };
 
-export const calcArrows = (arrowsInLabels: Arrow[], arcBtwLabels: Arc[]) => {
+export const calcArrows = () => {
+  const arrowsInLabels: Arrow[] = [];
+  const arcBtwLabels: Arc[] = [];
   store.labelsZero.value.forEach((label, index) => {
     if (label.arrowIn) {
       const lAngle = store.angles.value.angles.find(
@@ -54,4 +56,8 @@ export const calcArrows = (arrowsInLabels: Arrow[], arcBtwLabels: Arc[]) => {
       }
     }
   });
+  return {
+    arrowsInLabels,
+    arcBtwLabels,
+  };
 };

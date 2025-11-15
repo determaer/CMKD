@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed } from "vue";
 import { useParamStore } from "../store/paramStore";
-import { calcArrows, type Arrow, type Arc } from "../helpers/calcArrows";
+import { calcArrows } from "../helpers/calcArrows";
 
 const store = useParamStore();
 
-const arrowsInLabels = ref<Arrow[]>([]);
-const arcBtwLabels = ref<Arc[]>([]);
-
-calcArrows(arrowsInLabels.value, arcBtwLabels.value);
+const arrowsArcsData = computed(() => calcArrows());
 </script>
 
 <template v-if="arcBtwLabels.length > 0">
   <v-arrow
-    v-for="a of arrowsInLabels"
+    v-for="a of arrowsArcsData.arrowsInLabels"
     :key="`${store.reloadCount.value}-${a.startX}-arrow-base-trajectory`"
     :points="[a.startX, a.startY, a.endX, a.endY]"
     stroke="black"
@@ -22,7 +19,7 @@ calcArrows(arrowsInLabels.value, arcBtwLabels.value);
     :pointerLength="7 * store.scaleMultiplier.value"
   />
   <v-arc
-    v-for="a of arcBtwLabels"
+    v-for="a of arrowsArcsData.arcBtwLabels"
     :key="`${store.reloadCount.value}-${a.angle}-arc-base-trajectory`"
     :x="store.centerPoint.value"
     :y="store.centerPoint.value"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useParamStore } from "../store/paramStore";
 import DrawSector from "./DrawSector.vue";
 import TypeDivider from "./TypeDivider.vue";
@@ -9,6 +10,13 @@ defineProps<{
   bgColor: string;
   bgColor2: string;
 }>();
+
+const startRadius = computed(() => store.radiuses.value.innerRadius);
+const endRadius = computed(
+  () =>
+    store.radiuses.value.outerRadius +
+    50 * store.circleNum.value * store.scaleMultiplier.value,
+);
 </script>
 
 <template>
@@ -20,12 +28,9 @@ defineProps<{
   />
   <TypeDivider
     v-for="dAngle of store.angles.value.dividerAngles"
-    :key="dAngle"
-    :startRadius="store.radiuses.value.innerRadius"
-    :endRadius="
-      store.radiuses.value.outerRadius +
-      50 * store.circleNum.value * store.scaleMultiplier.value
-    "
+    :key="`${store.reloadCount}-${dAngle}-type-divider`"
+    :startRadius="startRadius"
+    :endRadius="endRadius"
     :angle="dAngle"
   />
 </template>
