@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DrawLabels from "./DrawLabels.vue";
-import DrawLineBtwElements from "./DrawLineBtwElements.vue";
+import DrawLine from "./DrawLine.vue";
 import { useClickedStore } from "../store/clickedStore";
 
 const clickedStore = useClickedStore();
@@ -15,7 +15,7 @@ const clickedStore = useClickedStore();
     v-if="clickedStore.clickedLine.value?.objLabelOut"
     :objLabel="clickedStore.clickedLine.value?.objLabelOut"
   />
-  <DrawLineBtwElements
+  <DrawLine
     v-if="
       clickedStore.clickedLine.value?.objLabelIn &&
       clickedStore.clickedLine.value?.objLabelOut
@@ -26,3 +26,4 @@ const clickedStore = useClickedStore();
 </template>
 
 <style scoped></style>
+

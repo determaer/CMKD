@@ -3,9 +3,9 @@ import { ref, watch, unref, watchEffect } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import DrawLabels from "./DrawLabels.vue";
-import DrawLineBtwElements from "./DrawLineBtwElements.vue";
+import DrawLine from "./DrawLine.vue";
 import DrawBase from "./DrawBase.vue";
-import DrawClickedElement from "./DrawClickedElement.vue";
+import DrawClickedLabel from "./DrawClickedLabel.vue";
 import DrawClickedLine from "./DrawClickedLine.vue";
 import DrawClickedSector from "./DrawClickedSector.vue";
 import DrawArrows from "./DrawArrows.vue";
@@ -129,7 +129,7 @@ function downloadURI() {
         :height="store.width.value * store.scaleMultiplier.value * 3"
       />
       <DrawBase bgColor="#dad0f1" bgColor2="#e8e8e8" />
-      <DrawLineBtwElements
+      <DrawLine
         v-for="line of store.lines.value"
         :key="String(line.objLabelIn.id) + line.objLabelOut.id"
         :objLabelOut="line.objLabelOut"
@@ -157,7 +157,7 @@ function downloadURI() {
           }
         "
       />
-      <DrawClickedElement v-if="isClickedLabel" />
+      <DrawClickedLabel v-if="isClickedLabel" />
       <DrawClickedLine v-if="isClickedLine" />
       <DrawClickedSector v-if="isClickedSector" bgColor="gray" />
     </v-layer>

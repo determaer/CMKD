@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DrawLabels from "./DrawLabels.vue";
-import DrawLineBtwElements from "./DrawLineBtwElements.vue";
+import DrawLine from "./DrawLine.vue";
 import { useClickedStore } from "../store/clickedStore";
 import type { Line } from "../types/line";
 import type { Label } from "../types";
@@ -40,7 +40,7 @@ clickedStore.clickedLabel.value?.prevLabels.map((pLabel) => {
 </script>
 
 <template>
-  <DrawLineBtwElements
+  <DrawLine
     v-for="line of lines"
     :key="String(line.objLabelIn.id) + line.objLabelOut.id"
     :objLabelIn="line.objLabelIn"

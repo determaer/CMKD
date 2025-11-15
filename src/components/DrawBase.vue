@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useParamStore } from "../store/paramStore";
 import DrawSector from "./DrawSector.vue";
-import TypeDivider from "./TypeDivider.vue";
+import DrawTypeDivider from "./DrawTypeDivider.vue";
 
 const store = useParamStore();
 
@@ -26,7 +26,7 @@ const endRadius = computed(
     :sector="sector"
     :bgColor="sector.sLevel % 2 === 0 ? bgColor : bgColor2"
   />
-  <TypeDivider
+  <DrawTypeDivider
     v-for="dAngle of store.dividerAngles.value"
     :key="`${store.reloadCount}-${dAngle}-type-divider`"
     :startRadius="startRadius"
