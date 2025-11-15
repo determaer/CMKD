@@ -34,7 +34,12 @@ export default [
       "vue/multi-word-component-names": "off",
       "vue/attribute-hyphenation": "off",
       ...prettierConfig.rules,
-      "prettier/prettier": "error",
+      "prettier/prettier": [
+        "error",
+        {
+          endOfLine: "auto",
+        },
+      ],
     },
   },
   {
