@@ -31,7 +31,7 @@ const radiuses = computed(() => ({
   additionalLabelRadius: generalCorrection(285),
   linesBtwElementsRadius: generalCorrection(190),
   mergingPortsRadius: generalCorrection(212),
-  sectorNameRadius: generalCorrection(265) + haveSupportsCorrection.value,
+  sectorNameRadius: generalCorrection(275) + haveSupportsCorrection.value,
 }));
 
 const angles = computed(() =>

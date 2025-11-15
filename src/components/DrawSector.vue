@@ -65,8 +65,8 @@ const labelFillColor = computed(() => {
   return "white";
 });
 
-const labelWithLabel = computed(() => {
-  if (props.sector.object && props.sector.object.isLabel) return true;
+const sectorWithLabel = computed(() => {
+  if (props.sector.object.isLabel && props.sector.object.level > 0) return true;
   else return false;
 });
 
@@ -92,6 +92,25 @@ const innerRadius = computed(
     store.radiuses.value.innerRadius +
     50 * props.sector.sLevel * store.scaleMultiplier.value,
 );
+
+const labelConfig = computed(() => ({
+  x: labelXY.value[0],
+  y: labelXY.value[1],
+  width: 36 * coeff.value,
+  height: 36 * coeff.value,
+  strokeWidth: 1 * store.scaleMultiplier.value,
+  offsetX: 18 * coeff.value,
+  offsetY: 18 * coeff.value,
+  rotation: -(props.sector.sEnd - arcLength.value / 2),
+}));
+
+const textConfig = computed(() => ({
+  x: labelXY.value[0],
+  y: labelXY.value[1],
+  fontFamily: "Times New Roman",
+  fontStyle: props.sector.object.fontStyle,
+  fontSize: 22 * coeff.value,
+}));
 </script>
 
 <template>
@@ -113,102 +132,70 @@ const innerRadius = computed(
   />
   <v-text
     v-if="store.showSectorName.value"
-    :x="nameXY[0]"
-    :y="nameXY[1]"
-    :text="sector.shortname"
-    :offset="{
-      x: 20 * coeff,
-      y: 10 * coeff,
+    :config="{
+      ...textConfig,
+      x: nameXY[0],
+      y: nameXY[1],
     }"
-    fontFamily="Times New Roman"
-    :fontSize="22 * coeff"
-    :rotation="nameRotation"
+    :text="sector.shortname"
+    :offsetX="10 * coeff"
+    :offsetY="10 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
-    v-if="labelWithLabel && sector.object.level != 0"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    v-if="sectorWithLabel"
+    :config="labelConfig"
     fill="white"
     stroke="black"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-(sector.sEnd - arcLength / 2)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-rect
-    v-if="labelWithLabel && store.showScore.value && sector.object.level != 0"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
-    :width="36 * coeff"
-    :height="36 * coeff"
+    v-if="sectorWithLabel && store.showScore.value"
+    :config="labelConfig"
     :opacity="Math.abs(sector.object.score)"
     :fill="shadowed ? 'white' : labelFillColor"
     :stroke="shadowed ? labelFillColor : 'black'"
-    :strokeWidth="1 * store.scaleMultiplier.value"
-    :offset="{
-      x: 18 * coeff,
-      y: 18 * coeff,
-    }"
-    :rotation="-(sector.sEnd - arcLength / 2)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="labelWithLabel && sector.object.level != 0"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
+    v-if="sectorWithLabel"
+    :key="`${store.reloadCount.value}-${sector.object.id}-sectorlabel-type-text`"
+    :config="textConfig"
     :text="sector.object.typeText"
-    :offset="{
-      x: 13 * coeff,
-      y: 10 * coeff,
-    }"
-    fontFamily="Times New Roman"
-    :fontSize="22 * coeff"
-    :fontStyle="sector.object.fontStyle"
+    :offsetX="13 * coeff"
+    :offsetY="10 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="labelWithLabel && sector.object.level != 0"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
+    v-if="sectorWithLabel"
+    :key="`${store.reloadCount.value}-${sector.object.id}-sectorlabel-num-text`"
+    :config="{
+      ...textConfig,
+      fontSize: 16 * coeff,
+    }"
     :text="sector.object.numText"
-    :offset="{
-      x: 1 * coeff,
-      y: 2 * coeff,
-    }"
-    fontFamily="Times New Roman"
-    :fontSize="16 * coeff"
-    :fontStyle="sector.object.fontStyle"
+    :offsetX="1 * coeff"
+    :offsetY="2 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="!labelWithLabel && sector.object.level != 0"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
+    v-if="!sectorWithLabel && sector.object.level != 0"
+    :key="`${store.reloadCount.value}-${sector.object.id}-sector-text`"
+    :config="textConfig"
     :text="sector.object.typeText + sector.object.numText"
-    :offset="{
-      x: 20 * coeff,
-      y: 10 * coeff,
-    }"
-    fontFamily="Times New Roman"
-    :fontSize="22 * coeff"
+    :offsetX="10 * coeff"
+    :offsetY="20 * coeff"
     :rotation="nameRotation"
-    :fontStyle="sector.object.fontStyle"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
