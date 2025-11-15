@@ -49,7 +49,7 @@ export const calcSectors = (
             }
           });
         }
-        sectorsAngles.push(360);
+        sectorsAngles.push(359.99);
       } else {
         // верхние уровни сводной карты
         labels.map((label, index) => {
