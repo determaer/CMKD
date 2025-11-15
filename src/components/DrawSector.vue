@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
-import { controlPoint } from "../helpers/controlPoint";
+import { calcControlPoint } from "../helpers/calcControlPoint";
 import type { Sector } from "../types/sector";
 
 const store = useParamStore();
@@ -41,7 +41,7 @@ const targetAngle = computed(
 const arcLength = computed(() => props.sector.sEnd - props.sector.sStart);
 
 const labelXY = computed<[number, number]>(() => {
-  return controlPoint(
+  return calcControlPoint(
     store.radiuses.value.labelRadius +
       50 * props.sector.sLevel * store.scaleMultiplier.value,
     90 + targetAngle.value,
@@ -49,7 +49,7 @@ const labelXY = computed<[number, number]>(() => {
 });
 
 const nameXY = computed<[number, number]>(() => {
-  return controlPoint(
+  return calcControlPoint(
     store.radiuses.value.sectorNameRadius,
     90 + targetAngle.value,
   );

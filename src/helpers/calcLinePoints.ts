@@ -1,6 +1,6 @@
 import type { Label } from "../types/label";
 import { useParamStore } from "../store/paramStore";
-import { controlPoint } from "./controlPoint";
+import { calcControlPoint } from "./calcControlPoint";
 const store = useParamStore();
 
 export const calcLinePoint = (objLabelIn: Label, objLabelOut: Label) => {
@@ -53,10 +53,10 @@ export const calcLinePoint = (objLabelIn: Label, objLabelOut: Label) => {
   const radius =
     10 * t * store.scaleMultiplier.value +
     50 * radiusCorrection * store.scaleMultiplier.value;
-  const [bezierCPX1, bezierCPY1] = controlPoint(radius, bezierCPangle1);
-  const [bezierCPX2, bezierCPY2] = controlPoint(radius, bezierCPangle2);
-  const [outX, outY] = controlPoint(outRadius, outAngle);
-  const [inX, inY] = controlPoint(inRadius, inAngle);
+  const [bezierCPX1, bezierCPY1] = calcControlPoint(radius, bezierCPangle1);
+  const [bezierCPX2, bezierCPY2] = calcControlPoint(radius, bezierCPangle2);
+  const [outX, outY] = calcControlPoint(outRadius, outAngle);
+  const [inX, inY] = calcControlPoint(inRadius, inAngle);
 
   return [outX, outY, bezierCPX1, bezierCPY1, bezierCPX2, bezierCPY2, inX, inY];
 };

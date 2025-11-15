@@ -1,5 +1,5 @@
 import { useParamStore } from "../store/paramStore";
-import { controlPoint } from "./controlPoint";
+import { calcControlPoint } from "./calcControlPoint";
 const store = useParamStore();
 
 export type Arrow = {
@@ -23,11 +23,11 @@ export const calcArrows = () => {
         (lAngle) => lAngle.labelId === index,
       );
       if (lAngle) {
-        const [startX, startY] = controlPoint(
+        const [startX, startY] = calcControlPoint(
           store.radiuses.value.labelRadius,
           lAngle.arrowAngle - 1,
         );
-        const [endX, endY] = controlPoint(
+        const [endX, endY] = calcControlPoint(
           store.radiuses.value.labelRadius,
           lAngle.arrowAngle,
         );

@@ -2,7 +2,7 @@
 import { computed, nextTick, ref } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
-import { controlPoint } from "../helpers/controlPoint";
+import { calcControlPoint } from "../helpers/calcControlPoint";
 import DrawSupportLabel from "./DrawSupportLabel.vue";
 import type { Label } from "../types";
 const store = useParamStore();
@@ -33,31 +33,37 @@ const lAngle = computed(
 const scale = ref(1);
 
 const labelXY = computed(() =>
-  controlPoint(store.radiuses.value.labelRadius, lAngle.value.labelAngle),
+  calcControlPoint(store.radiuses.value.labelRadius, lAngle.value.labelAngle),
 );
 const inInnerXY = computed(() =>
-  controlPoint(store.radiuses.value.innerRadius, lAngle.value.inAngle),
+  calcControlPoint(store.radiuses.value.innerRadius, lAngle.value.inAngle),
 );
 const outInnerXY = computed(() =>
-  controlPoint(store.radiuses.value.innerRadius, lAngle.value.outAngle),
+  calcControlPoint(store.radiuses.value.innerRadius, lAngle.value.outAngle),
 );
 const outMergingXY = computed(() =>
-  controlPoint(store.radiuses.value.mergingPortsRadius, lAngle.value.outAngle),
+  calcControlPoint(
+    store.radiuses.value.mergingPortsRadius,
+    lAngle.value.outAngle,
+  ),
 );
 const inMergingXY = computed(() =>
-  controlPoint(store.radiuses.value.mergingPortsRadius, lAngle.value.inAngle),
+  calcControlPoint(
+    store.radiuses.value.mergingPortsRadius,
+    lAngle.value.inAngle,
+  ),
 );
 const arrowXY = computed(() =>
-  controlPoint(store.radiuses.value.innerRadius - 1, lAngle.value.inAngle),
+  calcControlPoint(store.radiuses.value.innerRadius - 1, lAngle.value.inAngle),
 );
 const labelXY2 = computed(() =>
-  controlPoint(
+  calcControlPoint(
     store.radiuses.value.labelRadius + 2.5,
     lAngle.value.labelAngle + 0.6,
   ),
 );
 const labelXY3 = computed(() =>
-  controlPoint(
+  calcControlPoint(
     store.radiuses.value.labelRadius + 5,
     lAngle.value.labelAngle + 1.2,
   ),

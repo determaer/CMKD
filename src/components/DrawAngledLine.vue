@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { controlPoint } from "../helpers/controlPoint";
+import { calcControlPoint } from "../helpers/calcControlPoint";
 import { useParamStore } from "../store/paramStore";
 
 const { reloadCount } = useParamStore();
@@ -12,8 +12,8 @@ const props = defineProps<{
   width: number;
 }>();
 
-const [startX, startY] = controlPoint(props.startRadius, props.angle);
-const [endX, endY] = controlPoint(props.endRadius, props.angle);
+const [startX, startY] = calcControlPoint(props.startRadius, props.angle);
+const [endX, endY] = calcControlPoint(props.endRadius, props.angle);
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { controlPoint } from "../helpers/controlPoint";
+import { calcControlPoint } from "../helpers/calcControlPoint";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import type { Label } from "../types";
@@ -15,19 +15,19 @@ const props = defineProps<{
   labelXY: [number, number];
 }>();
 const supLabelXY = computed(() =>
-  controlPoint(
+  calcControlPoint(
     store.radiuses.value.additionalLabelRadius,
     props.angles.labelAngle,
   ),
 );
 const supLabelXY2 = computed(() =>
-  controlPoint(
+  calcControlPoint(
     store.radiuses.value.additionalLabelRadius + 2.5,
     props.angles.labelAngle + 0.6,
   ),
 );
 const supLabelXY3 = computed(() =>
-  controlPoint(
+  calcControlPoint(
     store.radiuses.value.additionalLabelRadius + 5,
     props.angles.labelAngle + 1.2,
   ),

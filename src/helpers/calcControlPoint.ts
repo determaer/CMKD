@@ -2,7 +2,7 @@ import { useParamStore } from "../store/paramStore";
 
 const store = useParamStore();
 
-export const controlPoint = (
+export const calcControlPoint = (
   radius: number,
   angle: number,
 ): [number, number] => {
