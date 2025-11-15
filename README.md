@@ -4,7 +4,7 @@ Cognitive Maps of Knowledge Diagnosis (CMKD) - visualization method for describi
 
 ## Storybook
 
-![link](https://determaer.github.io/CMKD)
+[link](https://determaer.github.io/CMKD)
 
 ## Screenshot
 
