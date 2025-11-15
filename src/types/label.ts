@@ -69,3 +69,8 @@ export const defaultLabel: Label = {
   grey: false,
   sectorName: "",
 };
+
+export type SelectableLabel = {
+  label: Label;
+  selected: boolean;
+};

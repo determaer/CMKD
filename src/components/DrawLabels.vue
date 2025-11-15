@@ -10,7 +10,7 @@ const clickedStore = useClickedStore();
 
 const props = defineProps<{
   objLabel: Label;
-  shadowed?: boolean;
+  selected?: boolean;
 }>();
 
 const objLabelIndex = computed(() =>
@@ -158,7 +158,7 @@ const typeTextFontSize = computed(() =>
 
 const scoredLabelOpacity = computed(() =>
   fillColor.value === "lightgrey" ||
-  props.shadowed ||
+  props.selected ||
   fillColor.value == "yellow"
     ? 1
     : Math.abs(props.objLabel.score),
@@ -261,8 +261,8 @@ const textConfig = computed(() => ({
     :x="labelXY[0]"
     :y="labelXY[1]"
     :opacity="scoredLabelOpacity"
-    :fill="shadowed ? 'white' : fillColor"
-    :stroke="shadowed ? fillColor : 'black'"
+    :fill="selected ? 'white' : fillColor"
+    :stroke="selected ? fillColor : 'black'"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"

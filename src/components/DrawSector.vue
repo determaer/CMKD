@@ -11,7 +11,6 @@ const clickedStore = useClickedStore();
 const props = defineProps<{
   sector: Sector;
   bgColor: string;
-  shadowed?: boolean;
   opacity?: number;
 }>();
 
@@ -152,8 +151,8 @@ const textConfig = computed(() => ({
     v-if="sectorWithLabel && store.showScore.value"
     :config="labelConfig"
     :opacity="Math.abs(sector.object.score)"
-    :fill="shadowed ? 'white' : labelFillColor"
-    :stroke="shadowed ? labelFillColor : 'black'"
+    :fill="labelFillColor"
+    :stroke="'black'"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"

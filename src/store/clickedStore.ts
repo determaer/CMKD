@@ -1,6 +1,7 @@
-import { ref } from "vue";
+import { ref, computed, type ComputedRef } from "vue";
 import type { Info, Label, Sector, Line } from "../types";
 import { useParamStore } from "../store/paramStore";
+import type { SelectableLabel } from "../types/label";
 
 const store = useParamStore();
 const clickLayerX = ref(-1000);
@@ -13,10 +14,41 @@ const isClickedSector = ref(false);
 const clickedLine = ref<Line>();
 
 const clickedLabel = ref<{
-  objLabel: Label; //содержит внутри объекта id элементов далее
-  prevLabels: Label[]; //стрелка к ним
-  nextLabels: Label[]; //стрелка от них
+  objLabel: SelectableLabel; //содержит внутри объекта id элементов далее
+  prevLabels: SelectableLabel[]; //стрелка к ним
+  nextLabels: SelectableLabel[]; //стрелка от них
 }>();
+
+const labelsToDraw: ComputedRef<SelectableLabel[]> = computed(() => {
+  if (clickedLabel.value != undefined)
+    return [
+      clickedLabel.value.objLabel,
+      ...clickedLabel.value.prevLabels,
+      ...clickedLabel.value.nextLabels,
+    ];
+  return [];
+});
+
+const linesToDraw = computed(() => {
+  const lines: Line[] = [];
+
+  clickedLabel.value?.nextLabels.map((nLabel) => {
+    if (clickedLabel.value?.objLabel)
+      lines.push({
+        objLabelIn: clickedLabel.value?.objLabel.label,
+        objLabelOut: nLabel.label,
+      });
+  });
+  clickedLabel.value?.prevLabels.map((pLabel) => {
+    if (clickedLabel.value?.objLabel)
+      lines.push({
+        objLabelIn: pLabel.label,
+        objLabelOut: clickedLabel.value?.objLabel.label,
+      });
+  });
+
+  return lines;
+});
 
 const clickedSector = ref<Sector>();
 
@@ -30,22 +62,27 @@ export const useClickedStore = () => {
   }
 
   function setClickedLabel(label: Label) {
-    let arrPrevLabels: Label[] = [];
-    let arrNextLabels: Label[] = [];
-    store.labelsZero.value.map((label) => {
-      if (label.connections.length !== 0) {
-        label.connections.map((connection) => {
-          if (label.id === connection) {
-            arrPrevLabels.push(label);
-          }
-        });
-      }
+    let arrPrevLabels: SelectableLabel[] = [];
+    let arrNextLabels: SelectableLabel[] = [];
+    store.labelsZero.value.map((otherLabel) => {
+      otherLabel.connections.map((connection) => {
+        if (label.id === connection) {
+          arrNextLabels.push({
+            label: otherLabel,
+            selected: false,
+          });
+        }
+      });
     });
     label.connections.map((connection) => {
-      let label = store.labelsZero.value.find(
+      const label = store.labelsZero.value.find(
         (label) => label.id === connection,
       );
-      if (label) arrNextLabels.push(label);
+      if (label)
+        arrPrevLabels.push({
+          label: label,
+          selected: false,
+        });
     });
 
     isClickedLine.value = false;
@@ -53,17 +90,16 @@ export const useClickedStore = () => {
     isClickedLabel.value = true;
 
     clickedLabel.value = {
-      objLabel: label,
-      prevLabels: arrNextLabels,
-      nextLabels: arrPrevLabels,
+      objLabel: { label: label, selected: true },
+      nextLabels: arrNextLabels,
+      prevLabels: arrPrevLabels,
     };
     clickedInfo.value = {
       type: "label",
       object: label,
-      prevLabels: arrNextLabels,
-      nextLabels: arrPrevLabels,
+      nextLabels: arrNextLabels,
+      prevLabels: arrPrevLabels,
     };
-    console.log(clickedInfo.value);
   }
 
   function setClickedLine(labelIn: Label, labelOut: Label) {
@@ -101,6 +137,8 @@ export const useClickedStore = () => {
     clickLayerY,
     clickedLine,
     clickedLabel,
+    labelsToDraw,
+    linesToDraw,
     clickedSector,
     clickedInfo,
     isClickedLine,
