@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
+import { computed, ref } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import { calcControlPoint } from "../helpers/calcControlPoint";
@@ -71,37 +71,7 @@ const labelXY3 = computed(() =>
 
 const handleClick = () => {
   scale.value = 1;
-  let arrPrevLabels: Label[] = [];
-  let arrNextLabels: Label[] = [];
-  store.labelsZero.value.map((label) => {
-    if (label.connections.length !== 0) {
-      label.connections.map((connection) => {
-        if (props.objLabel.id === connection) {
-          arrPrevLabels.push(label);
-        }
-      });
-    }
-  });
-  props.objLabel.connections.map((connection) => {
-    let label = store.labelsZero.value.find((label) => label.id === connection);
-    if (label) arrNextLabels.push(label);
-  });
-  clickedStore.resetClicked();
-  nextTick(() => {
-    clickedStore.isClickedElement.value = true;
-    clickedStore.clickedElement.value = {
-      objLabel: props.objLabel,
-      prevLabels: arrNextLabels,
-      nextLabels: arrPrevLabels,
-    };
-    clickedStore.clickedInfo.value = {
-      type: "label",
-      object: props.objLabel,
-      prevLabels: arrNextLabels,
-      nextLabels: arrPrevLabels,
-    };
-    console.log(clickedStore.clickedInfo.value);
-  });
+  clickedStore.setClickedLabel(props.objLabel);
 };
 
 const handleMouseOver = () => {

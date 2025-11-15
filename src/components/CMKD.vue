@@ -13,7 +13,7 @@ import type { Label } from "../types/label";
 
 const store = useParamStore();
 const {
-  isClickedElement,
+  isClickedLabel,
   isClickedLine,
   isClickedSector,
   clickedInfo,
@@ -142,7 +142,7 @@ function downloadURI() {
         :objLabel="label"
       />
     </v-layer>
-    <v-layer v-if="isClickedElement || isClickedLine || isClickedSector">
+    <v-layer v-if="isClickedLabel || isClickedLine || isClickedSector">
       <v-rect
         fill="white"
         :x="clickLayerX"
@@ -157,7 +157,7 @@ function downloadURI() {
           }
         "
       />
-      <DrawClickedElement v-if="isClickedElement" />
+      <DrawClickedElement v-if="isClickedLabel" />
       <DrawClickedLine v-if="isClickedLine" />
       <DrawClickedSector v-if="isClickedSector" bgColor="gray" />
     </v-layer>

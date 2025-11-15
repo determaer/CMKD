@@ -9,32 +9,32 @@ const clickedStore = useClickedStore();
 
 const labels1: { label: Label; shadowed: boolean }[] = [];
 const lines: Line[] = [];
-if (clickedStore.clickedElement.value?.objLabel)
+if (clickedStore.clickedLabel.value?.objLabel)
   labels1.push({
-    label: clickedStore.clickedElement.value?.objLabel,
+    label: clickedStore.clickedLabel.value?.objLabel,
     shadowed: true,
   });
 
-clickedStore.clickedElement.value?.nextLabels.map((nLabel) => {
+clickedStore.clickedLabel.value?.nextLabels.map((nLabel) => {
   labels1.push({
     label: nLabel,
     shadowed: false,
   });
-  if (clickedStore.clickedElement.value?.objLabel)
+  if (clickedStore.clickedLabel.value?.objLabel)
     lines.push({
-      objLabelIn: clickedStore.clickedElement.value?.objLabel,
+      objLabelIn: clickedStore.clickedLabel.value?.objLabel,
       objLabelOut: nLabel,
     });
 });
-clickedStore.clickedElement.value?.prevLabels.map((pLabel) => {
+clickedStore.clickedLabel.value?.prevLabels.map((pLabel) => {
   labels1.push({
     label: pLabel,
     shadowed: false,
   });
-  if (clickedStore.clickedElement.value?.objLabel)
+  if (clickedStore.clickedLabel.value?.objLabel)
     lines.push({
       objLabelIn: pLabel,
-      objLabelOut: clickedStore.clickedElement.value?.objLabel,
+      objLabelOut: clickedStore.clickedLabel.value?.objLabel,
     });
 });
 </script>
@@ -55,3 +55,4 @@ clickedStore.clickedElement.value?.prevLabels.map((pLabel) => {
 </template>
 
 <style scoped></style>
+

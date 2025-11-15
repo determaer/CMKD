@@ -18,12 +18,7 @@ const props = defineProps<{
 const fill = ref(props.bgColor);
 
 const handleClick = () => {
-  clickedStore.clickedInfo.value = {
-    type: "sector",
-    object: props.sector,
-  };
-  clickedStore.isClickedSector.value = true;
-  clickedStore.clickedSector.value = props.sector;
+  clickedStore.setClickedSector(props.sector);
 };
 
 const handleMouseOver = () => {

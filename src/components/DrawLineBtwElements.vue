@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, nextTick } from "vue";
+import { ref, computed } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import type { Label } from "../types";
@@ -50,21 +50,7 @@ const draw = computed(() => {
 
 const handleClick = () => {
   scale.value = 1;
-  clickedStore.resetClicked();
-  nextTick(() => {
-    clickedStore.isClickedLine.value = true;
-    clickedStore.clickedLine.value = {
-      objLabelIn: props.objLabelIn,
-      objLabelOut: props.objLabelOut,
-    };
-    clickedStore.clickedInfo.value = {
-      type: "line",
-      object: {
-        objLabelIn: props.objLabelIn,
-        objLabelOut: props.objLabelOut,
-      },
-    };
-  });
+  clickedStore.setClickedLine(props.objLabelIn, props.objLabelOut);
 };
 
 const handleMouseOver = () => {
