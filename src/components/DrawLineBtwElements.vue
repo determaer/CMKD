@@ -3,7 +3,7 @@ import { ref, computed, nextTick } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import type { Label } from "../types";
-import { calcLine } from "../helpers/calcLine";
+import { calcLinePoint } from "../helpers/calcLinePoints";
 const store = useParamStore();
 const clickedStore = useClickedStore();
 
@@ -14,7 +14,9 @@ const props = defineProps<{
 
 const scale = ref(1);
 
-const points = computed(() => calcLine(props.objLabelIn, props.objLabelOut));
+const points = computed(() =>
+  calcLinePoint(props.objLabelIn, props.objLabelOut),
+);
 
 const dash = computed(() => {
   if (

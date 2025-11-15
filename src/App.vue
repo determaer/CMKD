@@ -4,7 +4,7 @@ import { labels } from "./legacy/labelsNew.ts";
 import { onMounted, ref /*, useTemplateRef*/ } from "vue";
 
 //const cmkd = useTemplateRef("cmkd");
-const showSupportRect = ref(true);
+const showSupportRect = ref<"default" | "score" | "light">("default");
 const labelref = ref(labels);
 onMounted(() => {
   setTimeout(() => {
@@ -38,16 +38,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <input type="checkbox" v-model="showSupportRect" />
+  <select v-model="showSupportRect">
+    <option value="default">Базовая</option>
+    <option value="score">Частная</option>
+    <option value="light">Частная упрощённая</option>
+  </select>
   <CMKD
     ref="cmkd"
-    drawingMode="default"
+    :drawingMode="showSupportRect"
     :width="800"
     :labels="labelref"
     :position="99"
     :showSupportRect="false"
     :showImportant="false"
-    :showDefaultRect="showSupportRect"
+    :showDefaultRect="false"
     @clicked="
       (info) => {
         console.log(info);

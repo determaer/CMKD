@@ -1,11 +1,17 @@
 import { ref, computed } from "vue";
-import type { Label, Sector, Line } from "../types";
+import type { Label, Sector } from "../types";
 import type { Angle } from "../types/angle";
+import { calcLines } from "../helpers/calcLines";
 //#region params
 const width = ref(800);
 const centerPoint = computed(() => width.value / 2);
-const circleNum = ref(0);
-const discNum = ref(0);
+const circleNum = computed(() =>
+  labels.value.reduce(
+    (acc, current) => (acc = current.level > acc ? current.level : acc),
+    0,
+  ),
+);
+const discNum = computed(() => labelsZero.value.length);
 const circleDivider = 5;
 const pointNum = computed(() => discNum.value * circleDivider);
 
@@ -52,7 +58,7 @@ const showAdditionalInCircle = ref(true);
 const defaultRect = ref(true);
 const showScore = ref(false);
 const showLight = ref(false);
-const oneLevel = ref(false);
+const oneLevel = computed(() => (circleNum.value == 0 ? true : false));
 const showImportant = ref(false);
 const showDefaultRect = ref(false);
 
@@ -61,9 +67,13 @@ const showSectorName = computed(() => (oneLevel.value ? true : false));
 //#region content
 
 const labels = ref<Label[]>([]);
-const labelsZero = ref<Label[]>([]);
+const labelsZero = computed(() =>
+  labels.value.filter((label) => label.level == 0),
+);
 const sectors = ref<Sector[]>([]);
-const lines = ref<Line[]>([]);
+const lines = computed(() =>
+  calcLines(labelsZero.value, showLight.value, oneLevel.value),
+);
 const reloadCount = ref(0);
 
 export const useParamStore = () => {
@@ -75,11 +85,7 @@ export const useParamStore = () => {
 
   function resetParams() {
     labels.value = [];
-    labelsZero.value = [];
     sectors.value = [];
-    lines.value = [];
-    discNum.value = 0;
-    circleNum.value = 0;
 
     angles.value = {
       angles: [],

@@ -3,7 +3,7 @@ import { useParamStore } from "../store/paramStore";
 import { controlPoint } from "./controlPoint";
 const store = useParamStore();
 
-export const calcLine = (objLabelIn: Label, objLabelOut: Label) => {
+export const calcLinePoint = (objLabelIn: Label, objLabelOut: Label) => {
   const radiusCorrection = store.discNum.value >= 50 ? 1 : 0;
   const objLabelInAngles = store.angles.value.angles.find(
     (lAngle) =>
