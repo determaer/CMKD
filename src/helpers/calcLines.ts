@@ -3,31 +3,29 @@ import type { Label, Line } from "../types";
 export const calcLines = (
   labels: Label[],
   showLight: boolean,
-  oneLevel: boolean,
+  showAdditionalInCircle: boolean,
 ) => {
-  // расчёт нижнего уровня карты - набор элементов и связей
   const lines: Line[] = [];
-  labels.map((label) => {
-    if (label.connections.length !== 0) {
-      label.connections.map((to) => {
-        const labelTo = labels.find((elem) => elem.id == to);
-        if (labelTo) {
-          if (
-            (showLight && labelTo.score < 0) ||
-            (label.score < 0 && label.isBase == true) ||
-            !showLight ||
-            (oneLevel && label.drawAnyCase)
-          ) {
-            const labelIn = labels.find((x) => x.id === to);
-            if (labelIn)
-              lines.push({
-                objLabelOut: label,
-                objLabelIn: labelIn,
-              });
-          }
-        }
-      });
-    }
+
+  labels.forEach((label) => {
+    const connectedLabels = labels.filter((toLabel) =>
+      label.connections.some((connection) => toLabel.id == connection),
+    );
+    connectedLabels.forEach((toLabel) => {
+      const isTargetLabelShowing = showAdditionalInCircle || label.isBase;
+      const isConnectedLabelShowing = showAdditionalInCircle || toLabel.isBase;
+      const isLineImportant = toLabel.score < 0 || label.score < 0;
+      if (
+        (showLight && isLineImportant && toLabel.isBase && label.isBase) ||
+        (!showLight && isTargetLabelShowing && isConnectedLabelShowing)
+      ) {
+        lines.push({
+          objLabelOut: label,
+          objLabelIn: toLabel,
+        });
+      }
+    });
   });
+
   return lines;
 };

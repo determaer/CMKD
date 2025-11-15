@@ -72,7 +72,7 @@ const labelsZero = computed(() =>
 );
 const sectors = ref<Sector[]>([]);
 const lines = computed(() =>
-  calcLines(labelsZero.value, showLight.value, oneLevel.value),
+  calcLines(labelsZero.value, showLight.value, showAdditionalInCircle.value),
 );
 const reloadCount = ref(0);
 

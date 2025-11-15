@@ -24,7 +24,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t1",
-    drawAnyCase: false,
   },
   {
     id: 98,
@@ -49,7 +48,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 50,
     sectorName: "t1",
-    drawAnyCase: false,
   },*/
   {
     id: 99,
@@ -74,7 +72,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t1",
-    drawAnyCase: false,
   },
   {
     id: 101,
@@ -99,7 +96,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t1",
-    drawAnyCase: false,
   },
   {
     id: 102,
@@ -124,7 +120,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 0,
     sectorName: "t1",
-    drawAnyCase: false,
   },
   {
     id: 103,
@@ -149,7 +144,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t1",
-    drawAnyCase: false,
   },
   {
     id: 104,
@@ -174,7 +168,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t2",
-    drawAnyCase: false,
   },
   {
     id: 105,
@@ -199,7 +192,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 70,
     sectorName: "t2",
-    drawAnyCase: false,
   },
   {
     id: 106,
@@ -224,7 +216,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t2",
-    drawAnyCase: false,
   },
   {
     id: 107,
@@ -249,7 +240,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t2",
-    drawAnyCase: false,
   },
   {
     id: 108,
@@ -274,7 +264,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 77.5,
     sectorName: "t3",
-    drawAnyCase: false,
   },
   {
     id: 109,
@@ -299,7 +288,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t3",
-    drawAnyCase: false,
   },
   {
     id: 110,
@@ -324,7 +312,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t3",
-    drawAnyCase: false,
   },
   {
     id: 111,
@@ -349,7 +336,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 75,
     sectorName: "t3",
-    drawAnyCase: false,
   },
   {
     id: 112,
@@ -374,7 +360,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t4",
-    drawAnyCase: false,
   },
   {
     id: 113,
@@ -399,7 +384,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 0,
     sectorName: "t4",
-    drawAnyCase: false,
   },
   {
     id: 114,
@@ -424,7 +408,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 50,
     sectorName: "t4",
-    drawAnyCase: false,
   },
   {
     id: 115,
@@ -449,7 +432,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 0,
     sectorName: "t4",
-    drawAnyCase: false,
   },
   {
     id: 116,
@@ -474,7 +456,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t4",
-    drawAnyCase: false,
   },
   {
     id: 117,
@@ -499,7 +480,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t4",
-    drawAnyCase: false,
   },
   {
     id: 118,
@@ -524,7 +504,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t5",
-    drawAnyCase: false,
   },
   {
     id: 119,
@@ -549,7 +528,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 55,
     sectorName: "t5",
-    drawAnyCase: false,
   },
   {
     id: 120,
@@ -574,7 +552,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t5",
-    drawAnyCase: false,
   },
   {
     id: 121,
@@ -599,7 +576,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t5",
-    drawAnyCase: false,
   },
   {
     id: 122,
@@ -624,7 +600,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 90,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 123,
@@ -649,7 +624,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 124,
@@ -674,7 +648,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 125,
@@ -699,7 +672,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 126,
@@ -724,7 +696,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 127,
@@ -749,7 +720,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 50,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 128,
@@ -774,7 +744,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 100,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 129,
@@ -799,7 +768,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 130,
@@ -824,7 +792,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 135,
@@ -849,7 +816,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t6",
-    drawAnyCase: false,
   },
   {
     id: 131,
@@ -874,7 +840,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 80,
     sectorName: "t7",
-    drawAnyCase: false,
   },
   {
     id: 132,
@@ -899,7 +864,6 @@ export const labels: Label[] = [
     grey: false,
     percent: 80,
     sectorName: "t7",
-    drawAnyCase: false,
   },
   {
     id: 133,
@@ -924,7 +888,6 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t7",
-    drawAnyCase: false,
   },
   {
     id: 134,
@@ -949,6 +912,5 @@ export const labels: Label[] = [
     grey: true,
     percent: 0,
     sectorName: "t7",
-    drawAnyCase: false,
   },
 ];

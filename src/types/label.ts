@@ -22,7 +22,6 @@ export interface Label {
   grey: boolean; // true = элемент не покрыт тестированием
   percent?: number; // представление score в процентном соотношении
   sectorName: string; // наименование сектора
-  drawAnyCase: boolean; // ...
 }
 
 export function instanceOfLabel(label: unknown): label is Label {
@@ -45,8 +44,7 @@ export function instanceOfLabel(label: unknown): label is Label {
     "level" in label &&
     "isLabel" in label &&
     "secLength" in label &&
-    "grey" in label &&
-    "drawAnyCase" in label
+    "grey" in label
   );
 }
 
@@ -70,6 +68,4 @@ export const defaultLabel: Label = {
   secLength: 1,
   grey: false,
   sectorName: "",
-  drawAnyCase: true,
 };
-

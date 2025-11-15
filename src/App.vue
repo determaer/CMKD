@@ -29,7 +29,6 @@ onMounted(() => {
       secLength: 1,
       grey: false,
       sectorName: "",
-      drawAnyCase: true,
     });
 
     console.log(labelref.value);
