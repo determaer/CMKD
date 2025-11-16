@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import { calcControlPoint } from "../helpers/calcControlPoint";
 import DrawSupportLabel from "./DrawSupportLabel.vue";
 import type { Label } from "../types";
+import {
+  calcLeftShiftOffset,
+  calcTextFontSize,
+  calcRightShiftOffset,
+} from "../helpers/calcTextAdjustments";
 const store = useParamStore();
 const clickedStore = useClickedStore();
 
@@ -152,10 +157,6 @@ const drawTextLabel = computed(() => {
   else return false;
 });
 
-const typeTextFontSize = computed(() =>
-  props.objLabel.typeText.length == 1 ? 22 * coeff.value : 15 * coeff.value,
-);
-
 const scoredLabelOpacity = computed(() =>
   fillColor.value === "lightgrey" ||
   props.selected ||
@@ -180,6 +181,10 @@ const textConfig = computed(() => ({
   fontFamily: "Times New Roman",
   fontStyle: props.objLabel.fontStyle,
 }));
+
+onMounted(() => {
+  console.log(calcLeftShiftOffset("u", 22 * coeff.value, coeff.value));
+});
 </script>
 
 <template>
@@ -273,9 +278,8 @@ const textConfig = computed(() => ({
     :key="`${store.reloadCount.value}-${objLabel.id}-type-text`"
     :config="textConfig"
     :text="objLabel.typeText"
-    :offsetX="14 * coeff"
-    :offsetY="10 * coeff"
-    :fontSize="typeTextFontSize"
+    :offset="calcLeftShiftOffset(objLabel.typeText, 22 * coeff, coeff)"
+    :fontSize="calcTextFontSize(22 * coeff, objLabel.typeText)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -285,9 +289,8 @@ const textConfig = computed(() => ({
     :key="`${store.reloadCount.value}-${objLabel.id}-num-text`"
     :config="textConfig"
     :text="objLabel.numText"
-    :offsetX="3 * coeff"
-    :offsetY="4 * coeff"
-    :fontSize="16 * coeff"
+    :offset="calcRightShiftOffset(objLabel.typeText, 16 * coeff, coeff)"
+    :fontSize="calcTextFontSize(16 * coeff, objLabel.numText)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"

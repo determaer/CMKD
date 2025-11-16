@@ -580,8 +580,8 @@ export const oneLevelCMKD2: Label[] = [
   {
     id: 124,
     prop: 0,
-    typeText: "u",
-    numText: "27",
+    typeText: "ut",
+    numText: "277",
     type: "rect",
     num: 4,
     score: 1,

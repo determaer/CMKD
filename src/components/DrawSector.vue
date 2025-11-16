@@ -4,6 +4,12 @@ import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import { calcControlPoint } from "../helpers/calcControlPoint";
 import type { Sector } from "../types/sector";
+import {
+  calcTextFontSize,
+  calcCenteredOffset,
+  calcLeftShiftOffset,
+  calcRightShiftOffset,
+} from "../helpers/calcTextAdjustments";
 
 const store = useParamStore();
 const clickedStore = useClickedStore();
@@ -103,7 +109,6 @@ const textConfig = computed(() => ({
   y: labelXY.value[1],
   fontFamily: "Times New Roman",
   fontStyle: props.sector.object.fontStyle,
-  fontSize: 22 * coeff.value,
 }));
 </script>
 
@@ -125,15 +130,15 @@ const textConfig = computed(() => ({
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="store.showSectorName.value"
+    v-if="store.showSectorName.value && sector.shortname"
     :config="{
       ...textConfig,
       x: nameXY[0],
       y: nameXY[1],
     }"
     :text="sector.shortname"
-    :offsetX="10 * coeff"
-    :offsetY="10 * coeff"
+    :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"
+    :fontSize="22 * coeff"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -161,9 +166,9 @@ const textConfig = computed(() => ({
     v-if="sectorWithLabel"
     :key="`${store.reloadCount.value}-${sector.object.id}-sectorlabel-type-text`"
     :config="textConfig"
+    :fontSize="calcTextFontSize(22 * coeff, sector.object.numText)"
     :text="sector.object.typeText"
-    :offsetX="13 * coeff"
-    :offsetY="10 * coeff"
+    :offset="calcLeftShiftOffset(sector.object.typeText, 22 * coeff, coeff)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -171,13 +176,10 @@ const textConfig = computed(() => ({
   <v-text
     v-if="sectorWithLabel"
     :key="`${store.reloadCount.value}-${sector.object.id}-sectorlabel-num-text`"
-    :config="{
-      ...textConfig,
-      fontSize: 16 * coeff,
-    }"
+    :config="textConfig"
+    :fontSize="calcTextFontSize(16 * coeff, sector.object.numText)"
     :text="sector.object.numText"
-    :offsetX="1 * coeff"
-    :offsetY="2 * coeff"
+    :offset="calcRightShiftOffset(sector.object.numText, 16 * coeff, coeff)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -186,9 +188,14 @@ const textConfig = computed(() => ({
     v-if="!sectorWithLabel && sector.object.level != 0"
     :key="`${store.reloadCount.value}-${sector.object.id}-sector-text`"
     :config="textConfig"
+    :fontSize="22 * coeff"
     :text="sector.object.typeText + sector.object.numText"
-    :offsetX="10 * coeff"
-    :offsetY="20 * coeff"
+    :offset="
+      calcCenteredOffset(
+        sector.object.typeText + sector.object.numText,
+        22 * coeff,
+      )
+    "
     :rotation="nameRotation"
     @click="handleClick"
     @mouse-over="handleMouseOver"

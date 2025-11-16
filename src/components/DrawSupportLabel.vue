@@ -5,6 +5,11 @@ import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import type { Label } from "../types";
 import type { Angle } from "../types/angle";
+import {
+  calcTextFontSize,
+  calcLeftShiftOffset,
+  calcRightShiftOffset,
+} from "../helpers/calcTextAdjustments";
 
 const store = useParamStore();
 const clickedStore = useClickedStore();
@@ -135,9 +140,8 @@ const textConfig = computed(() => ({
   <v-text
     :config="textConfig"
     :text="objLabel.typeText"
-    :offsetX="13 * coeff"
-    :offsetY="10 * coeff"
-    :fontSize="22 * coeff"
+    :offset="calcLeftShiftOffset(objLabel.typeText, 22 * coeff, coeff)"
+    :fontSize="calcTextFontSize(22 * coeff, objLabel.typeText)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
@@ -145,9 +149,8 @@ const textConfig = computed(() => ({
   <v-text
     :config="textConfig"
     :text="objLabel.numText"
-    :offsetX="1 * coeff"
-    :offsetY="2 * coeff"
-    :fontSize="16 * coeff"
+    :offset="calcRightShiftOffset(objLabel.typeText, 16 * coeff, coeff)"
+    :fontSize="calcTextFontSize(16 * coeff, objLabel.numText)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
