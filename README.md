@@ -2,6 +2,10 @@
 
 Cognitive Maps of Knowledge Diagnosis (CMKD) - visualization method for describing hierarchical subjects, semantically connected between each others. It can be used for representing such entities like educational courses with purpose to improve learning experience. More details about method in [this paper](https://link.springer.com/chapter/10.1007/978-3-031-73344-4_51)
 
+## Storybook
+
+[link](https://determaer.github.io/CMKD)
+
 ## Screenshot
 
 ![](src/assets/cmkd.png)
