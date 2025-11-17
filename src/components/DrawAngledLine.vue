@@ -2,7 +2,7 @@
 import { calcControlPoint } from "../helpers/calcControlPoint";
 import { useParamStore } from "../store/paramStore";
 
-const { reloadCount } = useParamStore();
+const { reloadCount, centerPoint } = useParamStore();
 
 const props = defineProps<{
   startRadius: number;
@@ -12,8 +12,16 @@ const props = defineProps<{
   width: number;
 }>();
 
-const [startX, startY] = calcControlPoint(props.startRadius, props.angle);
-const [endX, endY] = calcControlPoint(props.endRadius, props.angle);
+const [startX, startY] = calcControlPoint(
+  centerPoint.value,
+  props.startRadius,
+  props.angle,
+);
+const [endX, endY] = calcControlPoint(
+  centerPoint.value,
+  props.endRadius,
+  props.angle,
+);
 </script>
 
 <template>

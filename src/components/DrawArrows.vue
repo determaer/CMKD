@@ -5,7 +5,15 @@ import { calcArrows } from "../helpers/calcArrows";
 
 const store = useParamStore();
 
-const arrowsArcsData = computed(() => calcArrows());
+const arrowsArcsData = computed(() =>
+  calcArrows(
+    store.labelsZero.value,
+    store.angles.value,
+    store.showAdditionalInCircle.value,
+    store.centerPoint.value,
+    store.radiuses.value.labelRadius,
+  ),
+);
 </script>
 
 <template v-if="arcBtwLabels.length > 0">

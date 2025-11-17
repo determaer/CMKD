@@ -1,24 +1,25 @@
 import type { Label } from "../types/label";
-import { useParamStore } from "../store/paramStore";
 import { calcControlPoint } from "./calcControlPoint";
-const store = useParamStore();
+import type { Angle } from "../types/angle";
 
-export const calcLinePoint = (objLabelIn: Label, objLabelOut: Label) => {
-  const labelInIndex = store.labelsZero.value.findIndex(
-    (label) => objLabelIn.id == label.id,
-  );
-  const labelOutIndex = store.labelsZero.value.findIndex(
-    (label) => objLabelOut.id == label.id,
-  );
-  const inAngles = store.angles.value.find(
-    (lAngle) => lAngle.labelId === labelInIndex,
-  );
-  const outAngles = store.angles.value.find(
-    (lAngle) => lAngle.labelId === labelOutIndex,
-  );
+export const calcLinePoint = (
+  objLabelIn: Label,
+  objLabelOut: Label,
+  labels: Label[],
+  angles: Angle[],
+  discNum: number,
+  scaleMultiplier: number,
+  innerRadius: number,
+  lineStartRadius: number,
+  centerPoint: number,
+) => {
+  const labelInIndex = labels.findIndex((label) => objLabelIn.id == label.id);
+  const labelOutIndex = labels.findIndex((label) => objLabelOut.id == label.id);
+  const inAngles = angles.find((lAngle) => lAngle.labelId === labelInIndex);
+  const outAngles = angles.find((lAngle) => lAngle.labelId === labelOutIndex);
   if (inAngles == undefined || outAngles == undefined) return [];
 
-  const discNumCorrection = store.discNum.value >= 50 ? 1 : 0;
+  const discNumCorrection = discNum >= 50 ? 1 : 0;
 
   const diff = Math.abs(outAngles.outAngle - inAngles.inAngle);
 
@@ -38,19 +39,12 @@ export const calcLinePoint = (objLabelIn: Label, objLabelOut: Label) => {
     diff < 180 ? (180 - diff) / 10 : (180 - Math.abs(diff - 360)) / 10;
 
   const radius =
-    (10 * angleCorrection + 50 * discNumCorrection) *
-    store.scaleMultiplier.value;
+    (10 * angleCorrection + 50 * discNumCorrection) * scaleMultiplier;
 
-  const [bezierCPX1, bezierCPY1] = calcControlPoint(radius, bezierCPangle1);
-  const [bezierCPX2, bezierCPY2] = calcControlPoint(radius, bezierCPangle2);
-  const [outX, outY] = calcControlPoint(
-    store.radiuses.value.innerRadius,
-    outAngle,
-  );
-  const [inX, inY] = calcControlPoint(
-    store.radiuses.value.linesBtwElementsRadius,
-    inAngle,
-  );
+  const [CPX1, CPY1] = calcControlPoint(centerPoint, radius, bezierCPangle1);
+  const [CPX2, CPY2] = calcControlPoint(centerPoint, radius, bezierCPangle2);
+  const [outX, outY] = calcControlPoint(centerPoint, innerRadius, outAngle);
+  const [inX, inY] = calcControlPoint(centerPoint, lineStartRadius, inAngle);
 
-  return [outX, outY, bezierCPX1, bezierCPY1, bezierCPX2, bezierCPY2, inX, inY];
+  return [outX, outY, CPX1, CPY1, CPX2, CPY2, inX, inY];
 };

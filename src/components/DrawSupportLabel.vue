@@ -21,18 +21,21 @@ const props = defineProps<{
 }>();
 const supLabelXY = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.additionalLabelRadius,
     props.angles.labelAngle,
   ),
 );
 const supLabelXY2 = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.additionalLabelRadius + 2.5,
     props.angles.labelAngle + 0.6,
   ),
 );
 const supLabelXY3 = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.additionalLabelRadius + 5,
     props.angles.labelAngle + 1.2,
   ),

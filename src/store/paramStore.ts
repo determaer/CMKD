@@ -29,7 +29,7 @@ const radiuses = computed(() => ({
   innerRadius: generalCorrection(200),
   labelRadius: generalCorrection(225),
   additionalLabelRadius: generalCorrection(285),
-  linesBtwElementsRadius: generalCorrection(190),
+  lineStartRadius: generalCorrection(190),
   mergingPortsRadius: generalCorrection(212),
   sectorNameRadius: generalCorrection(275) + haveSupportsCorrection.value,
 }));
@@ -60,7 +60,7 @@ const sizeMultiplier = computed(() => {
 });
 
 const position = ref();
-
+const reloadCount = ref(0);
 //#region flags
 
 const showSupportRect = ref(false);
@@ -71,7 +71,6 @@ const showLight = ref(false);
 const oneLevel = computed(() => (circleNum.value == 0 ? true : false));
 const showImportant = ref(false);
 const showDefaultRect = ref(false);
-
 const showSectorName = computed(() => (oneLevel.value ? true : false));
 
 //#region content
@@ -92,7 +91,6 @@ const sectors = computed(() =>
 const lines = computed(() =>
   calcLines(labelsZero.value, showLight.value, showAdditionalInCircle.value),
 );
-const reloadCount = ref(0);
 
 export const useParamStore = () => {
   function updateCMKD() {

@@ -15,7 +15,17 @@ const props = defineProps<{
 const scale = ref(1);
 
 const points = computed(() =>
-  calcLinePoint(props.objLabelIn, props.objLabelOut),
+  calcLinePoint(
+    props.objLabelIn,
+    props.objLabelOut,
+    store.labelsZero.value,
+    store.angles.value,
+    store.discNum.value,
+    store.scaleMultiplier.value,
+    store.radiuses.value.innerRadius,
+    store.radiuses.value.lineStartRadius,
+    store.centerPoint.value,
+  ),
 );
 
 const dash = computed(() => {

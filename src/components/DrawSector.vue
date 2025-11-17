@@ -42,6 +42,7 @@ const arcLength = computed(() => props.sector.sEnd - props.sector.sStart);
 
 const labelXY = computed<[number, number]>(() => {
   return calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.labelRadius +
       50 * props.sector.sLevel * store.scaleMultiplier.value,
     90 + targetAngle.value,
@@ -50,6 +51,7 @@ const labelXY = computed<[number, number]>(() => {
 
 const nameXY = computed<[number, number]>(() => {
   return calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.sectorNameRadius,
     90 + targetAngle.value,
   );

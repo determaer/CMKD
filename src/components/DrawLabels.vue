@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import { calcControlPoint } from "../helpers/calcControlPoint";
@@ -38,37 +38,57 @@ const lAngle = computed(
 const scale = ref(1);
 
 const labelXY = computed(() =>
-  calcControlPoint(store.radiuses.value.labelRadius, lAngle.value.labelAngle),
+  calcControlPoint(
+    store.centerPoint.value,
+    store.radiuses.value.labelRadius,
+    lAngle.value.labelAngle,
+  ),
 );
 const inInnerXY = computed(() =>
-  calcControlPoint(store.radiuses.value.innerRadius, lAngle.value.inAngle),
+  calcControlPoint(
+    store.centerPoint.value,
+    store.radiuses.value.innerRadius,
+    lAngle.value.inAngle,
+  ),
 );
 const outInnerXY = computed(() =>
-  calcControlPoint(store.radiuses.value.innerRadius, lAngle.value.outAngle),
+  calcControlPoint(
+    store.centerPoint.value,
+    store.radiuses.value.innerRadius,
+    lAngle.value.outAngle,
+  ),
 );
 const outMergingXY = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.mergingPortsRadius,
     lAngle.value.outAngle,
   ),
 );
 const inMergingXY = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.mergingPortsRadius,
     lAngle.value.inAngle,
   ),
 );
 const arrowXY = computed(() =>
-  calcControlPoint(store.radiuses.value.innerRadius - 1, lAngle.value.inAngle),
+  calcControlPoint(
+    store.centerPoint.value,
+    store.radiuses.value.innerRadius - 1,
+    lAngle.value.inAngle,
+  ),
 );
 const labelXY2 = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.labelRadius + 2.5,
     lAngle.value.labelAngle + 0.6,
   ),
 );
 const labelXY3 = computed(() =>
   calcControlPoint(
+    store.centerPoint.value,
     store.radiuses.value.labelRadius + 5,
     lAngle.value.labelAngle + 1.2,
   ),
@@ -181,10 +201,6 @@ const textConfig = computed(() => ({
   fontFamily: "Times New Roman",
   fontStyle: props.objLabel.fontStyle,
 }));
-
-onMounted(() => {
-  console.log(calcLeftShiftOffset("u", 22 * coeff.value, coeff.value));
-});
 </script>
 
 <template>
