@@ -32,7 +32,8 @@
     "lint-fix": "npx eslint . --fix",
     "lint": "npx eslint .",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest"
   },
   "dependencies": {
     "konva": "^9.3.18",

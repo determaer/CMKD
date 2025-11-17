@@ -89,14 +89,6 @@ watch(
 );
 
 watch(
-  () => [store.scaleMultiplier, store.sizeMultiplier],
-  () => {
-    store.updateCMKD();
-  },
-  { immediate: true },
-);
-
-watch(
   () => clickedInfo.value,
   () => {
     emit("clicked", clickedInfo.value);

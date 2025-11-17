@@ -6,5 +6,5 @@ export const calcControlPoint = (
   const radians = (angle / 180) * Math.PI;
   const controlX = centerPoint + radius * Math.cos(radians);
   const controlY = centerPoint - radius * Math.sin(radians);
-  return [controlX, controlY];
+  return [+controlX.toFixed(2), +controlY.toFixed(2)];
 };

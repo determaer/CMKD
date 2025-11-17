@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import type { Label } from "../types";
 import { calcLines } from "../helpers/calcLines";
 import { calcAngles } from "../helpers/calcAngles";
@@ -14,8 +14,6 @@ const circleNum = computed(() =>
   ),
 );
 const discNum = computed(() => labelsZero.value.length);
-const circleDivider = 5;
-const pointNum = computed(() => discNum.value * circleDivider);
 
 const manyLabelsCorrection = computed(() => (discNum.value < 50 ? 0 : 50));
 const haveSupportsCorrection = computed(() =>
@@ -34,14 +32,7 @@ const radiuses = computed(() => ({
   sectorNameRadius: generalCorrection(275) + haveSupportsCorrection.value,
 }));
 
-const angles = computed(() =>
-  calcAngles(
-    discNum.value,
-    pointNum.value,
-    circleDivider,
-    sizeMultiplier.value,
-  ),
-);
+const angles = computed(() => calcAngles(discNum.value, sizeMultiplier.value));
 
 const dividerAngles = computed(() =>
   calcDividerAngles(discNum.value, angles.value, labelsZero.value),
@@ -93,6 +84,14 @@ const lines = computed(() =>
 );
 
 export const useParamStore = () => {
+  watch(
+    () => [scaleMultiplier.value, sizeMultiplier.value],
+    () => {
+      updateCMKD();
+    },
+    { immediate: true },
+  );
+
   function updateCMKD() {
     setTimeout(() => {
       reloadCount.value++;
@@ -102,10 +101,8 @@ export const useParamStore = () => {
   return {
     width,
     centerPoint,
-    circleDivider,
     circleNum,
     discNum,
-    pointNum,
     angles,
     dividerAngles,
     radiuses,
