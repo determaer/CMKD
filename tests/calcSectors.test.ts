@@ -20,7 +20,7 @@ describe("calc sectors for one level cmkd", () => {
   it("there are 36 angles for labels", () => {
     expect(angles).toHaveLength(36);
   });
-  const sectors = calcSectors(circleNum, discNum, angles, oneLevelCMKD1);
+  const sectors = calcSectors(discNum, angles, oneLevelCMKD1);
   it("there are 8 sectors for labels", () => {
     expect(sectors).toHaveLength(8);
   });
@@ -29,18 +29,18 @@ describe("calc sectors for one level cmkd", () => {
       expect(sector.sLevel).toBe(0);
     }
   });
-  it("all angles in range [0; 359.99]", () => {
+  it("all angles in range [0; 360)", () => {
     for (const sector of sectors) {
-      expect(sector.sStart).toBeLessThanOrEqual(359.99);
-      expect(sector.sEnd).toBeLessThanOrEqual(359.99);
+      expect(sector.sStart).toBeLessThan(360);
+      expect(sector.sEnd).toBeLessThan(360);
       expect(sector.sStart).toBeGreaterThanOrEqual(0);
       expect(sector.sEnd).toBeGreaterThanOrEqual(0);
     }
   });
   it("sectors with right length (depends on labels count in sector)", () => {
-    const lengths = [40, 40, 40, 60, 40, 100, 30, 9.99];
+    const lengths = [40, 40, 40, 60, 40, 100, 30, 9.9999];
     for (let i = 0; i < 8; i++) {
-      expect(sectors[i].sEnd - sectors[i].sStart).toBeCloseTo(lengths[i]);
+      expect(sectors[i].sEnd - sectors[i].sStart).toBeCloseTo(lengths[i], 5);
     }
   });
 });
@@ -61,11 +61,11 @@ describe("calc sectors for 3 level cmkd", () => {
   it("there are 36 label with level = 0", () => {
     expect(discNum).toBe(36);
   });
-  const angles = calcAngles(summaryCMKD, 1);
+  const angles = calcAngles(labelsZero, 1);
   it("there are 36 angles for labels = 0", () => {
     expect(angles).toHaveLength(36);
   });
-  const sectors = calcSectors(circleNum, discNum, angles, summaryCMKD);
+  const sectors = calcSectors(discNum, angles, summaryCMKD);
   it("there are 26 sectors for labels", () => {
     expect(sectors).toHaveLength(26);
   });
@@ -75,17 +75,17 @@ describe("calc sectors for 3 level cmkd", () => {
       expect(sector.sLevel).toBeGreaterThanOrEqual(0);
     }
   });
-  it("all angles in range [0; 359.99]", () => {
+  it("all angles in range [0; 360)", () => {
     for (const sector of sectors) {
-      expect(sector.sStart).toBeLessThanOrEqual(359.99);
-      expect(sector.sEnd).toBeLessThanOrEqual(359.99);
+      expect(sector.sStart).toBeLessThan(360);
+      expect(sector.sEnd).toBeLessThan(360);
       expect(sector.sStart).toBeGreaterThanOrEqual(0);
       expect(sector.sEnd).toBeGreaterThanOrEqual(0);
     }
   });
 
   it("sectors sLevel = 2 with right length", () => {
-    const lengths = [50, 80, 70, 60, 60, 39.99];
+    const lengths = [50, 80, 70, 60, 60, 39.9999];
     for (let i = 0; i < 6; i++) {
       expect(sectors[i].sLevel).toBe(2);
       expect(sectors[i].sEnd - sectors[i].sStart).toBeCloseTo(lengths[i]);
@@ -93,7 +93,7 @@ describe("calc sectors for 3 level cmkd", () => {
   });
 
   it("sectors sLevel = 1 with right length", () => {
-    const lengths = [30, 20, 40, 40, 50, 20, 40, 20, 20, 20, 20, 39.99];
+    const lengths = [30, 20, 40, 40, 50, 20, 40, 20, 20, 20, 20, 39.9999];
     const sectors1level = sectors.filter((sector) => sector.sLevel == 1);
     for (let i = 0; i < 12; i++) {
       expect(sectors1level[i].sLevel).toBe(1);
@@ -104,11 +104,12 @@ describe("calc sectors for 3 level cmkd", () => {
   });
 
   it("sectors sLevel = 0 with right length", () => {
-    const lengths = [40, 40, 40, 60, 40, 100, 30, 9.99];
+    const lengths = [40, 40, 40, 60, 40, 100, 30, 9.9999];
     const sectors0level = sectors.filter((sector) => sector.sLevel == 0);
     for (let i = 0; i < 8; i++) {
       expect(sectors0level[i].sEnd - sectors0level[i].sStart).toBeCloseTo(
         lengths[i],
+        5,
       );
     }
   });
