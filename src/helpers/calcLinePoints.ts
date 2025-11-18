@@ -5,7 +5,6 @@ import type { Angle } from "../types/angle";
 export const calcLinePoint = (
   objLabelIn: Label,
   objLabelOut: Label,
-  labels: Label[],
   angles: Angle[],
   discNum: number,
   scaleMultiplier: number,
@@ -13,10 +12,8 @@ export const calcLinePoint = (
   lineStartRadius: number,
   centerPoint: number,
 ) => {
-  const labelInIndex = labels.findIndex((label) => objLabelIn.id == label.id);
-  const labelOutIndex = labels.findIndex((label) => objLabelOut.id == label.id);
-  const inAngles = angles.find((lAngle) => lAngle.labelId === labelInIndex);
-  const outAngles = angles.find((lAngle) => lAngle.labelId === labelOutIndex);
+  const inAngles = angles.find((lAngle) => lAngle.labelId === objLabelIn.id);
+  const outAngles = angles.find((lAngle) => lAngle.labelId === objLabelOut.id);
   if (inAngles == undefined || outAngles == undefined) return [];
 
   const discNumCorrection = discNum >= 50 ? 1 : 0;

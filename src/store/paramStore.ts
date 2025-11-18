@@ -32,7 +32,7 @@ const radiuses = computed(() => ({
   sectorNameRadius: generalCorrection(275) + haveSupportsCorrection.value,
 }));
 
-const angles = computed(() => calcAngles(discNum.value, sizeMultiplier.value));
+const angles = computed(() => calcAngles(labels.value, sizeMultiplier.value));
 
 const dividerAngles = computed(() =>
   calcDividerAngles(discNum.value, angles.value, labelsZero.value),

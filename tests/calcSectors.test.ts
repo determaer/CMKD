@@ -16,7 +16,7 @@ describe("calc sectors for one level cmkd", () => {
   it("there are labels with only level = 0", () => {
     expect(circleNum).toBe(0);
   });
-  const angles = calcAngles(36, 1);
+  const angles = calcAngles(oneLevelCMKD1, 1);
   it("there are 36 angles for labels", () => {
     expect(angles).toHaveLength(36);
   });
@@ -61,7 +61,7 @@ describe("calc sectors for 3 level cmkd", () => {
   it("there are 36 label with level = 0", () => {
     expect(discNum).toBe(36);
   });
-  const angles = calcAngles(36, 1);
+  const angles = calcAngles(summaryCMKD, 1);
   it("there are 36 angles for labels = 0", () => {
     expect(angles).toHaveLength(36);
   });

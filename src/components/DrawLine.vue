@@ -18,7 +18,6 @@ const points = computed(() =>
   calcLinePoint(
     props.objLabelIn,
     props.objLabelOut,
-    store.labelsZero.value,
     store.angles.value,
     store.discNum.value,
     store.scaleMultiplier.value,

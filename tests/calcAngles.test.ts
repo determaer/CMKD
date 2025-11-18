@@ -26,14 +26,17 @@ describe("calc 3 angles on the 360 deg circle with correction = 1", () => {
       outAngle: 378,
     },
   ];
+  const labels = [];
+  for (let i = 0; i < 3; i++) labels.push({ id: i, level: 0 });
+
   it("result is array with length 3", () => {
-    expect(calcAngles(3, 1)).toHaveLength(3);
+    expect(calcAngles(labels, 1)).toHaveLength(3);
   });
   it("result is equal to reference", () => {
-    expect(calcAngles(3, 1)).toStrictEqual<Angle[]>(angles);
+    expect(calcAngles(labels, 1)).toStrictEqual<Angle[]>(angles);
   });
   it("difference between every label is 120 deg", () => {
-    const angles = calcAngles(3, 1);
+    const angles = calcAngles(labels, 1);
     for (let i = 0; i < 2; i++) {
       expect(angles[i].labelAngle).toBe(angles[i + 1].labelAngle - 120);
     }
@@ -48,14 +51,16 @@ describe("calc 18 angles on the 360 deg circle with correction = 1", () => {
     labelAngle: 420,
     arrowAngle: 416,
   };
+  const labels = [];
+  for (let i = 0; i < 18; i++) labels.push({ id: i, level: 0 });
   it("result is array with length 18", () => {
-    expect(calcAngles(18, 1)).toHaveLength(18);
+    expect(calcAngles(labels, 1)).toHaveLength(18);
   });
   it("have an angle at index 16 with labelangle = 420", () => {
-    expect(calcAngles(18, 1)).toContainEqual<Angle>(angle);
+    expect(calcAngles(labels, 1)).toContainEqual<Angle>(angle);
   });
   it("difference between every label is 20 deg", () => {
-    const angles = calcAngles(18, 1);
+    const angles = calcAngles(labels, 1);
     for (let i = 0; i < 17; i++) {
       expect(angles[i].labelAngle).toBe(angles[i + 1].labelAngle - 20);
     }
@@ -63,11 +68,13 @@ describe("calc 18 angles on the 360 deg circle with correction = 1", () => {
 });
 
 describe("calc 9 angles on the 360 deg circle with correction = 1", () => {
+  const labels = [];
+  for (let i = 0; i < 9; i++) labels.push({ id: i, level: 0 });
   it("result is array with length 9", () => {
-    expect(calcAngles(9, 1)).toHaveLength(9);
+    expect(calcAngles(labels, 1)).toHaveLength(9);
   });
   it("difference between every label is 40 deg", () => {
-    const angles = calcAngles(9, 1);
+    const angles = calcAngles(labels, 1);
     for (let i = 0; i < 8; i++) {
       expect(angles[i].labelAngle).toBe(angles[i + 1].labelAngle - 40);
     }
@@ -75,11 +82,13 @@ describe("calc 9 angles on the 360 deg circle with correction = 1", () => {
 });
 
 describe("calc 36 angles on the 360 deg circle with correction = 1", () => {
+  const labels = [];
+  for (let i = 0; i < 36; i++) labels.push({ id: i, level: 0 });
   it("result is array with length 36", () => {
-    expect(calcAngles(36, 1)).toHaveLength(36);
+    expect(calcAngles(labels, 1)).toHaveLength(36);
   });
   it("difference between every label is 10 deg", () => {
-    const angles = calcAngles(36, 1);
+    const angles = calcAngles(labels, 1);
     for (let i = 0; i < 35; i++) {
       expect(angles[i].labelAngle).toBe(angles[i + 1].labelAngle - 10);
     }

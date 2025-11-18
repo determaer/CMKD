@@ -25,7 +25,7 @@ export const calcArrows = (
   const arcBtwLabels: Arc[] = [];
   labels.forEach((label, index) => {
     if (label.arrowIn && (showAdditionalInCircle || label.isBase)) {
-      const lAngle = angles.find((lAngle) => lAngle.labelId === index);
+      const lAngle = angles.find((lAngle) => lAngle.labelId === label.id);
       if (lAngle) {
         const [startX, startY] = calcControlPoint(
           centerPoint,
@@ -47,11 +47,11 @@ export const calcArrows = (
     }
     if (label.arrowOut) {
       const startAngle = angles.find(
-        (lAngle) => lAngle.labelId === index,
+        (lAngle) => lAngle.labelId === label.id,
       )?.labelAngle;
 
       const endAngle = angles.find(
-        (lAngle) => lAngle.labelId === index + 1,
+        (lAngle) => lAngle.labelId === labels[index + 1]?.id,
       )?.labelAngle;
       if (startAngle && endAngle) {
         arcBtwLabels.push({

@@ -25,7 +25,7 @@ const objLabelIndex = computed(() =>
 const lAngle = computed(
   () =>
     store.angles.value.find(
-      (lAngle) => lAngle.labelId === objLabelIndex.value,
+      (lAngle) => lAngle.labelId === props.objLabel.id,
     ) ?? {
       labelAngle: 0,
       labelId: 0,
