@@ -14,14 +14,10 @@ export interface Label {
   arrowOut: boolean; // исходящая стрелка образовательной траектории
   arrowIn: boolean; // входящая стрелка образовательной траектории
   level: number; // уровень на карте
+  grey: boolean; // true = элемент не покрыт тестированием
+  sectorName: string; // наименование сектора
   isLabel?: boolean; // сводная - наличие фигурного обозначения
   secLength?: number; // сводная - длина сектора
-  lowLevel?: number[]; // сводная - элементы иерархии, находящиеся выше
-  highLevel?: number[]; // сводная - элементы иерархии, находящиеся ниже
-  object?: unknown; // представление целевого объекта как есть
-  grey: boolean; // true = элемент не покрыт тестированием
-  percent?: number; // представление score в процентном соотношении
-  sectorName: string; // наименование сектора
 }
 
 export function instanceOfLabel(label: unknown): label is Label {
@@ -42,9 +38,8 @@ export function instanceOfLabel(label: unknown): label is Label {
     "arrowOut" in label &&
     "arrowIn" in label &&
     "level" in label &&
-    "isLabel" in label &&
-    "secLength" in label &&
-    "grey" in label
+    "grey" in label &&
+    "sectorName" in label
   );
 }
 

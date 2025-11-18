@@ -71,13 +71,7 @@ const labelsZero = computed(() =>
   labels.value.filter((label) => label.level == 0),
 );
 const sectors = computed(() =>
-  calcSectors(
-    circleNum.value,
-    discNum.value,
-    angles.value,
-    labelsZero.value,
-    labels.value,
-  ),
+  calcSectors(circleNum.value, discNum.value, angles.value, labels.value),
 );
 const lines = computed(() =>
   calcLines(labelsZero.value, showLight.value, showAdditionalInCircle.value),

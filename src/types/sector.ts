@@ -6,11 +6,14 @@ export interface Sector extends SectorLabel {
   sEnd: number; // конечный угол
 }
 
+export type SObjectLabel = Pick<
+  Label,
+  "id" | "isLabel" | "numText" | "typeText" | "score" | "fontStyle"
+>;
+
 export interface SectorLabel {
-  sStartLID: number; // id элемента в начале сектора
-  sEndLID: number; // id элемента в конце сектора
   sLevel: number; // уровень
-  object: Label; // объект, описываемый сектором
+  object: SObjectLabel | Pick<Label, "id">; // объект, описываемый сектором
   shortname?: string; // наименование
 }
 
@@ -19,10 +22,23 @@ export function instanceOfSector(sector: unknown): sector is Sector {
     sector instanceof Object &&
     "sStart" in sector &&
     "sEnd" in sector &&
-    "sStartLID" in sector &&
-    "sEndLID" in sector &&
     "sLevel" in sector &&
     "object" in sector &&
     instanceOfLabel(sector.object)
   );
 }
+
+export function isSectorObjectValidForUpperLevelsCMKD(
+  object: unknown,
+): object is SObjectLabel {
+  return (
+    object instanceof Object &&
+    "id" in object &&
+    "isLabel" in object &&
+    "numText" in object &&
+    "typeText" in object &&
+    "score" in object &&
+    "fontStyle" in object
+  );
+}
+

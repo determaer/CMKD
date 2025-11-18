@@ -10,6 +10,7 @@ import {
   calcLeftShiftOffset,
   calcRightShiftOffset,
 } from "../helpers/calcTextAdjustments";
+import { isSectorObjectValidForUpperLevelsCMKD } from "../types/sector";
 
 const store = useParamStore();
 const clickedStore = useClickedStore();
@@ -19,6 +20,12 @@ const props = defineProps<{
   bgColor: string;
   opacity?: number;
 }>();
+
+const validObject = computed(() => {
+  if (isSectorObjectValidForUpperLevelsCMKD(props.sector.object))
+    return props.sector.object;
+  return false;
+});
 
 const fill = ref(props.bgColor);
 
@@ -58,18 +65,18 @@ const nameXY = computed<[number, number]>(() => {
 });
 
 const labelFillColor = computed(() => {
-  if (props.sector.object.score > 0) {
+  if (!validObject.value) return "white";
+  if (validObject.value.score > 0) {
     return "green";
   }
-  if (props.sector.object.score < 0) {
+  if (validObject.value.score < 0) {
     return "red";
   }
-  return "white";
 });
 
 const sectorWithLabel = computed(() => {
-  if (props.sector.object.isLabel && props.sector.object.level > 0) return true;
-  else return false;
+  if (!validObject.value) return false;
+  if (validObject.value.isLabel && props.sector.sLevel > 0) return true;
 });
 
 const coeff = computed(() => {
@@ -110,7 +117,7 @@ const textConfig = computed(() => ({
   x: labelXY.value[0],
   y: labelXY.value[1],
   fontFamily: "Times New Roman",
-  fontStyle: props.sector.object.fontStyle,
+  fontStyle: validObject.value && validObject.value.fontStyle,
 }));
 </script>
 
@@ -137,6 +144,7 @@ const textConfig = computed(() => ({
       ...textConfig,
       x: nameXY[0],
       y: nameXY[1],
+      fontStyle: 'normal',
     }"
     :text="sector.shortname"
     :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"
@@ -155,9 +163,9 @@ const textConfig = computed(() => ({
     @mouse-out="handleMouseOut"
   />
   <v-rect
-    v-if="sectorWithLabel && store.showScore.value"
+    v-if="sectorWithLabel && store.showScore.value && validObject"
     :config="labelConfig"
-    :opacity="Math.abs(sector.object.score)"
+    :opacity="Math.abs(validObject.score)"
     :fill="labelFillColor"
     :stroke="'black'"
     @click="handleClick"
@@ -165,39 +173,34 @@ const textConfig = computed(() => ({
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="sectorWithLabel"
+    v-if="sectorWithLabel && validObject"
     :key="`${store.reloadCount.value}-${sector.object.id}-sectorlabel-type-text`"
     :config="textConfig"
-    :fontSize="calcTextFontSize(22 * coeff, sector.object.numText)"
-    :text="sector.object.typeText"
-    :offset="calcLeftShiftOffset(sector.object.typeText, 22 * coeff, coeff)"
+    :fontSize="calcTextFontSize(22 * coeff, validObject.typeText)"
+    :text="validObject.typeText"
+    :offset="calcLeftShiftOffset(validObject.typeText, 22 * coeff, coeff)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="sectorWithLabel"
+    v-if="sectorWithLabel && validObject"
     :key="`${store.reloadCount.value}-${sector.object.id}-sectorlabel-num-text`"
     :config="textConfig"
-    :fontSize="calcTextFontSize(16 * coeff, sector.object.numText)"
-    :text="sector.object.numText"
-    :offset="calcRightShiftOffset(sector.object.numText, 16 * coeff, coeff)"
+    :fontSize="calcTextFontSize(16 * coeff, validObject.numText)"
+    :text="validObject.numText"
+    :offset="calcRightShiftOffset(validObject.numText, 16 * coeff, coeff)"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <v-text
-    v-if="!sectorWithLabel && sector.object.level != 0"
+    v-if="!sectorWithLabel && sector.shortname && sector.sLevel > 0"
     :key="`${store.reloadCount.value}-${sector.object.id}-sector-text`"
     :config="textConfig"
     :fontSize="22 * coeff"
-    :text="sector.object.typeText + sector.object.numText"
-    :offset="
-      calcCenteredOffset(
-        sector.object.typeText + sector.object.numText,
-        22 * coeff,
-      )
-    "
+    :text="sector.shortname"
+    :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"
     :rotation="nameRotation"
     @click="handleClick"
     @mouse-over="handleMouseOver"
