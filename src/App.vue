@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import CMKD from "./components/CMKD.vue";
-import { labels } from "./legacy/labelsNew.ts";
+import { oneLevelCMKD1 } from "./stories/cmkd-sets/oneLevelStandardCMKD1";
 import { onMounted, ref /*, useTemplateRef*/ } from "vue";
 
 //const cmkd = useTemplateRef("cmkd");
 const showSupportRect = ref<"default" | "score" | "light">("default");
-const labelref = ref(labels);
+const labelref = ref(oneLevelCMKD1);
 onMounted(() => {
   setTimeout(() => {
     // загрузка изображения карты - cmkd.value?.downloadURI();
