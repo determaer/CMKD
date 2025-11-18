@@ -27,7 +27,7 @@ describe("calc 3 angles on the 360 deg circle with correction = 1", () => {
     },
   ];
   const labels = [];
-  for (let i = 0; i < 3; i++) labels.push({ id: i, level: 0 });
+  for (let i = 0; i < 3; i++) labels.push({ id: i });
 
   it("result is array with length 3", () => {
     expect(calcAngles(labels, 1)).toHaveLength(3);
@@ -52,7 +52,7 @@ describe("calc 18 angles on the 360 deg circle with correction = 1", () => {
     arrowAngle: 416,
   };
   const labels = [];
-  for (let i = 0; i < 18; i++) labels.push({ id: i, level: 0 });
+  for (let i = 0; i < 18; i++) labels.push({ id: i });
   it("result is array with length 18", () => {
     expect(calcAngles(labels, 1)).toHaveLength(18);
   });
@@ -69,7 +69,7 @@ describe("calc 18 angles on the 360 deg circle with correction = 1", () => {
 
 describe("calc 9 angles on the 360 deg circle with correction = 1", () => {
   const labels = [];
-  for (let i = 0; i < 9; i++) labels.push({ id: i, level: 0 });
+  for (let i = 0; i < 9; i++) labels.push({ id: i });
   it("result is array with length 9", () => {
     expect(calcAngles(labels, 1)).toHaveLength(9);
   });
@@ -83,7 +83,7 @@ describe("calc 9 angles on the 360 deg circle with correction = 1", () => {
 
 describe("calc 36 angles on the 360 deg circle with correction = 1", () => {
   const labels = [];
-  for (let i = 0; i < 36; i++) labels.push({ id: i, level: 0 });
+  for (let i = 0; i < 36; i++) labels.push({ id: i });
   it("result is array with length 36", () => {
     expect(calcAngles(labels, 1)).toHaveLength(36);
   });

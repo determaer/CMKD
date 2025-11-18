@@ -23,7 +23,12 @@ export const calcArrows = (
 ) => {
   const arrowsInLabels: Arrow[] = [];
   const arcBtwLabels: Arc[] = [];
+  let prevLabel: Label;
   labels.forEach((label, index) => {
+    if (index == 0) {
+      prevLabel = label;
+      return;
+    }
     if (label.arrowIn && (showAdditionalInCircle || label.isBase)) {
       const lAngle = angles.find((lAngle) => lAngle.labelId === label.id);
       if (lAngle) {
@@ -45,13 +50,13 @@ export const calcArrows = (
         });
       }
     }
-    if (label.arrowOut) {
+    if (prevLabel.arrowOut) {
       const startAngle = angles.find(
-        (lAngle) => lAngle.labelId === label.id,
+        (lAngle) => lAngle.labelId === prevLabel.id,
       )?.labelAngle;
 
       const endAngle = angles.find(
-        (lAngle) => lAngle.labelId === labels[index + 1]?.id,
+        (lAngle) => lAngle.labelId === label.id,
       )?.labelAngle;
       if (startAngle && endAngle) {
         arcBtwLabels.push({
@@ -60,6 +65,7 @@ export const calcArrows = (
         });
       }
     }
+    prevLabel = label;
   });
   return {
     arrowsInLabels,
