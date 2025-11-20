@@ -32,21 +32,21 @@ export const calcArrows = (
     if (label.arrowIn && (showAdditionalInCircle || label.isBase)) {
       const lAngle = angles.find((lAngle) => lAngle.labelId === label.id);
       if (lAngle) {
-        const [startX, startY] = calcControlPoint(
+        const start = calcControlPoint(
           centerPoint,
           labelRadius,
           lAngle.arrowAngle - 1,
         );
-        const [endX, endY] = calcControlPoint(
+        const end = calcControlPoint(
           centerPoint,
           labelRadius,
           lAngle.arrowAngle,
         );
         arrowsInLabels.push({
-          startX: startX,
-          startY: startY,
-          endX: endX,
-          endY: endY,
+          startX: start.x,
+          startY: start.y,
+          endX: end.x,
+          endY: end.y,
         });
       }
     }

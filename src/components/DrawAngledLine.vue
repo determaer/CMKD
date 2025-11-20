@@ -12,22 +12,18 @@ const props = defineProps<{
   width: number;
 }>();
 
-const [startX, startY] = calcControlPoint(
+const start = calcControlPoint(
   centerPoint.value,
   props.startRadius,
   props.angle,
 );
-const [endX, endY] = calcControlPoint(
-  centerPoint.value,
-  props.endRadius,
-  props.angle,
-);
+const end = calcControlPoint(centerPoint.value, props.endRadius, props.angle);
 </script>
 
 <template>
   <v-line
     :key="`${reloadCount}-angled-line`"
-    :points="[startX, startY, endX, endY]"
+    :points="[start.x, start.y, end.x, end.y]"
     :stroke="color"
     :strokeWidth="width"
   />

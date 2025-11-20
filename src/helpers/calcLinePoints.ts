@@ -38,10 +38,10 @@ export const calcLinePoint = (
   const radius =
     (10 * angleCorrection + 50 * discNumCorrection) * scaleMultiplier;
 
-  const [CPX1, CPY1] = calcControlPoint(centerPoint, radius, bezierCPangle1);
-  const [CPX2, CPY2] = calcControlPoint(centerPoint, radius, bezierCPangle2);
-  const [outX, outY] = calcControlPoint(centerPoint, innerRadius, outAngle);
-  const [inX, inY] = calcControlPoint(centerPoint, lineStartRadius, inAngle);
+  const CP1 = calcControlPoint(centerPoint, radius, bezierCPangle1);
+  const CP2 = calcControlPoint(centerPoint, radius, bezierCPangle2);
+  const out = calcControlPoint(centerPoint, innerRadius, outAngle);
+  const In = calcControlPoint(centerPoint, lineStartRadius, inAngle);
 
-  return [outX, outY, CPX1, CPY1, CPX2, CPY2, inX, inY];
+  return [out.x, out.y, CP1.x, CP1.y, CP2.x, CP2.y, In.x, In.y];
 };

@@ -5,6 +5,7 @@ import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import type { Label } from "../types";
 import DrawRect from "./DrawRect.vue";
+import type { ControlPoint } from "../types/control";
 
 const store = useParamStore();
 const clickedStore = useClickedStore();
@@ -12,10 +13,10 @@ const clickedStore = useClickedStore();
 const props = defineProps<{
   angle: number;
   objLabel: Label;
-  labelXY: [number, number];
+  labelCP: ControlPoint;
 }>();
 
-const supLabelXY = computed(() =>
+const supLabel = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.additionalLabelRadius,
@@ -39,7 +40,7 @@ const drawRectCount = computed(() => {
 
 <template>
   <v-line
-    :points="[labelXY[0], labelXY[1], supLabelXY[0], supLabelXY[1]]"
+    :points="[labelCP.x, labelCP.y, supLabel.x, supLabel.y]"
     :strokeWidth="2 * store.scaleMultiplier.value"
     stroke="black"
   />

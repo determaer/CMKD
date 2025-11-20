@@ -28,42 +28,42 @@ const lAngle = computed(
     },
 );
 
-const labelXY = computed(() =>
+const label = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.labelRadius,
     lAngle.value.labelAngle,
   ),
 );
-const inInnerXY = computed(() =>
+const inInner = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.innerRadius,
     lAngle.value.inAngle,
   ),
 );
-const outInnerXY = computed(() =>
+const outInner = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.innerRadius,
     lAngle.value.outAngle,
   ),
 );
-const outMergingXY = computed(() =>
+const outMerging = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.mergingPortsRadius,
     lAngle.value.outAngle,
   ),
 );
-const inMergingXY = computed(() =>
+const inMerging = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.mergingPortsRadius,
     lAngle.value.inAngle,
   ),
 );
-const arrowXY = computed(() =>
+const arrow = computed(() =>
   calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.innerRadius - 1,
@@ -100,16 +100,16 @@ const drawRectCount = computed(() => {
   <v-line
     :key="`${store.reloadCount.value}-${objLabel.id}-lines-label`"
     :points="[
-      inInnerXY[0],
-      inInnerXY[1],
-      inMergingXY[0],
-      inMergingXY[1],
-      labelXY[0],
-      labelXY[1],
-      outMergingXY[0],
-      outMergingXY[1],
-      outInnerXY[0],
-      outInnerXY[1],
+      inInner.x,
+      inInner.y,
+      inMerging.x,
+      inMerging.y,
+      label.x,
+      label.y,
+      outMerging.x,
+      outMerging.y,
+      outInner.x,
+      outInner.y,
     ]"
     stroke="black"
     :strokeWidth="2 * store.scaleMultiplier.value"
@@ -117,7 +117,7 @@ const drawRectCount = computed(() => {
   />
   <v-arrow
     :key="`${store.reloadCount.value}-${objLabel.id}-arrow-label`"
-    :points="[arrowXY[0], arrowXY[1], inInnerXY[0], inInnerXY[1]]"
+    :points="[arrow.x, arrow.y, inInner.x, inInner.y]"
     stroke="black"
     fill="black"
     :pointerWidth="
@@ -130,7 +130,7 @@ const drawRectCount = computed(() => {
     :key="`${store.reloadCount.value}-${objLabel.id}-support-label-wrapper`"
     :angle="lAngle.labelAngle"
     :objLabel="objLabel"
-    :labelXY="labelXY"
+    :labelCP="label"
   />
   <DrawRect
     v-if="drawLabel"

@@ -50,7 +50,7 @@ const targetLabelRadius = computed(
     50 * props.sector.sLevel * store.scaleMultiplier.value,
 );
 
-const labelXY = computed<[number, number]>(() => {
+const label = computed(() => {
   return calcControlPoint(
     store.centerPoint.value,
     targetLabelRadius.value,
@@ -58,7 +58,7 @@ const labelXY = computed<[number, number]>(() => {
   );
 });
 
-const nameXY = computed<[number, number]>(() => {
+const name = computed(() => {
   return calcControlPoint(
     store.centerPoint.value,
     store.radiuses.value.sectorNameRadius,
@@ -114,8 +114,8 @@ const innerRadius = computed(
   />
   <v-text
     v-if="store.showSectorName.value && sector.shortname"
-    :x="nameXY[0]"
-    :y="nameXY[1]"
+    :x="name.x"
+    :y="name.y"
     :text="sector.shortname"
     :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"
     :fontSize="22 * coeff"
@@ -140,8 +140,8 @@ const innerRadius = computed(
   <v-text
     v-if="!sectorWithLabel && sector.shortname && sector.sLevel > 0"
     :key="`${store.reloadCount.value}-${sector.object.id}-sector-text`"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
+    :x="label.x"
+    :y="label.y"
     :fontSize="22 * coeff"
     :text="sector.shortname"
     :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"

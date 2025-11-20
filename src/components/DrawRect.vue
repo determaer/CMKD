@@ -33,23 +33,23 @@ const objLabelIndex = computed(() =>
 
 const scale = ref(1);
 
-const labelXY = computed(() =>
+const label = computed(() =>
   calcControlPoint(store.centerPoint.value, radius, angle),
 );
-const labelXY2 = computed(() =>
+const label2 = computed(() =>
   calcControlPoint(store.centerPoint.value, radius + 2.5, angle + 0.6),
 );
-const labelXY3 = computed(() =>
+const label3 = computed(() =>
   calcControlPoint(store.centerPoint.value, radius + 5, angle + 1.2),
 );
 
 const labelControlPoints = computed(() => {
-  const result: { label: [number, number]; scored: boolean }[] = [];
+  const result: { label: { x: number; y: number }; scored: boolean }[] = [];
 
-  if (rectCount > 2) result.push({ label: labelXY3.value, scored: false });
-  if (rectCount > 1) result.push({ label: labelXY2.value, scored: false });
-  if (rectCount > 0) result.push({ label: labelXY.value, scored: false });
-  if (showScore) result.push({ label: labelXY.value, scored: true });
+  if (rectCount > 2) result.push({ label: label3.value, scored: false });
+  if (rectCount > 1) result.push({ label: label2.value, scored: false });
+  if (rectCount > 0) result.push({ label: label.value, scored: false });
+  if (showScore) result.push({ label: label.value, scored: true });
 
   return result;
 });
@@ -115,8 +115,8 @@ const labelConfig = computed(() => ({
 }));
 
 const textConfig = computed(() => ({
-  x: labelXY.value[0],
-  y: labelXY.value[1],
+  x: label.value.x,
+  y: label.value.y,
   fontFamily: "Times New Roman",
   fontStyle: objLabel.fontStyle,
 }));
@@ -127,8 +127,8 @@ const textConfig = computed(() => ({
     v-for="(labelCP, index) of labelControlPoints"
     :key="`${store.reloadCount.value}-${objLabel.id}-${index}-label`"
     :config="labelConfig"
-    :x="labelCP.label[0]"
-    :y="labelCP.label[1]"
+    :x="labelCP.label.x"
+    :y="labelCP.label.y"
     :opacity="labelCP.scored ? scoredLabelOpacity : 1"
     :fill="selected || !labelCP.scored ? 'white' : fillColor"
     :stroke="selected && labelCP.scored ? fillColor : 'black'"
