@@ -43,6 +43,17 @@ const labelXY3 = computed(() =>
   calcControlPoint(store.centerPoint.value, radius + 5, angle + 1.2),
 );
 
+const labelControlPoints = computed(() => {
+  const result: { label: [number, number]; scored: boolean }[] = [];
+
+  if (rectCount > 2) result.push({ label: labelXY3.value, scored: false });
+  if (rectCount > 1) result.push({ label: labelXY2.value, scored: false });
+  if (rectCount > 0) result.push({ label: labelXY.value, scored: false });
+  if (showScore) result.push({ label: labelXY.value, scored: true });
+
+  return result;
+});
+
 const handleClick = () => {
   scale.value = 1;
   emit("clicked");
@@ -112,56 +123,19 @@ const textConfig = computed(() => ({
 </script>
 
 <template>
-  <!-- Label -->
   <v-rect
-    v-if="rectCount > 2"
-    :key="`${store.reloadCount.value}-${objLabel.id}-3-label`"
+    v-for="(labelCP, index) of labelControlPoints"
+    :key="`${store.reloadCount.value}-${objLabel.id}-${index}-label`"
     :config="labelConfig"
-    :x="labelXY3[0]"
-    :y="labelXY3[1]"
-    fill="white"
-    stroke="black"
+    :x="labelCP.label[0]"
+    :y="labelCP.label[1]"
+    :opacity="labelCP.scored ? scoredLabelOpacity : 1"
+    :fill="selected || !labelCP.scored ? 'white' : fillColor"
+    :stroke="selected && labelCP.scored ? fillColor : 'black'"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
-  <v-rect
-    v-if="rectCount > 1"
-    :key="`${store.reloadCount.value}-${objLabel.id}-2-label`"
-    :config="labelConfig"
-    :x="labelXY2[0]"
-    :y="labelXY2[1]"
-    fill="white"
-    stroke="black"
-    @сlick="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <v-rect
-    :key="`${store.reloadCount.value}-${objLabel.id}-1-label`"
-    :config="labelConfig"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
-    fill="white"
-    stroke="black"
-    @click="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <v-rect
-    v-if="showScore"
-    :key="`${store.reloadCount.value}-${objLabel.id}-scored-label`"
-    :config="labelConfig"
-    :x="labelXY[0]"
-    :y="labelXY[1]"
-    :opacity="scoredLabelOpacity"
-    :fill="selected ? 'white' : fillColor"
-    :stroke="selected ? fillColor : 'black'"
-    @click="handleClick"
-    @mouse-over="handleMouseOver"
-    @mouse-out="handleMouseOut"
-  />
-  <!-- Text in label -->
   <v-text
     :key="`${store.reloadCount.value}-${objLabel.id}-type-text`"
     :config="textConfig"

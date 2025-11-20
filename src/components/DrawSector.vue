@@ -93,12 +93,6 @@ const innerRadius = computed(
     store.radiuses.value.innerRadius +
     50 * props.sector.sLevel * store.scaleMultiplier.value,
 );
-
-const textConfig = computed(() => ({
-  x: labelXY.value[0],
-  y: labelXY.value[1],
-  fontFamily: "Times New Roman",
-}));
 </script>
 
 <template>
@@ -120,21 +114,19 @@ const textConfig = computed(() => ({
   />
   <v-text
     v-if="store.showSectorName.value && sector.shortname"
-    :config="{
-      ...textConfig,
-      x: nameXY[0],
-      y: nameXY[1],
-      fontStyle: 'normal',
-    }"
+    :x="nameXY[0]"
+    :y="nameXY[1]"
     :text="sector.shortname"
     :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"
     :fontSize="22 * coeff"
+    fontFamily="Times New Roman"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"
   />
   <DrawRect
     v-if="validObject && validObject.isLabel"
+    :key="`${store.reloadCount.value}-${validObject.id}-sectorlabel-wrapper`"
     :objLabel="validObject"
     :selected="false"
     :radius="targetLabelRadius"
@@ -148,11 +140,13 @@ const textConfig = computed(() => ({
   <v-text
     v-if="!sectorWithLabel && sector.shortname && sector.sLevel > 0"
     :key="`${store.reloadCount.value}-${sector.object.id}-sector-text`"
-    :config="textConfig"
+    :x="labelXY[0]"
+    :y="labelXY[1]"
     :fontSize="22 * coeff"
     :text="sector.shortname"
     :offset="calcCenteredOffset(sector.shortname, 22 * coeff)"
     :rotation="nameRotation"
+    fontFamily="Times New Roman"
     @click="handleClick"
     @mouse-over="handleMouseOver"
     @mouse-out="handleMouseOut"

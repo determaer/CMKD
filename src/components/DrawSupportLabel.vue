@@ -44,6 +44,7 @@ const drawRectCount = computed(() => {
     stroke="black"
   />
   <DrawRect
+    :key="`${store.reloadCount.value}-${objLabel.id}-supportlabel-wrapper`"
     :objLabel="objLabel"
     :selected="false"
     :radius="store.radiuses.value.additionalLabelRadius"

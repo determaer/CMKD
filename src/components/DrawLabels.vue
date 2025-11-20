@@ -127,12 +127,14 @@ const drawRectCount = computed(() => {
   />
   <DrawSupportLabel
     v-if="drawSupportLabel"
+    :key="`${store.reloadCount.value}-${objLabel.id}-support-label-wrapper`"
     :angle="lAngle.labelAngle"
     :objLabel="objLabel"
     :labelXY="labelXY"
   />
   <DrawRect
     v-if="drawLabel"
+    :key="`${store.reloadCount.value}-${objLabel.id}-label-wrapper`"
     :objLabel="objLabel"
     :selected="selected"
     :radius="store.radiuses.value.labelRadius"
