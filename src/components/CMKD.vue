@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, unref, watchEffect } from "vue";
+import { ref, watch, unref } from "vue";
 import { useParamStore } from "../store/paramStore";
 import { useClickedStore } from "../store/clickedStore";
 import DrawLabels from "./DrawLabels.vue";
@@ -61,14 +61,18 @@ watch(
   { immediate: true, deep: true },
 );
 
-watchEffect(() => {
-  store.width.value = width;
-  store.position.value = position;
-  store.showImportant.value = showImportant;
-  store.showSupportRect.value = showSupportRect;
-  store.showDefaultRect.value = showDefaultRect;
-  store.updateCMKD();
-});
+watch(
+  () => [width, position, showImportant, showSupportRect, showDefaultRect],
+  () => {
+    store.width.value = width;
+    store.position.value = position;
+    store.showImportant.value = showImportant;
+    store.showSupportRect.value = showSupportRect;
+    store.showDefaultRect.value = showDefaultRect;
+    store.updateCMKD();
+  },
+  { immediate: true },
+);
 
 watch(
   () => drawingMode,

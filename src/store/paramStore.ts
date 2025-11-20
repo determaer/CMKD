@@ -1,4 +1,4 @@
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import type { Label } from "../types";
 import { calcLines } from "../helpers/calcLines";
 import { calcAngles } from "../helpers/calcAngles";
@@ -80,14 +80,6 @@ const lines = computed(() =>
 );
 
 export const useParamStore = () => {
-  watch(
-    () => [scaleMultiplier.value, sizeMultiplier.value],
-    () => {
-      updateCMKD();
-    },
-    { immediate: true },
-  );
-
   function updateCMKD() {
     setTimeout(() => {
       reloadCount.value++;
