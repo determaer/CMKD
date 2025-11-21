@@ -20,6 +20,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t1",
   },
   {
@@ -41,6 +42,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t1",
   },
   {
@@ -62,6 +64,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t1",
   },
   {
@@ -83,6 +86,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t1",
   },
   {
@@ -104,6 +108,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t2",
   },
   {
@@ -125,6 +130,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t2",
   },
   {
@@ -146,6 +152,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t2",
   },
   {
@@ -167,6 +174,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t2",
   },
   {
@@ -188,6 +196,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t3",
   },
   {
@@ -209,6 +218,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t3",
   },
   {
@@ -230,6 +240,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t3",
   },
   {
@@ -251,6 +262,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t3",
   },
   {
@@ -272,6 +284,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t4",
   },
   {
@@ -293,6 +306,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t4",
   },
   {
@@ -314,6 +328,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t4",
   },
   {
@@ -335,6 +350,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t4",
   },
   {
@@ -356,6 +372,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t4",
   },
   {
@@ -377,6 +394,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t4",
   },
   {
@@ -398,6 +416,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t5",
   },
   {
@@ -419,6 +438,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t5",
   },
   {
@@ -440,6 +460,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t5",
   },
   {
@@ -461,6 +482,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t5",
   },
   {
@@ -482,6 +504,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -503,6 +526,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -524,6 +548,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -545,6 +570,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -566,6 +592,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -587,6 +614,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -608,6 +636,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -629,6 +658,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -650,6 +680,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -671,6 +702,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t6",
   },
   {
@@ -692,6 +724,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t7",
   },
   {
@@ -713,6 +746,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t7",
   },
   {
@@ -734,6 +768,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
     sectorName: "t7",
   },
   {
@@ -755,6 +790,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 36,
     grey: true,
+    yellow: false,
     sectorName: "t7",
   },
   {
@@ -776,6 +812,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -797,6 +834,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -818,6 +856,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -839,6 +878,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -860,6 +900,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -881,6 +922,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -902,6 +944,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -923,6 +966,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -944,6 +988,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -965,6 +1010,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -986,6 +1032,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t7",
   },
   {
@@ -1007,6 +1054,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t7",
   },
   {
@@ -1028,6 +1076,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t7",
   },
   {
@@ -1049,6 +1098,7 @@ export const oneLevelLongCMKD: Label[] = [
     isLabel: true,
     secLength: 36,
     grey: true,
+    yellow: true,
     sectorName: "t7",
   },
 ];

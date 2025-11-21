@@ -52,18 +52,17 @@ const sizeMultiplier = computed(() => {
   else return 1;
 });
 
-const position = ref();
 const reloadCount = ref(0);
 //#region flags
 
 const showSupportRect = ref(false);
 const showAdditionalInCircle = ref(true);
-const defaultRect = ref(true);
 const showScore = ref(false);
 const showLight = ref(false);
 const oneLevel = computed(() => (circleNum.value == 0 ? true : false));
 const showImportant = ref(false);
 const showDefaultRect = ref(false);
+const showUnreached = ref(false);
 const showSectorName = computed(() => (oneLevel.value ? true : false));
 
 //#region content
@@ -96,11 +95,10 @@ export const useParamStore = () => {
     radiuses,
     scaleMultiplier,
     sizeMultiplier,
-    position,
     showSupportRect,
     showDefaultRect,
+    showUnreached,
     showAdditionalInCircle,
-    defaultRect,
     showScore,
     showLight,
     showSectorName,

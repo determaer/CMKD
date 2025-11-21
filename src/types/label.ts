@@ -5,7 +5,7 @@ export interface Label {
   numText: string; // цифровое обозначение элемента
   type: "rect" | "roundrect" | "circle"; // фигурное обозначение элемента
   num: number; // количество представлений информации элементом
-  score: number; // значение результата освоения элемента (-1; 1)
+  score: number; // значение результата освоения элемента [-1; 1]
   isBase: boolean; // часть основной траектории
   connections: number[]; // идентификаторы элементов, на которые опирается элемент
   secStart: boolean; // начало сектора
@@ -15,6 +15,7 @@ export interface Label {
   arrowIn: boolean; // входящая стрелка образовательной траектории
   level: number; // уровень на карте
   grey: boolean; // true = элемент не покрыт тестированием
+  yellow: boolean; //true = элемент ещё не был изучен
   sectorName: string; // наименование сектора
   isLabel?: boolean; // сводная - наличие фигурного обозначения
   secLength?: number; // сводная - длина сектора
@@ -62,6 +63,7 @@ export const defaultLabel: Label = {
   isLabel: true,
   secLength: 1,
   grey: false,
+  yellow: false,
   sectorName: "",
 };
 

@@ -27,10 +27,6 @@ const emit = defineEmits<{
   mouseovered: [];
 }>();
 
-const objLabelIndex = computed(() =>
-  store.labelsZero.value.findIndex((label) => label.id == objLabel.id),
-);
-
 const scale = ref(1);
 
 const label = computed(() =>
@@ -70,16 +66,11 @@ const handleMouseOut = () => {
 };
 
 const fillColor = computed(() => {
-  if (objLabelIndex.value > store.position.value) return "yellow";
-  if (instanceOfLabel(objLabel) && objLabel.grey) {
-    return "lightgrey";
-  } else {
-    if (objLabel.score > 0) {
-      return "green";
-    } else if (objLabel.score < 0) {
-      return "red";
-    }
-  }
+  if (store.showUnreached.value && instanceOfLabel(objLabel) && objLabel.yellow)
+    return "yellow";
+  if (instanceOfLabel(objLabel) && objLabel.grey) return "lightgrey";
+  if (objLabel.score > 0) return "green";
+  if (objLabel.score < 0) return "red";
   return "white";
 });
 

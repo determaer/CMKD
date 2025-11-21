@@ -20,6 +20,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
     sectorName: "t1",
   },
   {
@@ -41,6 +42,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t1",
   },
   {
@@ -62,6 +65,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t1",
   },
   {
@@ -83,6 +88,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t1",
   },
   {
@@ -104,6 +111,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t2",
   },
   {
@@ -125,6 +134,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t2",
   },
   {
@@ -146,6 +157,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t2",
   },
   {
@@ -167,6 +180,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: true,
+    yellow: true,
+
     sectorName: "t2",
   },
   {
@@ -188,6 +203,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t3",
   },
   {
@@ -209,6 +226,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: false,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t3",
   },
   {
@@ -230,6 +249,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
+
     sectorName: "t3",
   },
   {
@@ -251,6 +272,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
+
     sectorName: "t3",
   },
   {
@@ -272,6 +295,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t4",
   },
   {
@@ -293,6 +318,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t4",
   },
   {
@@ -314,6 +341,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t4",
   },
   {
@@ -335,6 +364,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t4",
   },
   {
@@ -356,6 +387,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t4",
   },
   {
@@ -377,6 +410,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t4",
   },
   {
@@ -398,6 +433,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t5",
   },
   {
@@ -419,6 +456,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t5",
   },
   {
@@ -440,6 +479,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t5",
   },
   {
@@ -461,6 +502,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t5",
   },
   {
@@ -482,6 +525,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: false,
+
     sectorName: "t6",
   },
   {
@@ -504,6 +549,7 @@ export const oneLevelCMKD2: Label[] = [
     secLength: 1,
 
     grey: false,
+    yellow: false,
 
     sectorName: "t6",
   },
@@ -525,6 +571,8 @@ export const oneLevelCMKD2: Label[] = [
     level: 0,
     isLabel: true,
     secLength: 1,
+    yellow: false,
+
     grey: false,
     sectorName: "t6",
   },
@@ -547,6 +595,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t6",
   },
   {
@@ -568,6 +618,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: false,
+
     sectorName: "t6",
   },
   {
@@ -589,6 +641,8 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
+
     sectorName: "t6",
   },
   {
@@ -610,6 +664,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -631,6 +686,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -652,6 +708,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "t6",
   },
   {
@@ -673,6 +730,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "d1",
   },
   {
@@ -694,6 +752,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "d2",
   },
   {
@@ -715,6 +774,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: false,
+    yellow: true,
     sectorName: "d2",
   },
   {
@@ -736,6 +796,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 1,
     grey: true,
+    yellow: true,
     sectorName: "d2",
   },
   {
@@ -757,6 +818,7 @@ export const oneLevelCMKD2: Label[] = [
     isLabel: true,
     secLength: 36,
     grey: true,
+    yellow: true,
     sectorName: "d3",
   },
 ];

@@ -27,5 +27,6 @@ export const Primary: Story = {
     showSupportRect: false,
     showImportant: false,
     showDefaultRect: false,
+    showUnreached: false,
   },
 };

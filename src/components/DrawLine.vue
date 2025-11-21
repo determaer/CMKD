@@ -49,11 +49,7 @@ const stroke = computed(() => {
 });
 
 const draw = computed(() => {
-  const objLabelInIndex = store.labelsZero.value.findIndex(
-    (label) => label.id == props.objLabelIn.id,
-  );
-  if (store.position.value && objLabelInIndex > store.position.value)
-    return false;
+  if (store.showUnreached.value && props.objLabelIn.yellow) return false;
   return true;
 });
 

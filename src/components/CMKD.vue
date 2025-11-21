@@ -25,18 +25,18 @@ const {
 const {
   width = 800,
   drawingMode = "default",
-  position = 9999,
   showSupportRect = false,
   showImportant = false,
   showDefaultRect = false,
+  showUnreached = false,
   labels,
 } = defineProps<{
   width?: number;
   drawingMode?: "default" | "score" | "light";
-  position?: number;
   showSupportRect?: boolean;
   showImportant?: boolean;
   showDefaultRect?: boolean;
+  showUnreached?: boolean;
   labels: Label[];
 }>();
 
@@ -62,13 +62,13 @@ watch(
 );
 
 watch(
-  () => [width, position, showImportant, showSupportRect, showDefaultRect],
+  () => [width, showImportant, showSupportRect, showDefaultRect, showUnreached],
   () => {
     store.width.value = width;
-    store.position.value = position;
     store.showImportant.value = showImportant;
     store.showSupportRect.value = showSupportRect;
     store.showDefaultRect.value = showDefaultRect;
+    store.showUnreached.value = showUnreached;
     store.updateCMKD();
   },
   { immediate: true },

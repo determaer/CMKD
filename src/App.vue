@@ -28,6 +28,7 @@ onMounted(() => {
       isLabel: true,
       secLength: 1,
       grey: false,
+      yellow: false,
       sectorName: "",
     });
 
@@ -51,6 +52,7 @@ onMounted(() => {
     :showSupportRect="false"
     :showImportant="false"
     :showDefaultRect="false"
+    :showUnreached="false"
     @clicked="
       (info) => {
         console.log(info);
