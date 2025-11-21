@@ -33,7 +33,8 @@
     "lint": "npx eslint .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "vitest",
+    "chromatic": "npx chromatic --project-token=chpt_c45656a74f5f836"
   },
   "dependencies": {
     "konva": "^9.3.18",
@@ -49,12 +50,16 @@
     "@storybook/vue3-vite": "^10.0.7",
     "@types/node": "^24.6.0",
     "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/browser-playwright": "^4.0.9",
+    "@vitest/coverage-v8": "^4.0.9",
     "@vue/tsconfig": "^0.8.1",
+    "chromatic": "^13.3.4",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-storybook": "^10.0.7",
     "eslint-plugin-vue": "^10.5.1",
+    "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "storybook": "^10.0.7",
     "typescript": "~5.7.3",
@@ -62,11 +67,8 @@
     "vite": "^7.1.7",
     "vite-plugin-css-injected-by-js": "^3.5.2",
     "vite-plugin-dts": "^4.5.4",
-    "vue-tsc": "^3.1.0",
     "vitest": "^4.0.9",
-    "playwright": "^1.56.1",
-    "@vitest/browser-playwright": "^4.0.9",
-    "@vitest/coverage-v8": "^4.0.9"
+    "vue-tsc": "^3.1.0"
   },
   "description": "Cognitive Maps of Knowledge Diagnosis (CMKD) interactive builder",
   "repository": {
