@@ -24,6 +24,9 @@ describe("calc sectors for one level cmkd", () => {
   it("there are 8 sectors for labels", () => {
     expect(sectors).toHaveLength(8);
   });
+  it("result is equal to snapshot", () => {
+    expect(sectors).toMatchSnapshot();
+  });
   it("every sector with sLevel = 0", () => {
     for (const sector of sectors) {
       expect(sector.sLevel).toBe(0);
@@ -82,6 +85,10 @@ describe("calc sectors for 3 level cmkd", () => {
       expect(sector.sStart).toBeGreaterThanOrEqual(0);
       expect(sector.sEnd).toBeGreaterThanOrEqual(0);
     }
+  });
+
+  it("result is equal to snapshot", () => {
+    expect(sectors).toMatchSnapshot();
   });
 
   it("sectors sLevel = 2 with right length", () => {
