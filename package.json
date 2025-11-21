@@ -33,7 +33,7 @@
     "lint": "npx eslint .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest",
+    "test": "vitest run tests",
     "chromatic": "npx chromatic --project-token=chpt_c45656a74f5f836"
   },
   "dependencies": {
